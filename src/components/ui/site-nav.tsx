@@ -6,6 +6,7 @@ import { spring } from "@/lib/motion";
 
 const LINKS = [
   { href: "#games", label: "Games" },
+  { href: "#citadel", label: "Citadel" },
   { href: "#sandbox", label: "Sandbox" },
   { href: "#contact", label: "Contact" },
 ] as const;

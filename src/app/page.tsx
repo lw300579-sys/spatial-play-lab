@@ -1,6 +1,9 @@
 import { DeviceBanner } from "@/components/hero/device-banner";
 import { Hero } from "@/components/hero/hero";
+import { HowItWorks } from "@/components/how/how-it-works";
 import { GameMatrix } from "@/components/game-card/game-matrix";
+import { FeaturedCaseStudy } from "@/components/case-study/featured-case-study";
+import { Principles } from "@/components/craft/principles";
 import { Sandbox } from "@/components/sandbox/sandbox";
 import { BioContact } from "@/components/bio/bio-contact";
 import { SiteNav } from "@/components/ui/site-nav";
@@ -20,7 +23,10 @@ export default function Home() {
       <DeviceBanner />
       <main className="flex-1">
         <Hero />
+        <HowItWorks />
         <GameMatrix />
+        <FeaturedCaseStudy />
+        <Principles />
         <Sandbox />
         <BioContact />
       </main>

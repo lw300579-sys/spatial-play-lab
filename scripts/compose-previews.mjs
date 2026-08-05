@@ -59,7 +59,7 @@ function stageSvg(accent) {
   `);
 }
 
-function phoneChromeSvg({ title, subtitle, accent, phoneW, phoneH, screenX, screenY, screenW, screenH }) {
+function phoneChromeSvg({ title, subtitle, accent, phoneW, phoneH }) {
   const px = Math.round((W - phoneW) / 2);
   const py = Math.round((H - phoneH) / 2) - 10;
   return Buffer.from(`
@@ -143,10 +143,6 @@ async function composePhone({
       accent,
       phoneW,
       phoneH,
-      screenX,
-      screenY,
-      screenW,
-      screenH,
     }),
   )
     .png()

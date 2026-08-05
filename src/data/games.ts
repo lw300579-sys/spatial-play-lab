@@ -235,21 +235,21 @@ export const caseStudies: PortfolioProject[] = [
     caseStudyGallery: [
       {
         src: "/previews/citadel.png",
-        alt: "Citadel terminal — L2 order book with biomechanical overlays",
+        alt: "Citadel mission control terminal — full dashboard",
         aspectRatio: "16/10",
-        caption: "L2 bio-tactical terminal",
+        caption: "Mission Control · full terminal",
       },
       {
         src: "/previews/citadel-ballistics.png",
-        alt: "Citadel — ballistic trajectory fit on a 130mph serve",
+        alt: "Citadel digital twin biometrics and tilt indices",
         aspectRatio: "16/10",
-        caption: "Ballistic trajectory fit",
+        caption: "Digital twin · POMDP tilt / breakdown risk",
       },
       {
         src: "/previews/citadel-epv.png",
-        alt: "Citadel — Expected Possession Value court heatmap",
+        alt: "Citadel live Expected Possession Value chart",
         aspectRatio: "16/10",
-        caption: "EPV court heatmap",
+        caption: "Live EPV · spatiotemporal edge",
       },
     ],
     accent: "cobalt",

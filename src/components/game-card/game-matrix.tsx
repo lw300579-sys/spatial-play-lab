@@ -1,13 +1,13 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { caseStudies, matrixGames } from "@/data/games";
+import { matrixGames } from "@/data/games";
 import { fadeUp, reduced, spring, staggerContainer } from "@/lib/motion";
 import { GameCard } from "./game-card";
 
 export function GameMatrix() {
   const reduce = useReducedMotion();
-  const projects = [...matrixGames, ...caseStudies];
+  const projects = matrixGames;
 
   return (
     <section id="games" className="border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-24">
