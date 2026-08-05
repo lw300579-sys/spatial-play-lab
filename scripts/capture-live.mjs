@@ -1,4 +1,7 @@
-import { chromium } from "playwright";
+/**
+ * Capture real product UIs from live deployments.
+ */
+import { chromium, devices } from "playwright";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -8,34 +11,61 @@ const out = path.join(__dirname, "captures");
 fs.mkdirSync(out, { recursive: true });
 
 const targets = [
-  ["jiku-fitness", "https://posture-app-nms-projects-e9ba3578.vercel.app/#academy"],
-  ["asl-hero", "https://asl-web-fawn.vercel.app/lesson?id=basics-1"],
-  ["ar-baseball", "https://ar-baseball.vercel.app/"],
-  ["ar-slicer", "https://ar-fruit-slicer-orpin.vercel.app/"],
-  ["jiku-tennis", "https://artennisgame.vercel.app/"],
-  ["form-pickleball", "https://pickleball-coach-three.vercel.app/"],
+  {
+    id: "jiku-tennis",
+    url: "https://artennisgame.vercel.app/",
+    wait: 4000,
+  },
+  {
+    id: "jiku-fitness",
+    url: "https://posture-app-nms-projects-e9ba3578.vercel.app/#academy",
+    wait: 4500,
+  },
+  {
+    id: "asl-hero",
+    url: "https://asl-web-fawn.vercel.app/",
+    wait: 4000,
+  },
+  {
+    id: "form-pickleball",
+    url: "https://pickleball-coach-three.vercel.app/",
+    wait: 4000,
+  },
+  {
+    id: "ar-baseball",
+    url: "https://ar-baseball.vercel.app/",
+    wait: 4500,
+  },
+  {
+    id: "ar-slicer",
+    url: "https://ar-fruit-slicer-orpin.vercel.app/",
+    wait: 4500,
+  },
 ];
 
-const browser = await chromium.launch();
-const context = await browser.newContext({
-  viewport: { width: 390, height: 844 },
-  deviceScaleFactor: 2,
-  isMobile: true,
-  hasTouch: true,
-});
+const browser = await chromium.launch({ headless: true });
+const iphone = devices["iPhone 13 Pro"];
 
-for (const [name, url] of targets) {
+for (const t of targets) {
+  const context = await browser.newContext({
+    ...iphone,
+    deviceScaleFactor: 3,
+  });
   const page = await context.newPage();
   try {
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45000 });
-    await page.waitForTimeout(3000);
-    const dest = path.join(out, `${name}.png`);
-    await page.screenshot({ path: dest, type: "png" });
-    console.log(`ok ${name} ${Math.round(fs.statSync(dest).size / 1024)}kb`);
+    await page.goto(t.url, { waitUntil: "networkidle", timeout: 60000 });
+    await page.waitForTimeout(t.wait);
+    // Dismiss common permission / cookie noise if present
+    await page.keyboard.press("Escape").catch(() => {});
+    const dest = path.join(out, `${t.id}.png`);
+    await page.screenshot({ path: dest, type: "png", fullPage: false });
+    const kb = Math.round(fs.statSync(dest).size / 1024);
+    console.log(`ok ${t.id} ${kb}kb`);
   } catch (e) {
-    console.log(`fail ${name}: ${e.message}`);
+    console.log(`fail ${t.id}: ${e.message}`);
   } finally {
-    await page.close();
+    await context.close();
   }
 }
+
 await browser.close();

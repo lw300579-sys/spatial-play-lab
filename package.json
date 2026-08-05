@@ -7,8 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "previews": "node scripts/generate-previews.mjs",
-    "previews:live": "node scripts/capture-live.mjs && USE_LIVE_CAPTURES=1 node scripts/generate-previews.mjs"
+    "previews": "node scripts/compose-previews.mjs",
+    "previews:capture": "node scripts/capture-live.mjs",
+    "previews:all": "node scripts/capture-live.mjs && node scripts/compose-previews.mjs",
+    "previews:diagrams": "node scripts/generate-previews.mjs"
   },
   "dependencies": {
     "framer-motion": "^13.0.0",
