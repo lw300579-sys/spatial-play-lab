@@ -29,20 +29,20 @@ export function Sandbox() {
             variants={reduce ? undefined : fadeUp}
             className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ochre"
           >
-            The Sandbox
+            The Sandbox · in the lab
           </motion.p>
           <motion.h2
             variants={reduce ? undefined : fadeUp}
             className="mt-2 font-display text-3xl font-semibold tracking-tight"
           >
-            In the lab.
+            Raw experiments & prototypes.
           </motion.h2>
           <motion.p
             variants={reduce ? undefined : fadeUp}
             className="mt-2 max-w-xl text-sm leading-relaxed text-charcoal/80"
           >
             Unreleased mini-prototypes, webcam tests, shader experiments, and
-            physics notes—raw craftsman energy.
+            physics notes—craftsman energy, not polished product.
           </motion.p>
         </motion.div>
 
@@ -50,7 +50,7 @@ export function Sandbox() {
           {sandboxProjects.map((item, i) => (
             <motion.article
               key={item.id}
-              className={`sticker sticker-sm border-l-4 bg-surface-raised p-5 ${accentBorder[item.accent]}`}
+              className={`sticker sticker-sm flex flex-col border-l-4 bg-surface-raised p-5 ${accentBorder[item.accent]}`}
               style={{ rotate: i % 2 === 0 ? -0.5 : 0.7 }}
               initial={reduce ? false : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -59,9 +59,14 @@ export function Sandbox() {
               whileHover={reduce ? undefined : { y: -3, rotate: 0 }}
             >
               <h3 className="font-display text-xl font-semibold tracking-tight">
+                {item.glyph ? (
+                  <span className="mr-1.5" aria-hidden>
+                    {item.glyph}
+                  </span>
+                ) : null}
                 {item.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-charcoal/80">
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-charcoal/80">
                 {item.blurb}
               </p>
               <div className="mt-3 flex flex-wrap gap-1">
@@ -82,7 +87,11 @@ export function Sandbox() {
                   >
                     Open prototype
                   </TactileLink>
-                ) : null}
+                ) : (
+                  <span className="font-mono text-[0.65rem] uppercase tracking-wider text-muted">
+                    Internal note
+                  </span>
+                )}
                 {item.extraUrls?.map((u) => (
                   <TactileLink
                     key={u.url}
@@ -99,7 +108,6 @@ export function Sandbox() {
             </motion.article>
           ))}
 
-          {/* Craftsman note card */}
           <motion.article
             className="sticker sticker-sm flex flex-col justify-between border-dashed bg-paper-ink p-5"
             initial={reduce ? false : { opacity: 0, y: 16 }}

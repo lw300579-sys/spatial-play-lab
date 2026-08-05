@@ -18,7 +18,7 @@ export function BioContact() {
           initial={reduce ? undefined : "hidden"}
           whileInView={reduce ? undefined : "visible"}
           viewport={{ once: true, margin: "-60px" }}
-          className="sticker sticker-cobalt grid gap-8 bg-surface-raised p-6 sm:grid-cols-[1.2fr_0.8fr] sm:p-10"
+          className="sticker sticker-cobalt grid gap-8 bg-surface-raised p-6 sm:grid-cols-[1.25fr_0.75fr] sm:p-10"
         >
           <div>
             <motion.p
@@ -45,18 +45,25 @@ export function BioContact() {
 
             <motion.div
               variants={reduce ? undefined : fadeUp}
-              className="mt-6 inline-flex items-center gap-2 border-2 border-charcoal bg-paper-ink px-3 py-2"
+              className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
             >
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lawn opacity-60" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-lawn border border-charcoal" />
-              </span>
-              <div>
-                <p className="font-mono text-[0.6rem] uppercase tracking-widest text-muted">
-                  Current focus
-                </p>
-                <p className="text-sm font-medium text-charcoal">
-                  {SITE.currentFocus}
+              <div className="inline-flex items-center gap-2 border-2 border-charcoal bg-paper-ink px-3 py-2">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lawn opacity-60" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full border border-charcoal bg-lawn" />
+                </span>
+                <div>
+                  <p className="font-mono text-[0.6rem] uppercase tracking-widest text-muted">
+                    Current focus
+                  </p>
+                  <p className="text-sm font-medium text-charcoal">
+                    {SITE.currentFocus}
+                  </p>
+                </div>
+              </div>
+              <div className="inline-flex items-center border-2 border-charcoal bg-paper px-3 py-2">
+                <p className="font-mono text-[0.7rem] text-charcoal/80">
+                  {SITE.location}
                 </p>
               </div>
             </motion.div>
@@ -66,10 +73,14 @@ export function BioContact() {
             variants={reduce ? undefined : fadeUp}
             className="flex flex-col justify-center gap-3"
           >
+            <p className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">
+              Direct contact
+            </p>
             <TactileButton
               accent="coral"
               fullWidth
               onClick={() => copy(SITE.email)}
+              aria-label={`Copy email ${SITE.email}`}
             >
               <AnimatePresence mode="wait" initial={false}>
                 {copied ? (
@@ -103,9 +114,20 @@ export function BioContact() {
           </motion.div>
         </motion.div>
 
-        <p className="mt-10 text-center font-mono text-[0.65rem] text-muted">
-          Built with Next.js · Framer Motion · tactile paper · {new Date().getFullYear()}
-        </p>
+        <footer className="mt-12 flex flex-col items-center gap-3 border-t-2 border-charcoal/10 pt-8 text-center">
+          <p className="font-display text-lg font-semibold tracking-tight">
+            {SITE.name}
+          </p>
+          <p className="font-mono text-[0.65rem] text-muted">
+            Next.js · Framer Motion · tactile paper · {new Date().getFullYear()}
+          </p>
+          <a
+            href="#top"
+            className="font-mono text-[0.7rem] uppercase tracking-wider text-cobalt no-underline hover:underline"
+          >
+            ↑ Back to top
+          </a>
+        </footer>
       </div>
     </section>
   );

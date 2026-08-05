@@ -2,11 +2,9 @@
 
 import { useSyncExternalStore } from "react";
 
-export type DeviceKind = "mobile" | "desktop" | "unknown";
+export type DeviceKind = "mobile" | "desktop";
 
 function detectDevice(): DeviceKind {
-  if (typeof window === "undefined") return "unknown";
-
   const ua = navigator.userAgent;
   const coarse =
     typeof window.matchMedia === "function" &&
@@ -24,12 +22,9 @@ function subscribe(onStoreChange: () => void) {
   return () => window.removeEventListener("resize", onStoreChange);
 }
 
-function getSnapshot(): DeviceKind {
-  return detectDevice();
-}
-
+/** Optimistic desktop for SSR — no "Detecting…" flash on first paint */
 function getServerSnapshot(): DeviceKind {
-  return "unknown";
+  return "desktop";
 }
 
 export function useDevice(): {
@@ -38,16 +33,12 @@ export function useDevice(): {
   isDesktop: boolean;
   ready: boolean;
 } {
-  const device = useSyncExternalStore(
-    subscribe,
-    getSnapshot,
-    getServerSnapshot,
-  );
+  const device = useSyncExternalStore(subscribe, detectDevice, getServerSnapshot);
 
   return {
     device,
     isMobile: device === "mobile",
     isDesktop: device === "desktop",
-    ready: device !== "unknown",
+    ready: true,
   };
 }

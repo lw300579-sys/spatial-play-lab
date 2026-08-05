@@ -1,35 +1,4 @@
-export type TechSpec =
-  | "MediaPipe Pose"
-  | "MediaPipe Hand/Pose Landmarks"
-  | "MediaPipe 33-Landmark"
-  | "Body Tracking"
-  | "Pose & Velocity Tracking"
-  | "Hand Skeleton"
-  | "Face Anchor"
-  | "Plane Detection"
-  | "Device Motion"
-  | "Webcam/CV"
-  | "React-Three-Fiber"
-  | "Three.js"
-  | "Zustand"
-  | "TensorFlow.js"
-  | "Particle VFX"
-  | "Dynamic Hitboxes"
-  | "Next.js 16"
-  | "ONNX WLASL Model"
-  | "Geometric Template Engine"
-  | "RF-DETR Keypoint"
-  | "TrackNet Temporal CNN"
-  | "Homography Solvers"
-  | "Ballistic Trajectory Fit"
-  | "AWS"
-  | "YOLOv8n + EfficientDet"
-  | "Kalman Filter Tracking"
-  | "Rapier Physics Engine"
-  | "Spatial Anchors"
-  | "Procedural Generation"
-  | "Particle Shaders"
-  | string;
+export type TechSpec = string;
 
 export type ProjectPlacement = "matrix" | "case-study" | "sandbox";
 
@@ -38,33 +7,32 @@ export type AccentTone = "coral" | "cobalt" | "lawn" | "ochre";
 export interface PortfolioProject {
   id: string;
   title: string;
-  /** Short human hook shown on cards */
   narrative: string;
-  /** Longer spatial / systems breakdown */
   spatialMechanics: string;
+  /** Engineering challenges called out in deep-dive */
+  challenges: string[];
+  /** Monospace requirement line */
+  requirements: string;
   techSpecs: TechSpec[];
   placement: ProjectPlacement;
-  /** Live play URL — null means case-study / no QR launch */
   liveUrl: string | null;
-  /** Optional secondary URLs (sandbox multi-link) */
   extraUrls?: { label: string; url: string }[];
-  /** Preview media — aspect-ratio locked */
   preview: {
     src: string;
     alt: string;
     aspectRatio: `${number}/${number}`;
     type: "image" | "video" | "gif";
   };
-  /** High-res gallery for case studies without live URLs */
   caseStudyGallery?: {
     src: string;
     alt: string;
     aspectRatio: `${number}/${number}`;
+    caption?: string;
   }[];
   accent: AccentTone;
-  /** Optional emoji / sticker glyph */
   glyph?: string;
   status?: "live" | "prototype" | "archived";
+  year?: string;
 }
 
 export interface SandboxNote {
@@ -75,6 +43,7 @@ export interface SandboxNote {
   liveUrl: string | null;
   extraUrls?: { label: string; url: string }[];
   accent: AccentTone;
+  glyph?: string;
 }
 
 export const SITE = {
@@ -82,9 +51,13 @@ export const SITE = {
   tagline: "Browser AR that moves with you",
   email: "hello@spatialplay.lab",
   currentFocus: "On-device pose filters + couch multiplayer for Jiku Tennis",
+  location: "Building in the open · camera-first",
   socials: [
-    { label: "GitHub", href: "https://github.com" },
-    { label: "X", href: "https://x.com" },
+    {
+      label: "GitHub",
+      href: "https://github.com/lw300579-sys/spatial-play-lab",
+    },
+    { label: "Live site", href: "https://spatial-play-lab.vercel.app" },
   ],
 } as const;
 
@@ -94,10 +67,18 @@ export const matrixGames: PortfolioProject[] = [
     id: "jiku-tennis",
     title: "Jiku Tennis",
     glyph: "🎾",
+    year: "2025",
     narrative:
       "Browser AR tennis—swing your real arm, rally a living rival, and climb the ladder. No controller needed.",
     spatialMechanics:
       "100% on-device pose detection running on a mobile browser. Your real swing drives a virtual racket through a 1-Euro predictor-corrector filter for smoothing. Features \"invisible assist\" to map natural timing (early pulls cross-court, late goes down the line) rather than physical footwork. Includes a Pass & Play couch multiplayer mode and AI rivals with custom tuning.",
+    challenges: [
+      "Smoothing noisy MediaPipe joints without killing responsiveness",
+      "Mapping swing timing → shot direction without requiring footwork",
+      "Keeping a playable 60fps budget on mid-range mobile SoCs",
+      "Pass & Play state sync across a single shared camera session",
+    ],
+    requirements: "Camera · Portrait phone · Safari / Chrome",
     techSpecs: [
       "MediaPipe Pose",
       "Body Tracking",
@@ -120,10 +101,18 @@ export const matrixGames: PortfolioProject[] = [
     id: "jiku-fitness",
     title: "Jiku: Cyber-Athletic Engine",
     glyph: "🥊",
+    year: "2025",
     narrative:
       "Real-time 3D target boxing with a proprietary Impact Metric calculating the actual kinetic power of your punches.",
     spatialMechanics:
       "Transforms the camera feed into a physical Action-RPG. Tracks wrist acceleration and hesitation to implement Flow State Dynamic Difficulty Adjustment (DDA). Features asynchronous Ghost-multiplayer (race past personal bests) and procedural, audio-reactive 3D targets.",
+    challenges: [
+      "Deriving kinetic Impact Metric from 2D wrist acceleration",
+      "Flow-state DDA that reacts to hesitation without feeling unfair",
+      "Particle VFX that survive the mobile frame budget",
+      "Ghost replays that stay temporally aligned with live pose",
+    ],
+    requirements: "Camera · Standing space · Chrome / Safari",
     techSpecs: [
       "Pose & Velocity Tracking",
       "TensorFlow.js",
@@ -145,10 +134,18 @@ export const matrixGames: PortfolioProject[] = [
     id: "asl-hero",
     title: "ASL Hero",
     glyph: "🤟",
+    year: "2025",
     narrative:
       "A Duolingo-style American Sign Language trainer driven entirely by browser-based computer vision.",
     spatialMechanics:
       "Real-time geometric analysis of 3D handshapes and motion paths (e.g., reverse axis paths, depth squashing, wrist gaps). Combines a deterministic template engine with a 400-class ONNX WLASL model fallback. Uses a telemetry flywheel backed by Firestore to constantly harvest user failures and refine gesture hitboxes.",
+    challenges: [
+      "Geometric templates vs. ML fallback without false rejects",
+      "Depth squashing & wrist-gap edge cases in real rooms",
+      "ONNX inference latency inside a lesson UI frame budget",
+      "Telemetry flywheel that improves hitboxes from failures",
+    ],
+    requirements: "Camera · Good lighting · Front-facing hands",
     techSpecs: [
       "MediaPipe Hand/Pose Landmarks",
       "Next.js 16",
@@ -170,10 +167,18 @@ export const matrixGames: PortfolioProject[] = [
     id: "form-pickleball",
     title: "Form — Pickleball Coach",
     glyph: "🥒",
+    year: "2025",
     narrative:
       "Real-time biomechanics coaching analyzing elbow angles, hip-shoulder separation, and exact swing events right from the court.",
     spatialMechanics:
       "Operates in dual capture modes: a side-angle Decision pose overlay, and an endline Court Cam. Fuses background-subtraction with object detection and audio fusion to calculate exact swing events (via wrist velocity peaks), trajectory-aware court placements, and spatial heatmaps.",
+    challenges: [
+      "Fusing pose + YOLO + audio for exact swing event timing",
+      "Dual-mode capture (Decision vs Court Cam) without UX thrash",
+      "Kalman tracking through occlusion and motion blur",
+      "Court heatmaps grounded to real spatial placements",
+    ],
+    requirements: "Webcam or phone · Side or endline angle",
     techSpecs: [
       "MediaPipe 33-Landmark",
       "YOLOv8n + EfficientDet",
@@ -193,16 +198,24 @@ export const matrixGames: PortfolioProject[] = [
   },
 ];
 
-/** Section D — Deep-dive case studies (no live play URL) */
+/** Section D — Deep-dive case studies */
 export const caseStudies: PortfolioProject[] = [
   {
     id: "project-citadel",
     title: "Project Citadel",
     glyph: "📡",
+    year: "2024",
     narrative:
       "Mission Control for Market Makers. Extracting SI-unit biomechanical and tactical metrics directly from pure broadcast sports video—no wearables required.",
     spatialMechanics:
       "Processes 60fps HD sports broadcasts to emit real physical metrics via a custom L2 Limit Order Book terminal. Uses a TrackNet temporal heatmap CNN to capture motion-blurred tennis balls (e.g., 130mph serves) by fitting a ballistic trajectory. Solves complex camera geometry using confidence-weighted inverse-variance DLT to ground everything to a 3D court model with calibrated uncertainty. Features Expected Possession Value (EPV) mapping and Digital Twin Biometric modeling.",
+    challenges: [
+      "TrackNet heatmaps for 130mph motion-blurred tennis balls",
+      "Confidence-weighted inverse-variance DLT for camera geometry",
+      "Calibrated uncertainty on a 3D court digital twin",
+      "Streaming SI-unit metrics into an L2-style analytics terminal",
+    ],
+    requirements: "Broadcast HD feed · Offline / AWS pipeline",
     techSpecs: [
       "RF-DETR Keypoint",
       "TrackNet Temporal CNN",
@@ -223,16 +236,19 @@ export const caseStudies: PortfolioProject[] = [
         src: "/previews/citadel.svg",
         alt: "Citadel terminal — L2 order book with biomechanical overlays",
         aspectRatio: "16/10",
+        caption: "L2 bio-tactical terminal",
       },
       {
         src: "/previews/citadel-ballistics.svg",
         alt: "Citadel — ballistic trajectory fit on a 130mph serve",
         aspectRatio: "16/10",
+        caption: "Ballistic trajectory fit",
       },
       {
         src: "/previews/citadel-epv.svg",
         alt: "Citadel — Expected Possession Value court heatmap",
         aspectRatio: "16/10",
+        caption: "EPV court heatmap",
       },
     ],
     accent: "cobalt",
@@ -245,6 +261,7 @@ export const sandboxProjects: SandboxNote[] = [
   {
     id: "ar-baseball",
     title: "AR Baseball",
+    glyph: "⚾",
     blurb:
       "Low-overhead experiments mapping spatial device motion to Rapier—virtual bats colliding with 3D baseballs in the browser.",
     techSpecs: [
@@ -258,6 +275,7 @@ export const sandboxProjects: SandboxNote[] = [
   {
     id: "ar-slicer",
     title: "AR Slicer Mechanics",
+    glyph: "🗡️",
     blurb:
       "Fast-paced 3D arcade dodging and slicing—dynamic controllers, ghost replays, floating feedback, particle destruction.",
     techSpecs: [
@@ -274,6 +292,26 @@ export const sandboxProjects: SandboxNote[] = [
       },
     ],
     accent: "ochre",
+  },
+  {
+    id: "webcam-latency",
+    title: "Webcam Latency Probe",
+    glyph: "⏱️",
+    blurb:
+      "Micro-bench for getUserMedia → canvas paint latency across Safari/Chrome, used to budget pose pipelines before shipping.",
+    techSpecs: ["getUserMedia", "rAF timing", "Canvas 2D"],
+    liveUrl: null,
+    accent: "lawn",
+  },
+  {
+    id: "shader-grain",
+    title: "Paper Grain Shader",
+    glyph: "🌫️",
+    blurb:
+      "Fragment experiments for organic paper noise that stays cheap—same spirit as the site grain, pushed into WebGL.",
+    techSpecs: ["GLSL", "Three.js", "Post FX"],
+    liveUrl: null,
+    accent: "cobalt",
   },
 ];
 

@@ -23,8 +23,8 @@ const TOKENS: Token[] = [
     id: "racket",
     label: "Swing",
     emoji: "🎾",
-    x: 8,
-    y: 12,
+    x: 10,
+    y: 14,
     rotate: -8,
     accent: "bg-lawn",
   },
@@ -32,8 +32,8 @@ const TOKENS: Token[] = [
     id: "glove",
     label: "Impact",
     emoji: "🥊",
-    x: 62,
-    y: 8,
+    x: 58,
+    y: 10,
     rotate: 6,
     accent: "bg-coral",
   },
@@ -41,8 +41,8 @@ const TOKENS: Token[] = [
     id: "hand",
     label: "Sign",
     emoji: "🤟",
-    x: 38,
-    y: 48,
+    x: 34,
+    y: 42,
     rotate: -3,
     accent: "bg-cobalt text-white",
   },
@@ -50,8 +50,8 @@ const TOKENS: Token[] = [
     id: "ball",
     label: "Track",
     emoji: "📡",
-    x: 72,
-    y: 52,
+    x: 64,
+    y: 48,
     rotate: 10,
     accent: "bg-ochre",
   },
@@ -59,8 +59,8 @@ const TOKENS: Token[] = [
     id: "cam",
     label: "Webcam",
     emoji: "📷",
-    x: 18,
-    y: 62,
+    x: 14,
+    y: 58,
     rotate: 4,
     accent: "bg-paper",
   },
@@ -73,21 +73,23 @@ function DraggableToken({ token }: { token: Token }) {
 
   const onDragEnd = (_: unknown, info: PanInfo) => {
     if (reduce) return;
-    x.set(x.get() + info.velocity.x * 0.08);
-    y.set(y.get() + info.velocity.y * 0.08);
+    x.set(x.get() + info.velocity.x * 0.1);
+    y.set(y.get() + info.velocity.y * 0.1);
   };
 
   return (
     <motion.div
       drag={!reduce}
       dragMomentum
-      dragElastic={0.35}
+      dragElastic={0.45}
+      dragConstraints={{ left: -40, right: 40, top: -40, bottom: 40 }}
       onDragEnd={onDragEnd}
       style={{ x, y, left: `${token.x}%`, top: `${token.y}%` }}
-      className={`absolute z-10 cursor-grab touch-none select-none active:cursor-grabbing ${token.accent} sticker-sm border-2 border-charcoal px-3 py-2`}
+      className={`absolute z-10 cursor-grab touch-none select-none active:cursor-grabbing ${token.accent} sticker-sm border-2 border-charcoal px-3 py-2 shadow-[2px_2px_0_#18181B]`}
       initial={false}
       animate={{ rotate: token.rotate }}
-      whileDrag={reduce ? undefined : { scale: 1.08, rotate: token.rotate + 4 }}
+      whileHover={reduce ? undefined : { scale: 1.05 }}
+      whileDrag={reduce ? undefined : { scale: 1.12, rotate: token.rotate + 6, zIndex: 30 }}
       transition={spring}
       aria-label={`Drag ${token.label} token`}
     >
@@ -107,9 +109,8 @@ export function StickerBoard() {
       className="relative h-56 w-full overflow-hidden border-2 border-charcoal bg-paper-deep sm:h-72"
       aria-label="Interactive sticker board — drag the tokens"
     >
-      {/* subtle court lines */}
       <svg
-        className="pointer-events-none absolute inset-0 h-full w-full opacity-30"
+        className="pointer-events-none absolute inset-0 h-full w-full opacity-25"
         aria-hidden
       >
         <line
@@ -128,6 +129,15 @@ export function StickerBoard() {
           fill="none"
           stroke="#18181B"
           strokeWidth="1.5"
+        />
+        <circle
+          cx="50%"
+          cy="50%"
+          r="4%"
+          fill="#E15A46"
+          stroke="#18181B"
+          strokeWidth="1.5"
+          opacity="0.5"
         />
       </svg>
 

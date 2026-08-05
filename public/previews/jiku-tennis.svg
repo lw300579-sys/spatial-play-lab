@@ -1,19 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
   <rect width="800" height="500" fill="#E8F5E9"/>
   <rect x="40" y="40" width="720" height="420" stroke="#18181B" stroke-width="3" fill="#FFFDF7"/>
-  <!-- court -->
   <rect x="120" y="100" width="560" height="300" stroke="#18181B" stroke-width="2.5" fill="#22C55E" fill-opacity="0.35"/>
   <line x1="400" y1="100" x2="400" y2="400" stroke="#18181B" stroke-width="2"/>
   <ellipse cx="400" cy="250" rx="70" ry="40" stroke="#18181B" stroke-width="2" fill="none"/>
-  <!-- pose stick figure -->
-  <circle cx="220" cy="180" r="22" stroke="#18181B" stroke-width="2.5" fill="#E15A46"/>
-  <line x1="220" y1="202" x2="220" y2="280" stroke="#18181B" stroke-width="3"/>
-  <line x1="220" y1="230" x2="300" y2="200" stroke="#18181B" stroke-width="3"/>
-  <line x1="300" y1="200" x2="340" y2="170" stroke="#18181B" stroke-width="3"/>
-  <line x1="220" y1="280" x2="190" y2="350" stroke="#18181B" stroke-width="3"/>
-  <line x1="220" y1="280" x2="255" y2="350" stroke="#18181B" stroke-width="3"/>
-  <!-- racket + ball -->
-  <ellipse cx="355" cy="155" rx="28" ry="18" stroke="#18181B" stroke-width="2.5" fill="#FFFDF7" transform="rotate(-25 355 155)"/>
-  <circle cx="480" cy="200" r="16" fill="#EAB308" stroke="#18181B" stroke-width="2.5"/>
-  <text x="60" y="470" font-family="ui-monospace,monospace" font-size="14" fill="#18181B" opacity="0.6">MEDIAPIPE POSE · 1¬ FILTER · 60FPS</text>
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0 0; 8 -4; 0 0" dur="2.4s" repeatCount="indefinite"/>
+    <circle cx="220" cy="180" r="22" stroke="#18181B" stroke-width="2.5" fill="#E15A46"/>
+    <line x1="220" y1="202" x2="220" y2="280" stroke="#18181B" stroke-width="3"/>
+    <line x1="220" y1="230" x2="300" y2="200" stroke="#18181B" stroke-width="3"/>
+    <line x1="300" y1="200" x2="340" y2="170" stroke="#18181B" stroke-width="3"/>
+    <line x1="220" y1="280" x2="190" y2="350" stroke="#18181B" stroke-width="3"/>
+    <line x1="220" y1="280" x2="255" y2="350" stroke="#18181B" stroke-width="3"/>
+    <ellipse cx="355" cy="155" rx="28" ry="18" stroke="#18181B" stroke-width="2.5" fill="#FFFDF7" transform="rotate(-25 355 155)"/>
+  </g>
+  <circle cx="480" cy="200" r="16" fill="#EAB308" stroke="#18181B" stroke-width="2.5">
+    <animate attributeName="cx" values="420;560;420" dur="1.8s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="220;180;220" dur="1.8s" repeatCount="indefinite"/>
+  </circle>
+  <text x="60" y="470" font-family="ui-monospace,monospace" font-size="14" fill="#18181B" opacity="0.6">MEDIAPIPE POSE · 1€ FILTER · 60FPS</text>
 </svg>
