@@ -5,7 +5,7 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { caseStudies } from "@/data/games";
 import { fadeUp, reduced, spring, staggerContainer } from "@/lib/motion";
-import { TactileButton } from "@/components/ui/tactile-button";
+import { TactileButton, TactileLink } from "@/components/ui/tactile-button";
 
 export function FeaturedCaseStudy() {
   const reduce = useReducedMotion();
@@ -54,14 +54,19 @@ export function FeaturedCaseStudy() {
           viewport={{ once: true }}
           transition={reduce ? reduced : spring}
         >
-          <div className="relative aspect-[16/10] w-full">
+          <div
+            className="relative w-full bg-[#020617]"
+            style={{ aspectRatio: project.preview.aspectRatio }}
+          >
+            {/* unoptimized: skip Next.js recompress/AVIF — dashboard text stays crisp */}
             <Image
               src={project.preview.src}
               alt={project.preview.alt}
               fill
-              className="object-cover object-top"
-              sizes="(max-width: 1200px) 100vw, 1152px"
+              unoptimized
               priority
+              className="object-contain object-center"
+              sizes="100vw"
             />
           </div>
 
@@ -96,6 +101,14 @@ export function FeaturedCaseStudy() {
                   </li>
                 ))}
               </ul>
+              <a
+                href={project.preview.src}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-block font-mono text-[0.7rem] text-cobalt underline-offset-2 hover:underline"
+              >
+                Open full-resolution capture ↗
+              </a>
               <TactileButton
                 accent="cobalt"
                 className="mt-5 w-full"
@@ -121,31 +134,43 @@ export function FeaturedCaseStudy() {
             aria-modal
             className="sticker sticker-lg relative z-10 max-h-[90dvh] w-full max-w-4xl overflow-y-auto bg-paper p-6"
           >
-            <div className="mb-4 flex items-center justify-between gap-4">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
               <h3 className="font-display text-xl font-semibold">
                 {project.title} · gallery
               </h3>
-              <TactileButton
-                variant="secondary"
-                className="!px-3 !py-1.5"
-                onClick={() => setOpen(false)}
-              >
-                ✕
-              </TactileButton>
+              <div className="flex gap-2">
+                <TactileLink
+                  href={project.preview.src}
+                  variant="secondary"
+                  className="!px-3 !py-1.5 text-xs"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Open full resolution
+                </TactileLink>
+                <TactileButton
+                  variant="secondary"
+                  className="!px-3 !py-1.5"
+                  onClick={() => setOpen(false)}
+                >
+                  ✕
+                </TactileButton>
+              </div>
             </div>
             <div className="grid gap-4">
               {(project.caseStudyGallery ?? [project.preview]).map((img) => (
                 <figure key={img.src + img.alt}>
                   <div
-                    className="relative w-full overflow-hidden border-2 border-charcoal bg-charcoal"
+                    className="relative w-full overflow-hidden border-2 border-charcoal bg-[#020617]"
                     style={{ aspectRatio: img.aspectRatio }}
                   >
                     <Image
                       src={img.src}
                       alt={img.alt}
                       fill
-                      className="object-cover object-top"
-                      sizes="(max-width: 900px) 100vw, 800px"
+                      unoptimized
+                      className="object-contain"
+                      sizes="100vw"
                     />
                   </div>
                   {"caption" in img && img.caption ? (
