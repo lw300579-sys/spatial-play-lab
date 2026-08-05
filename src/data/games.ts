@@ -44,6 +44,7 @@ export interface SandboxNote {
   extraUrls?: { label: string; url: string }[];
   accent: AccentTone;
   glyph?: string;
+  preview?: string;
 }
 
 export const SITE = {
@@ -89,7 +90,7 @@ export const matrixGames: PortfolioProject[] = [
     placement: "matrix",
     liveUrl: "https://artennisgame.vercel.app/",
     preview: {
-      src: "/previews/jiku-tennis.svg",
+      src: "/previews/jiku-tennis.png",
       alt: "Jiku Tennis — player swinging into a browser AR tennis court",
       aspectRatio: "16/10",
       type: "image",
@@ -122,7 +123,7 @@ export const matrixGames: PortfolioProject[] = [
     placement: "matrix",
     liveUrl: "https://posture-app-nms-projects-e9ba3578.vercel.app/#academy",
     preview: {
-      src: "/previews/jiku-fitness.svg",
+      src: "/previews/jiku-fitness.png",
       alt: "Jiku Fitness — shadow boxing targets in a live camera feed",
       aspectRatio: "16/10",
       type: "image",
@@ -155,7 +156,7 @@ export const matrixGames: PortfolioProject[] = [
     placement: "matrix",
     liveUrl: "https://asl-web-fawn.vercel.app/lesson?id=basics-1",
     preview: {
-      src: "/previews/asl-hero.svg",
+      src: "/previews/asl-hero.png",
       alt: "ASL Hero — hand landmark overlay teaching sign language",
       aspectRatio: "16/10",
       type: "image",
@@ -188,7 +189,7 @@ export const matrixGames: PortfolioProject[] = [
     placement: "matrix",
     liveUrl: "https://pickleball-coach-three.vercel.app/",
     preview: {
-      src: "/previews/form-pickleball.svg",
+      src: "/previews/form-pickleball.png",
       alt: "Form — pickleball biomechanics overlay on court footage",
       aspectRatio: "16/10",
       type: "image",
@@ -226,26 +227,26 @@ export const caseStudies: PortfolioProject[] = [
     placement: "case-study",
     liveUrl: null,
     preview: {
-      src: "/previews/citadel.svg",
+      src: "/previews/citadel.png",
       alt: "Project Citadel — bio-tactical analytics terminal",
       aspectRatio: "16/10",
       type: "image",
     },
     caseStudyGallery: [
       {
-        src: "/previews/citadel.svg",
+        src: "/previews/citadel.png",
         alt: "Citadel terminal — L2 order book with biomechanical overlays",
         aspectRatio: "16/10",
         caption: "L2 bio-tactical terminal",
       },
       {
-        src: "/previews/citadel-ballistics.svg",
+        src: "/previews/citadel-ballistics.png",
         alt: "Citadel — ballistic trajectory fit on a 130mph serve",
         aspectRatio: "16/10",
         caption: "Ballistic trajectory fit",
       },
       {
-        src: "/previews/citadel-epv.svg",
+        src: "/previews/citadel-epv.png",
         alt: "Citadel — Expected Possession Value court heatmap",
         aspectRatio: "16/10",
         caption: "EPV court heatmap",
@@ -271,6 +272,7 @@ export const sandboxProjects: SandboxNote[] = [
     ],
     liveUrl: "https://ar-baseball.vercel.app/",
     accent: "coral",
+    preview: "/previews/ar-baseball.png",
   },
   {
     id: "ar-slicer",
@@ -292,6 +294,7 @@ export const sandboxProjects: SandboxNote[] = [
       },
     ],
     accent: "ochre",
+    preview: "/previews/ar-slicer.png",
   },
   {
     id: "webcam-latency",

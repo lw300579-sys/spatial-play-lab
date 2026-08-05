@@ -50,7 +50,7 @@ export function Sandbox() {
           {sandboxProjects.map((item, i) => (
             <motion.article
               key={item.id}
-              className={`sticker sticker-sm flex flex-col border-l-4 bg-surface-raised p-5 ${accentBorder[item.accent]}`}
+              className={`sticker sticker-sm flex flex-col overflow-hidden border-l-4 bg-surface-raised p-0 ${accentBorder[item.accent]}`}
               style={{ rotate: i % 2 === 0 ? -0.5 : 0.7 }}
               initial={reduce ? false : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -58,6 +58,17 @@ export function Sandbox() {
               transition={reduce ? reduced : { ...spring, delay: i * 0.06 }}
               whileHover={reduce ? undefined : { y: -3, rotate: 0 }}
             >
+              {item.preview ? (
+                <div className="relative aspect-[16/10] w-full border-b-2 border-charcoal bg-paper-ink">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={item.preview}
+                    alt=""
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              ) : null}
+              <div className="flex flex-1 flex-col p-5">
               <h3 className="font-display text-xl font-semibold tracking-tight">
                 {item.glyph ? (
                   <span className="mr-1.5" aria-hidden>
@@ -104,6 +115,7 @@ export function Sandbox() {
                     {u.label}
                   </TactileLink>
                 ))}
+              </div>
               </div>
             </motion.article>
           ))}

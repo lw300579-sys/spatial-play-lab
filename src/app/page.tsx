@@ -5,7 +5,6 @@ import { Sandbox } from "@/components/sandbox/sandbox";
 import { BioContact } from "@/components/bio/bio-contact";
 import { SiteNav } from "@/components/ui/site-nav";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
-import { TechTicker } from "@/components/ui/tech-ticker";
 
 export default function Home() {
   return (
@@ -19,7 +18,6 @@ export default function Home() {
       <ScrollProgress />
       <SiteNav />
       <DeviceBanner />
-      <TechTicker />
       <main className="flex-1">
         <Hero />
         <GameMatrix />
