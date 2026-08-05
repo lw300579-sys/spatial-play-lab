@@ -1,0 +1,228 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────
+   Tactile Digital Artifact — Design Tokens
+   ───────────────────────────────────────────── */
+
+:root {
+  /* Base canvas */
+  --paper: #fffdf7;
+  --paper-deep: #f7f4eb;
+  --paper-ink: #efe9dc;
+
+  /* Accent primaries */
+  --cobalt: #1e3a8a;
+  --coral: #e15a46;
+  --lawn: #22c55e;
+  --ochre: #eab308;
+  --charcoal: #18181b;
+
+  /* Surfaces */
+  --surface: #fffdf7;
+  --surface-raised: #ffffff;
+  --border: #18181b;
+  --muted: #71717a;
+  --muted-soft: #a1a1aa;
+
+  /* Semantic aliases */
+  --background: var(--paper);
+  --foreground: var(--charcoal);
+
+  /* Tactile shadows */
+  --shadow-offset: 4px;
+  --shadow-hard: 4px 4px 0px var(--charcoal);
+  --shadow-hard-sm: 2px 2px 0px var(--charcoal);
+  --shadow-hard-lg: 6px 6px 0px var(--charcoal);
+  --shadow-coral: 4px 4px 0px var(--coral);
+  --shadow-cobalt: 4px 4px 0px var(--cobalt);
+  --shadow-lawn: 4px 4px 0px var(--lawn);
+  --shadow-ochre: 4px 4px 0px var(--ochre);
+
+  /* Motion */
+  --spring-stiffness: 300;
+  --spring-damping: 15;
+  --ease-tactile: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Grain */
+  --grain-opacity: 0.035;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-paper-ink: var(--paper-ink);
+  --color-cobalt: var(--cobalt);
+  --color-coral: var(--coral);
+  --color-lawn: var(--lawn);
+  --color-ochre: var(--ochre);
+  --color-charcoal: var(--charcoal);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-muted-soft: var(--muted-soft);
+
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --shadow-hard: var(--shadow-hard);
+  --shadow-hard-sm: var(--shadow-hard-sm);
+  --shadow-hard-lg: var(--shadow-hard-lg);
+}
+
+/* ─────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────── */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--charcoal);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--ochre);
+  color: var(--charcoal);
+}
+
+/* ─────────────────────────────────────────────
+   Paper grain overlay (SVG noise)
+   ───────────────────────────────────────────── */
+
+.grain-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+
+/* Soft paper wash behind content */
+.paper-canvas {
+  background:
+    radial-gradient(ellipse 80% 50% at 10% 0%, rgba(225, 90, 70, 0.06), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(30, 58, 138, 0.05), transparent 45%),
+    radial-gradient(ellipse 50% 30% at 50% 100%, rgba(234, 179, 8, 0.07), transparent 50%),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+  min-height: 100dvh;
+}
+
+/* ─────────────────────────────────────────────
+   Typography utilities
+   ───────────────────────────────────────────── */
+
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* ─────────────────────────────────────────────
+   Sticker / tactile surfaces
+   ───────────────────────────────────────────── */
+
+.sticker {
+  background: var(--surface-raised);
+  border: 2px solid var(--charcoal);
+  box-shadow: var(--shadow-hard);
+  transition:
+    transform 0.2s var(--ease-tactile),
+    box-shadow 0.2s var(--ease-tactile);
+}
+
+.sticker-sm {
+  border: 2px solid var(--charcoal);
+  box-shadow: var(--shadow-hard-sm);
+}
+
+.sticker-lg {
+  border: 2px solid var(--charcoal);
+  box-shadow: var(--shadow-hard-lg);
+}
+
+.sticker-coral {
+  box-shadow: var(--shadow-coral);
+}
+
+.sticker-cobalt {
+  box-shadow: var(--shadow-cobalt);
+}
+
+.sticker-lawn {
+  box-shadow: var(--shadow-lawn);
+}
+
+.sticker-ochre {
+  box-shadow: var(--shadow-ochre);
+}
+
+/* Press / lift affordances (non-motion fallback) */
+.tactile-press:active {
+  transform: scale(0.96);
+}
+
+.tactile-lift:hover {
+  transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .sticker,
+  .tactile-press,
+  .tactile-lift {
+    transition: none;
+  }
+
+  .tactile-lift:hover {
+    transform: none;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Spec badge chips
+   ───────────────────────────────────────────── */
+
+.spec-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  padding: 0.3rem 0.5rem;
+  border: 1.5px solid var(--charcoal);
+  background: var(--paper-ink);
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────────
+   Focus ring
+   ───────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 3px;
+}

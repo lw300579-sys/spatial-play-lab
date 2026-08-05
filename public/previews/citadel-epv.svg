@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <rect width="800" height="500" fill="#DCE3F0"/>
+  <rect x="40" y="40" width="720" height="420" stroke="#18181B" stroke-width="3" fill="#0F172A"/>
+  <text x="70" y="90" font-family="ui-monospace,monospace" font-size="14" fill="#22C55E">EXPECTED POSSESSION VALUE</text>
+  <rect x="120" y="130" width="560" height="280" stroke="#3F3F46" stroke-width="2" fill="#18181B"/>
+  <defs>
+    <radialGradient id="h1" cx="30%" cy="40%" r="40%">
+      <stop offset="0%" stop-color="#E15A46" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#E15A46" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="h2" cx="70%" cy="55%" r="35%">
+      <stop offset="0%" stop-color="#EAB308" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#EAB308" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="120" y="130" width="560" height="280" fill="url(#h1)"/>
+  <rect x="120" y="130" width="560" height="280" fill="url(#h2)"/>
+  <line x1="400" y1="130" x2="400" y2="410" stroke="#FFFDF7" stroke-width="1" opacity="0.4"/>
+  <text x="140" y="160" font-family="ui-monospace,monospace" font-size="12" fill="#FFFDF7" opacity="0.6">EPV heatmap · digital twin court</text>
+</svg>
