@@ -75,7 +75,7 @@ export function FeaturedCaseStudy() {
               <p className="mb-2 font-mono text-[0.65rem] uppercase tracking-widest text-cobalt">
                 How it works
               </p>
-              <p className="text-sm leading-relaxed text-charcoal/85 sm:text-[0.95rem]">
+              <p className="text-sm leading-relaxed text-charcoal/85 sm:text-[0.95rem] whitespace-pre-line">
                 {project.spatialMechanics}
               </p>
               <div className="mt-4 flex flex-wrap gap-1.5">
