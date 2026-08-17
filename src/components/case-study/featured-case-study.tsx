@@ -31,7 +31,7 @@ export function FeaturedCaseStudy() {
             variants={reduce ? undefined : fadeUp}
             className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-cobalt"
           >
-            Deep dive · Case study
+            Deep dive · case study
           </motion.p>
           <motion.h2
             variants={reduce ? undefined : fadeUp}
@@ -73,7 +73,7 @@ export function FeaturedCaseStudy() {
           <div className="grid gap-8 border-t-2 border-charcoal bg-paper p-6 sm:grid-cols-[1.2fr_0.8fr] sm:p-8">
             <div>
               <p className="mb-2 font-mono text-[0.65rem] uppercase tracking-widest text-cobalt">
-                Spatial mechanics
+                How it works
               </p>
               <p className="text-sm leading-relaxed text-charcoal/85 sm:text-[0.95rem]">
                 {project.spatialMechanics}

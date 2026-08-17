@@ -4,7 +4,6 @@ import { HowItWorks } from "@/components/how/how-it-works";
 import { GameMatrix } from "@/components/game-card/game-matrix";
 import { FeaturedCaseStudy } from "@/components/case-study/featured-case-study";
 import { Principles } from "@/components/craft/principles";
-import { Sandbox } from "@/components/sandbox/sandbox";
 import { BioContact } from "@/components/bio/bio-contact";
 import { SiteNav } from "@/components/ui/site-nav";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
@@ -27,7 +26,6 @@ export default function Home() {
         <GameMatrix />
         <FeaturedCaseStudy />
         <Principles />
-        <Sandbox />
         <BioContact />
       </main>
     </>

@@ -273,15 +273,22 @@ const jobs = [
     captureName: "ar-baseball",
     outName: "ar-baseball",
     title: "AR BASEBALL",
-    subtitle: "sandbox · Rapier physics",
+    subtitle: "Rapier physics · browser AR",
     accentKey: "coral",
   },
   {
     captureName: "ar-slicer",
     outName: "ar-slicer",
     title: "AR SLICER",
-    subtitle: "sandbox · Three.js arcade",
+    subtitle: "camera arcade · Three.js",
     accentKey: "ochre",
+  },
+  {
+    captureName: "arcade-runner",
+    outName: "arcade-runner",
+    title: "ARCADE RUNNER",
+    subtitle: "browser arcade · one-tap endless run",
+    accentKey: "cobalt",
   },
 ];
 

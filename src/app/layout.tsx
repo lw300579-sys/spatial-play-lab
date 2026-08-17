@@ -21,40 +21,42 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
-const siteUrl = "https://spatial-play-lab.vercel.app";
+const siteUrl = "https://ari-swerdlow.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Spatial Play Lab — Browser AR & Computer Vision",
-    template: "%s · Spatial Play Lab",
+    default: "Ari Swerdlow · Browser AR & Computer Vision",
+    template: "%s · Ari Swerdlow",
   },
   description:
-    "Interactive browser-based mobile AR games, computer vision experiments, and physical computing web apps. Swing, punch, sign, and play—no app store required.",
+    "Ari Swerdlow builds browser AR games and on-device computer vision: tennis you swing with your arm, shadow boxing with an impact metric, ASL lessons checked by hand landmarks, and pickleball biomechanics from court video.",
   keywords: [
+    "Ari Swerdlow",
     "WebXR",
     "browser AR",
     "MediaPipe",
     "computer vision",
     "pose tracking",
     "ASL",
-    "interactive portfolio",
+    "portfolio",
   ],
-  authors: [{ name: "Spatial Play Lab" }],
+  authors: [{ name: "Ari Swerdlow" }],
   openGraph: {
-    title: "Spatial Play Lab",
+    title: "Ari Swerdlow",
     description:
-      "Browser AR tennis, shadow boxing, ASL training, and biomechanics coaching—running live in your phone camera.",
+      "Browser AR tennis, shadow boxing, ASL training, and biomechanics coaching. Live in your phone camera, no app store.",
     type: "website",
     url: siteUrl,
-    siteName: "Spatial Play Lab",
+    siteName: "Ari Swerdlow",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Spatial Play Lab",
+    title: "Ari Swerdlow",
     description:
-      "Browser AR that moves with you—games, boxing, ASL, biomechanics.",
+      "Browser AR and on-device computer vision: games, boxing, ASL, biomechanics.",
+    creator: "@2Swerdy",
   },
   robots: { index: true, follow: true },
   alternates: { canonical: siteUrl },

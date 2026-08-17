@@ -27,6 +27,7 @@ export function GameCard({ project, index }: GameCardProps) {
 
   const hasLive = Boolean(project.liveUrl);
   const isCaseStudy = project.placement === "case-study" || !hasLive;
+  const isLinkLaunch = project.launchMode === "link";
   const n = String(index + 1).padStart(2, "0");
 
   return (
@@ -97,6 +98,16 @@ export function GameCard({ project, index }: GameCardProps) {
               >
                 View Case Study
               </TactileButton>
+            ) : isLinkLaunch && project.liveUrl ? (
+              <TactileLink
+                href={project.liveUrl}
+                accent={project.accent}
+                className="flex-1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open game
+              </TactileLink>
             ) : ready && isMobile && project.liveUrl ? (
               <TactileLink
                 href={project.liveUrl}
@@ -123,7 +134,7 @@ export function GameCard({ project, index }: GameCardProps) {
               className="flex-1"
               aria-expanded={drawerOpen}
             >
-              {drawerOpen ? "Hide Breakdown" : "Spatial Breakdown"}
+              {drawerOpen ? "Hide breakdown" : "Open breakdown"}
             </TactileButton>
           </div>
 
@@ -140,7 +151,7 @@ export function GameCard({ project, index }: GameCardProps) {
                 <div className="space-y-4 border-t-2 border-charcoal/15 pt-4">
                   <div>
                     <p className="mb-2 font-mono text-[0.65rem] uppercase tracking-widest text-cobalt">
-                      Spatial mechanics
+                      How it works
                     </p>
                     <p className="text-sm leading-relaxed text-charcoal/85">
                       {project.spatialMechanics}
@@ -163,8 +174,9 @@ export function GameCard({ project, index }: GameCardProps) {
                     </ul>
                   </div>
                   <p className="font-mono text-[0.65rem] leading-relaxed text-muted">
-                    Target: 60fps on mobile · on-device inference · lighting-adaptive
-                    camera pipeline
+                    {project.launchMode === "camera"
+                      ? "Target: 60fps on mobile · on-device inference · lighting-adaptive camera pipeline"
+                      : "Target: readable timing · short sessions · no camera required"}
                   </p>
                 </div>
               </motion.div>
@@ -173,7 +185,7 @@ export function GameCard({ project, index }: GameCardProps) {
         </div>
       </StickerCard>
 
-      {project.liveUrl ? (
+      {project.liveUrl && project.launchMode === "camera" ? (
         <QrModal
           open={qrOpen}
           onClose={() => setQrOpen(false)}

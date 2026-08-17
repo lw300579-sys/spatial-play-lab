@@ -25,7 +25,7 @@ export function BioContact() {
               variants={reduce ? undefined : fadeUp}
               className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-cobalt"
             >
-              Human bio
+              About
             </motion.p>
             <motion.h2
               variants={reduce ? undefined : fadeUp}
@@ -37,15 +37,25 @@ export function BioContact() {
               variants={reduce ? undefined : fadeUp}
               className="mt-4 max-w-lg text-base leading-relaxed text-charcoal/85"
             >
-              I build interactive systems where human movement is the input
-              device—browser AR tennis, on-device boxing engines, ASL trainers,
-              and broadcast sports analytics. The craft lives at the intersection
-              of computer vision, game feel, and accessible web tech.
+              Hi, I&apos;m Ari Swerdlow. I build interactive systems where
+              movement is the input device: browser AR tennis, on-device boxing
+              engines, ASL trainers checked by hand landmarks, pickleball
+              coaching from court video, and broadcast sports analytics that
+              never asks an athlete to wear a sensor.
+            </motion.p>
+            <motion.p
+              variants={reduce ? undefined : fadeUp}
+              className="mt-3 max-w-lg text-base leading-relaxed text-charcoal/85"
+            >
+              The craft sits between computer vision, game feel, and accessible
+              web tech. I care about mid-range phones, honest frame budgets, and
+              sessions that start from a URL. If you want to talk shop, hire, or
+              play-test, reach out.
             </motion.p>
 
             <motion.div
               variants={reduce ? undefined : fadeUp}
-              className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+              className="mt-6"
             >
               <div className="inline-flex items-center gap-2 border-2 border-charcoal bg-paper-ink px-3 py-2">
                 <span className="relative flex h-2.5 w-2.5">
@@ -60,11 +70,6 @@ export function BioContact() {
                     {SITE.currentFocus}
                   </p>
                 </div>
-              </div>
-              <div className="inline-flex items-center border-2 border-charcoal bg-paper px-3 py-2">
-                <p className="font-mono text-[0.7rem] text-charcoal/80">
-                  {SITE.location}
-                </p>
               </div>
             </motion.div>
           </div>
@@ -108,7 +113,7 @@ export function BioContact() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {s.label}
+                {s.label === "X" ? "X / Twitter" : s.label}
               </TactileLink>
             ))}
           </motion.div>
@@ -119,7 +124,7 @@ export function BioContact() {
             {SITE.name}
           </p>
           <p className="font-mono text-[0.65rem] text-muted">
-            Next.js · Framer Motion · tactile paper · {new Date().getFullYear()}
+            {SITE.tagline} · {new Date().getFullYear()}
           </p>
           <a
             href="#top"

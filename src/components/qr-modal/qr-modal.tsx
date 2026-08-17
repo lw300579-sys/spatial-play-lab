@@ -115,7 +115,7 @@ export function QrModal({ open, onClose, url, title }: QrModalProps) {
               </p>
               <p className="mb-5 text-center text-sm leading-relaxed text-charcoal/80">
                 Point your phone camera at this code for an instant browser AR
-                launch—no app store.
+                launch. No app store required.
               </p>
 
               <div className="flex flex-col gap-2">

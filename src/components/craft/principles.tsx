@@ -6,23 +6,23 @@ import { fadeUp, reduced, spring, staggerContainer } from "@/lib/motion";
 const PRINCIPLES = [
   {
     title: "On-device first",
-    body: "Pose, hands, and velocity stay on the silicon in your pocket. Privacy isn’t a marketing line—it’s the architecture.",
+    body: "Pose, hands, and velocity run on the phone in your pocket. That choice is about latency and trust at the same time: fewer round-trips, and a clearer story when someone asks where the video goes. If a feature needs a server, it earns that trip for a specific job (telemetry, model updates), not as the default path for every frame.",
     tag: "Privacy · latency",
   },
   {
     title: "Frame budget is sacred",
-    body: "Every filter, particle, and assist has to earn its milliseconds. Target: playable 60fps on mid-range mobile chips.",
+    body: "Every filter, particle burst, and assist has to justify its milliseconds. The target is playable 60fps on mid-range mobile chips, not a demo that only looks good on a flagship in perfect light. When something has to go, the hit feel stays and the decoration leaves.",
     tag: "60fps · mobile SoC",
   },
   {
-    title: "Invisible assist > fake footwork",
-    body: "Map natural timing and intent—early pull, late drive—instead of demanding perfect physical positioning in a bedroom.",
+    title: "Invisible assist beats fake footwork",
+    body: "Bedroom play is not a regulation court. Mapping natural timing and intent (early pull, late drive, hesitation) keeps sessions fun without demanding perfect positioning. Assists should disappear into the feel of contact, not announce themselves as a tutorial overlay.",
     tag: "Game feel",
   },
   {
     title: "No install tax",
-    body: "If it needs an app store, it’s already lost half the session. Browser camera + WebGL is the distribution strategy.",
-    tag: "WebXR handoff",
+    body: "If someone has to visit an app store before the first rally, half the session is already gone. Browser camera plus WebGL is the distribution strategy: share a URL, scan a QR, grant the camera, move. That constraint shapes architecture as much as it shapes marketing copy.",
+    tag: "Web handoff",
   },
 ] as const;
 
@@ -40,7 +40,7 @@ export function Principles() {
           initial={reduce ? undefined : "hidden"}
           whileInView={reduce ? undefined : "visible"}
           viewport={{ once: true, margin: "-60px" }}
-          className="mb-8"
+          className="mb-8 max-w-2xl"
         >
           <motion.p
             variants={reduce ? undefined : fadeUp}
@@ -50,10 +50,19 @@ export function Principles() {
           </motion.p>
           <motion.h2
             variants={reduce ? undefined : fadeUp}
-            className="mt-2 max-w-xl font-display text-3xl font-semibold tracking-tight"
+            className="mt-2 font-display text-3xl font-semibold tracking-tight"
           >
             How these systems get built.
           </motion.h2>
+          <motion.p
+            variants={reduce ? undefined : fadeUp}
+            className="mt-3 text-base leading-relaxed text-charcoal/80"
+          >
+            These are the constraints that show up again across tennis, boxing,
+            ASL, coaching tools, and broadcast analytics. They are less a brand
+            manifesto and more a checklist that keeps prototypes honest when the
+            demo urge gets loud.
+          </motion.p>
         </motion.div>
 
         <div className="grid gap-px border-2 border-charcoal bg-charcoal sm:grid-cols-2">

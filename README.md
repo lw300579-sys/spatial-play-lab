@@ -1,13 +1,15 @@
-# Spatial Play Lab
+# Ari Swerdlow
 
-Production portfolio for browser-based mobile AR games, computer vision experiments, and physical computing web apps.
+Portfolio for browser AR games, on-device computer vision, and physical computing web apps.
+
+Live: [ari-swerdlow.vercel.app](https://ari-swerdlow.vercel.app)
 
 ## Stack
 
-- **Next.js** (App Router, TypeScript strict)
+- **Next.js** (App Router, TypeScript)
 - **Tailwind CSS v4** — tactile paper theme, hard-edged sticker shadows
-- **Framer Motion** — spring physics (`stiffness: 300`, `damping: 15`)
-- **qrcode.react** — desktop → mobile WebXR handoff
+- **Framer Motion** — spring physics
+- **qrcode.react** — desktop → mobile handoff
 
 ## Develop
 
@@ -24,13 +26,13 @@ Open [http://localhost:3000](http://localhost:3000).
 src/
   app/                 # App Router layout + page
   components/
-    hero/              # Human hero + device banner + sticker board
-    game-card/         # Primary matrix cards + case study gallery
-    qr-modal/          # Instant QR scan overlay
-    sandbox/           # Lab prototypes micro-grid
+    hero/              # Hero + device banner + sticker board
+    game-card/         # Live title cards
+    qr-modal/          # QR scan overlay
+    sandbox/           # Prototypes
     bio/               # Contact + current focus
     ui/                # Tactile button / sticker primitives
-  data/games.ts        # Strongly typed portfolio payload
+  data/games.ts        # Portfolio payload
   hooks/               # Device detection + clipboard
   lib/motion.ts        # Shared spring configs
 ```
@@ -39,5 +41,4 @@ src/
 
 - `npm run dev` — local development
 - `npm run build` — production build
-- `npm run start` — serve production build
-- `npm run lint` — ESLint
+- `npm run capture` / compose scripts — preview pipeline under `scripts/`

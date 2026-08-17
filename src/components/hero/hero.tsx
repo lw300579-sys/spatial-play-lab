@@ -24,21 +24,25 @@ export function Hero() {
           animate={reduce ? undefined : "visible"}
           className="flex flex-col gap-6"
         >
-          <motion.div
+          <motion.p
             variants={reduce ? undefined : fadeUp}
-            className="inline-flex w-fit items-center gap-2 border-2 border-charcoal bg-paper px-3 py-1.5 sticker-sm"
+            className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-cobalt"
           >
-            <span className="h-2 w-2 rounded-full bg-lawn" aria-hidden />
-            <span className="font-mono text-[0.65rem] uppercase tracking-[0.16em] text-charcoal">
-              {SITE.tagline}
-            </span>
-          </motion.div>
+            {SITE.tagline}
+          </motion.p>
 
           <motion.h1
             variants={reduce ? undefined : fadeUp}
-            className="font-display text-[clamp(2.5rem,6.5vw,4.5rem)] font-semibold leading-[1.02] tracking-tight text-balance text-charcoal"
+            className="font-display text-[clamp(2.75rem,7vw,5rem)] font-semibold leading-[1.02] tracking-tight text-balance text-charcoal"
           >
-            Spatial play you can{" "}
+            {SITE.name}
+          </motion.h1>
+
+          <motion.p
+            variants={reduce ? undefined : fadeUp}
+            className="max-w-xl font-display text-xl font-medium leading-snug text-charcoal/90 sm:text-2xl"
+          >
+            Browser AR you can{" "}
             <span className="relative inline-block">
               <span className="relative z-10 italic">feel</span>
               <motion.span
@@ -49,17 +53,18 @@ export function Hero() {
                 transition={reduce ? reduced : { ...spring, delay: 0.35 }}
                 style={{ originX: 0 }}
               />
-            </span>{" "}
-            in the browser.
-          </motion.h1>
+            </span>
+            . Swing, punch, sign, and coach from a phone camera.
+          </motion.p>
 
           <motion.p
             variants={reduce ? undefined : fadeUp}
             className="max-w-lg text-base leading-relaxed text-charcoal/80 sm:text-lg"
           >
-            Mobile AR games, computer vision experiments, and physical computing
-            apps—driven by real arms, hands, and bodies. No app store. Just a
-            camera and curiosity.
+            I ship live titles and research prototypes where your body is the
+            controller. Pose and hand models stay on-device. Distribution is a
+            link, not an App Store listing. The work spans tennis, shadow boxing,
+            ASL lessons, pickleball biomechanics, and broadcast sports analytics.
           </motion.p>
 
           <motion.div
@@ -69,8 +74,8 @@ export function Hero() {
             <TactileLink href="#games" accent="coral">
               Explore games
             </TactileLink>
-            <TactileLink href="#sandbox" variant="secondary">
-              Peek the sandbox
+            <TactileLink href="#citadel" variant="secondary">
+              Bio-Tactical OS
             </TactileLink>
           </motion.div>
 
@@ -89,7 +94,7 @@ export function Hero() {
           className="sticker sticker-coral relative bg-surface-raised p-2"
         >
           <div className="absolute -right-3 -top-3 z-20 rotate-6 border-2 border-charcoal bg-ochre px-2 py-1 font-mono text-[0.6rem] font-bold uppercase tracking-wide sticker-sm">
-            Interactive
+            Drag me
           </div>
           <StickerBoard />
         </motion.div>

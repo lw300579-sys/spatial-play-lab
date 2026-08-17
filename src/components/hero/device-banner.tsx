@@ -9,8 +9,8 @@ export function DeviceBanner() {
   const reduce = useReducedMotion();
 
   const label = isMobile
-    ? "Ready for direct browser camera play — tap any Launch button"
-    : "QR scanner mode — scan from desktop to launch on your phone";
+    ? "Mobile ready: tap Launch on any live title to open the camera session"
+    : "Desktop mode: scan the QR from any live title to play on your phone";
 
   const chip = isMobile ? "MOBILE" : "DESKTOP";
   const chipColor = isMobile ? "bg-lawn" : "bg-ochre";

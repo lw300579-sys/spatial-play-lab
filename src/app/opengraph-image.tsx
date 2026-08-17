@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Spatial Play Lab — Browser AR & Computer Vision";
+export const alt = "Ari Swerdlow · Browser AR & Computer Vision";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -45,9 +45,9 @@ export default function OpenGraphImage() {
               fontSize: 20,
             }}
           >
-            SP
+            AS
           </div>
-          Spatial Play Lab
+          Ari Swerdlow
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -57,13 +57,13 @@ export default function OpenGraphImage() {
               fontWeight: 700,
               lineHeight: 1.05,
               color: "#18181B",
-              maxWidth: 900,
+              maxWidth: 980,
             }}
           >
-            Spatial play you can feel in the browser.
+            Browser AR you play with your body.
           </div>
           <div style={{ fontSize: 28, color: "#52525B", maxWidth: 720 }}>
-            Browser AR tennis · shadow boxing · ASL · biomechanics
+            Tennis · shadow boxing · ASL · biomechanics · broadcast CV
           </div>
         </div>
 
@@ -75,7 +75,7 @@ export default function OpenGraphImage() {
             fontSize: 18,
           }}
         >
-          {["MediaPipe", "WebXR", "60fps", "No app store"].map((t) => (
+          {["MediaPipe", "On-device", "60fps", "No app store"].map((t) => (
             <div
               key={t}
               style={{

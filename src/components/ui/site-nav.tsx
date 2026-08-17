@@ -6,8 +6,7 @@ import { spring } from "@/lib/motion";
 
 const LINKS = [
   { href: "#games", label: "Games" },
-  { href: "#citadel", label: "Citadel" },
-  { href: "#sandbox", label: "Sandbox" },
+  { href: "#citadel", label: "Bio-Tactical OS" },
   { href: "#contact", label: "Contact" },
 ] as const;
 
@@ -25,13 +24,13 @@ export function SiteNav() {
         <a
           href="#top"
           className="group flex items-center gap-2.5 no-underline"
-          aria-label={`${SITE.name} — back to top`}
+          aria-label={`${SITE.name}, back to top`}
         >
           <span
             className="flex h-8 w-8 items-center justify-center border-2 border-charcoal bg-coral text-sm font-bold text-white sticker-sm transition-transform group-hover:-rotate-6"
             aria-hidden
           >
-            SP
+            {SITE.shortName}
           </span>
           <span className="font-display text-lg font-semibold tracking-tight text-charcoal">
             {SITE.name}

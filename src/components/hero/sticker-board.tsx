@@ -107,7 +107,7 @@ export function StickerBoard() {
   return (
     <div
       className="relative h-56 w-full overflow-hidden border-2 border-charcoal bg-paper-deep sm:h-72"
-      aria-label="Interactive sticker board — drag the tokens"
+      aria-label="Sticker board: drag the tokens"
     >
       <svg
         className="pointer-events-none absolute inset-0 h-full w-full opacity-25"

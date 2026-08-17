@@ -7,19 +7,19 @@ const STEPS = [
   {
     n: "01",
     title: "Scan or tap",
-    body: "Desktop shows a QR handoff. Mobile launches straight into the browser—no App Store, no install.",
+    body: "On desktop, each live title opens a QR handoff so your phone becomes the play surface. On mobile, Launch goes straight into the browser session. No App Store, no install tax, no waiting for a binary to download before the first swing.",
     accent: "bg-coral",
   },
   {
     n: "02",
     title: "Allow the camera",
-    body: "Pose and hand models run on-device. Video stays on the phone; only gameplay state crosses the network if needed.",
+    body: "Pose and hand models run locally on the phone. The camera feed is input for landmarks and velocity, not a livestream to a server by default. Gameplay state may sync when a mode needs it; the pixels that identify your room stay on-device.",
     accent: "bg-ochre",
   },
   {
     n: "03",
     title: "Move to play",
-    body: "Swings, punches, and signs become input. Filters and hitboxes turn noisy landmarks into game feel.",
+    body: "Swings, punches, and signs become the controller. Filters, hitboxes, and invisible assists turn noisy MediaPipe landmarks into readable game feel: early contact tends cross-court, late contact goes down the line, hesitation changes difficulty instead of pretending the model is perfect.",
     accent: "bg-lawn",
   },
 ] as const;
@@ -38,7 +38,7 @@ export function HowItWorks() {
           initial={reduce ? undefined : "hidden"}
           whileInView={reduce ? undefined : "visible"}
           viewport={{ once: true, margin: "-60px" }}
-          className="mb-8 max-w-xl"
+          className="mb-8 max-w-2xl"
         >
           <motion.p
             variants={reduce ? undefined : fadeUp}
@@ -50,8 +50,17 @@ export function HowItWorks() {
             variants={reduce ? undefined : fadeUp}
             className="mt-2 font-display text-3xl font-semibold tracking-tight"
           >
-            From link to living input.
+            From a link to living input.
           </motion.h2>
+          <motion.p
+            variants={reduce ? undefined : fadeUp}
+            className="mt-3 text-base leading-relaxed text-charcoal/80"
+          >
+            The portfolio is built around the same loop as the products: get
+            someone into a camera session fast, keep inference on their silicon,
+            and spend the engineering budget on how movement feels once the
+            landmarks arrive.
+          </motion.p>
         </motion.div>
 
         <div className="grid gap-4 md:grid-cols-3">
