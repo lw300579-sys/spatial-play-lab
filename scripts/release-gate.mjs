@@ -63,9 +63,11 @@ try {
         };
       }, project.expected);
 
+      // Camera-first products must still render on machines without camera hardware
+      // (including hosted CI); permission/device absence is an expected fallback path.
       const blockingErrors = errors.filter(
         (message) =>
-          !/favicon|Failed to load resource.*404|ResizeObserver|Blocked call to navigator\.vibrate|Camera access failed:\s*NotAllowedError|WebSocket connection.*\/_next\/hmr.*failed/i.test(message),
+          !/favicon|Failed to load resource.*404|ResizeObserver|Blocked call to navigator\.vibrate|Camera access failed:\s*(?:NotAllowedError|NotFoundError)|WebSocket connection.*\/_next\/hmr.*failed/i.test(message),
       );
       const passed = Boolean(
         response?.ok() &&
