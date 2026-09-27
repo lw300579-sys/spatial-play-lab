@@ -18,6 +18,7 @@ export function AmbientCanvas() {
     let raf = 0;
     let w = 0;
     let h = 0;
+    let visible = true;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const dots = Array.from({ length: 28 }, () => ({
@@ -44,6 +45,10 @@ export function AmbientCanvas() {
     };
 
     const draw = () => {
+      if (!visible || document.hidden) {
+        raf = 0;
+        return;
+      }
       ctx.clearRect(0, 0, w, h);
       for (const d of dots) {
         d.x += d.vx;
@@ -62,9 +67,29 @@ export function AmbientCanvas() {
 
     resize();
     draw();
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible && !document.hidden && !raf) draw();
+      if (!visible && raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+    });
+    observer.observe(canvas);
+    const onVisibility = () => {
+      if (document.hidden && raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      } else if (!document.hidden && visible && !raf) {
+        draw();
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("resize", resize);
     return () => {
       cancelAnimationFrame(raf);
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("resize", resize);
     };
   }, [reduce]);

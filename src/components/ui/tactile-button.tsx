@@ -5,6 +5,7 @@ import {
   useReducedMotion,
   type HTMLMotionProps,
 } from "framer-motion";
+import { forwardRef } from "react";
 import { reduced, spring } from "@/lib/motion";
 
 type ButtonVariant = "primary" | "secondary" | "ghost" | "accent";
@@ -24,7 +25,7 @@ interface TactileButtonProps extends HTMLMotionProps<"button"> {
   fullWidth?: boolean;
 }
 
-export function TactileButton({
+export const TactileButton = forwardRef<HTMLButtonElement, TactileButtonProps>(function TactileButton({
   children,
   className = "",
   variant = "primary",
@@ -32,7 +33,7 @@ export function TactileButton({
   fullWidth,
   disabled,
   ...props
-}: TactileButtonProps) {
+}: TactileButtonProps, ref) {
   const reduce = useReducedMotion();
 
   const base =
@@ -47,6 +48,7 @@ export function TactileButton({
 
   return (
     <motion.button
+      ref={ref}
       type="button"
       disabled={disabled}
       className={`${base} ${variants[variant]} ${fullWidth ? "w-full" : ""} ${className}`}
@@ -62,7 +64,7 @@ export function TactileButton({
       {children}
     </motion.button>
   );
-}
+});
 
 interface TactileLinkProps extends HTMLMotionProps<"a"> {
   variant?: ButtonVariant;

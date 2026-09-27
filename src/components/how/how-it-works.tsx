@@ -7,19 +7,19 @@ const STEPS = [
   {
     n: "01",
     title: "Scan or tap",
-    body: "On desktop, each live title opens a QR handoff so your phone becomes the play surface. On mobile, Launch goes straight into the browser session. No App Store, no install tax, no waiting for a binary to download before the first swing.",
+    body: "On desktop, scan a QR code or open the game directly. On mobile, one tap starts the browser experience. There is nothing to install before the first swing.",
     accent: "bg-coral",
   },
   {
     n: "02",
     title: "Allow the camera",
-    body: "Pose and hand models run locally on the phone. The camera feed is input for landmarks and velocity, not a livestream to a server by default. Gameplay state may sync when a mode needs it; the pixels that identify your room stay on-device.",
+    body: "Your phone reads movement on the device. Camera frames stay local by default, while a game can save ordinary progress such as scores and settings.",
     accent: "bg-ochre",
   },
   {
     n: "03",
     title: "Move to play",
-    body: "Swings, punches, and signs become the controller. Filters, hitboxes, and invisible assists turn noisy MediaPipe landmarks into readable game feel: early contact tends cross-court, late contact goes down the line, hesitation changes difficulty instead of pretending the model is perfect.",
+    body: "Swings, punches, and signs become the controller. Quiet assists smooth rough camera input so actions feel clear, responsive, and forgiving without playing the game for you.",
     accent: "bg-lawn",
   },
 ] as const;
@@ -56,10 +56,8 @@ export function HowItWorks() {
             variants={reduce ? undefined : fadeUp}
             className="mt-3 text-base leading-relaxed text-charcoal/80"
           >
-            The portfolio is built around the same loop as the products: get
-            someone into a camera session fast, keep inference on their silicon,
-            and spend the engineering budget on how movement feels once the
-            landmarks arrive.
+            Every project follows the same idea: start quickly, keep camera work
+            private, and make movement feel good from the first attempt.
           </motion.p>
         </motion.div>
 

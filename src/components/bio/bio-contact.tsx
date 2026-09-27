@@ -49,8 +49,9 @@ export function BioContact() {
             >
               The craft sits between computer vision, game feel, and accessible
               web tech. I care about mid-range phones, honest frame budgets, and
-              sessions that start from a URL. If you want to talk shop, hire, or
-              play-test, reach out.
+              sessions that start from a URL. I&apos;m available for product
+              engineering and applied computer vision work—especially when the
+              input is physical, noisy, and difficult to make trustworthy.
             </motion.p>
 
             <motion.div

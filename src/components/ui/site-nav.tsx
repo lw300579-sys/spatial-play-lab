@@ -5,8 +5,8 @@ import { SITE } from "@/data/games";
 import { spring } from "@/lib/motion";
 
 const LINKS = [
-  { href: "#games", label: "Games" },
-  { href: "#citadel", label: "Bio-Tactical OS" },
+  { href: "#flagships", label: "Selected" },
+  { href: "#games", label: "More work" },
   { href: "#contact", label: "Contact" },
 ] as const;
 
@@ -20,7 +20,7 @@ export function SiteNav() {
       animate={{ y: 0, opacity: 1 }}
       transition={spring}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 py-3 sm:gap-4 sm:px-6">
         <a
           href="#top"
           className="group flex items-center gap-2.5 no-underline"
@@ -32,7 +32,7 @@ export function SiteNav() {
           >
             {SITE.shortName}
           </span>
-          <span className="font-display text-lg font-semibold tracking-tight text-charcoal">
+          <span className="hidden font-display text-lg font-semibold tracking-tight text-charcoal min-[430px]:inline">
             {SITE.name}
           </span>
         </a>
@@ -42,7 +42,7 @@ export function SiteNav() {
             <a
               key={link.href}
               href={link.href}
-              className="px-2.5 py-1.5 font-mono text-[0.7rem] uppercase tracking-wider text-charcoal/70 no-underline transition-colors hover:bg-paper-ink hover:text-charcoal sm:px-3 sm:text-xs"
+              className="px-2 py-1.5 font-mono text-[0.62rem] uppercase tracking-wide text-charcoal/70 no-underline transition-colors hover:bg-paper-ink hover:text-charcoal sm:px-3 sm:text-xs sm:tracking-wider"
             >
               {link.label}
             </a>

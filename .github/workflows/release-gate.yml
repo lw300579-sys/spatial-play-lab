@@ -1,0 +1,51 @@
+name: Portfolio release gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 15 * * 1"
+
+concurrency:
+  group: portfolio-release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  production-journeys:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Build portfolio
+        run: npm run build
+
+      - name: Start portfolio
+        run: npm run start &
+
+      - name: Wait for local portfolio
+        run: |
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:3000 > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          exit 1
+
+      - name: Check portfolio routes and production products
+        run: npm run test:release

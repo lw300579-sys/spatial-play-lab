@@ -2,10 +2,11 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { QRCodeSVG } from "qrcode.react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useCopyToClipboard } from "@/hooks/use-copy";
 import { reduced, spring, springSnappy } from "@/lib/motion";
 import { TactileButton } from "@/components/ui/tactile-button";
+import { TactileLink } from "@/components/ui/tactile-button";
 
 interface QrModalProps {
   open: boolean;
@@ -16,18 +17,40 @@ interface QrModalProps {
 
 export function QrModal({ open, onClose, url, title }: QrModalProps) {
   const reduce = useReducedMotion();
-  const { copied, copy } = useCopyToClipboard();
+  const { copied, copyError, copy } = useCopyToClipboard();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open) return;
+    const previousFocus = document.activeElement as HTMLElement | null;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
+      if (e.key !== "Tab" || !dialogRef.current) return;
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
+    const focusTimer = window.setTimeout(() => closeRef.current?.focus(), 0);
     return () => {
+      window.clearTimeout(focusTimer);
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
+      previousFocus?.focus();
     };
   }, [open, onClose]);
 
@@ -61,6 +84,7 @@ export function QrModal({ open, onClose, url, title }: QrModalProps) {
           />
 
           <motion.div
+            ref={dialogRef}
             role="dialog"
             aria-modal="true"
             aria-labelledby="qr-modal-title"
@@ -72,7 +96,7 @@ export function QrModal({ open, onClose, url, title }: QrModalProps) {
           >
             <div className="border-b-2 border-charcoal bg-coral px-6 py-4 text-white">
               <p className="font-mono text-[0.65rem] uppercase tracking-widest text-white/80">
-                Scan to launch · WebXR handoff
+                Scan to launch · Opens in your browser
               </p>
               <h2
                 id="qr-modal-title"
@@ -111,7 +135,7 @@ export function QrModal({ open, onClose, url, title }: QrModalProps) {
               </div>
 
               <p className="mb-2 text-center font-mono text-[0.7rem] leading-relaxed text-muted">
-                Requires Camera Access · Best in Safari / Chrome
+                Camera access required · Best in Safari or Chrome
               </p>
               <p className="mb-5 text-center text-sm leading-relaxed text-charcoal/80">
                 Point your phone camera at this code for an instant browser AR
@@ -119,6 +143,15 @@ export function QrModal({ open, onClose, url, title }: QrModalProps) {
               </p>
 
               <div className="flex flex-col gap-2">
+                <TactileLink
+                  href={url}
+                  accent="coral"
+                  fullWidth
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Open on this device
+                </TactileLink>
                 <TactileButton accent="cobalt" fullWidth onClick={() => copy(url)}>
                   <AnimatePresence mode="wait" initial={false}>
                     {copied ? (
@@ -139,11 +172,16 @@ export function QrModal({ open, onClose, url, title }: QrModalProps) {
                     )}
                   </AnimatePresence>
                 </TactileButton>
+                {copyError ? (
+                  <p role="status" className="text-center text-xs font-semibold text-coral">
+                    Copy was blocked. Open the game, then copy the address from your browser.
+                  </p>
+                ) : null}
                 <div className="flex gap-2">
                   <TactileButton variant="secondary" fullWidth onClick={share}>
                     Share
                   </TactileButton>
-                  <TactileButton variant="secondary" fullWidth onClick={onClose}>
+                  <TactileButton ref={closeRef} variant="secondary" fullWidth onClick={onClose}>
                     Close
                   </TactileButton>
                 </div>

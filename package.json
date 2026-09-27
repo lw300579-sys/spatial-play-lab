@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
+    "test:release": "node scripts/release-gate.mjs",
     "previews": "node scripts/compose-previews.mjs",
     "previews:capture": "node scripts/capture-live.mjs",
     "previews:all": "node scripts/capture-live.mjs && node scripts/compose-previews.mjs",

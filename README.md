@@ -1,6 +1,6 @@
 # Ari Swerdlow
 
-Portfolio for browser AR games, on-device computer vision, and physical computing web apps.
+Portfolio for camera-first products spanning browser fitness, AR games, applied computer vision, and sports intelligence.
 
 Live: [ari-swerdlow.vercel.app](https://ari-swerdlow.vercel.app)
 
@@ -25,6 +25,7 @@ Open [http://localhost:3000](http://localhost:3000).
 ```
 src/
   app/                 # App Router layout + page
+    work/[slug]/       # Flagship case-study routes
   components/
     hero/              # Hero + device banner + sticker board
     game-card/         # Live title cards
@@ -32,7 +33,8 @@ src/
     sandbox/           # Prototypes
     bio/               # Contact + current focus
     ui/                # Tactile button / sticker primitives
-  data/games.ts        # Portfolio payload
+  data/games.ts        # Portfolio project payload
+  data/case-studies.ts # Flagship evidence, ownership, and limitations
   hooks/               # Device detection + clipboard
   lib/motion.ts        # Shared spring configs
 ```
@@ -41,4 +43,7 @@ src/
 
 - `npm run dev` — local development
 - `npm run build` — production build
-- `npm run capture` / compose scripts — preview pipeline under `scripts/`
+- `npm run test:release` — browser gate for the portfolio routes and all linked products
+- `npm run previews:all` — capture and compose preview assets
+
+The release gate also runs in GitHub Actions on pull requests, `main`, manual dispatch, and a weekly schedule.

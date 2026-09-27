@@ -40,19 +40,36 @@ export interface PortfolioProject {
     aspectRatio: `${number}/${number}`;
     caption?: string;
   }[];
+  caseStudySections?: {
+    step: string;
+    title: string;
+    body: string;
+  }[];
+  caseStudyQuestions?: string[];
+  techDetails?: {
+    label: string;
+    explanation: string;
+  }[];
   accent: AccentTone;
   glyph?: string;
   status?: "live" | "prototype" | "archived";
   year?: string;
 }
 
+export interface ProjectProof {
+  built: string;
+  changed: string;
+  impact: string;
+  validation: string[];
+}
+
 export const SITE = {
   name: "Ari Swerdlow",
   shortName: "AS",
-  tagline: "Browser AR & on-device computer vision",
+  tagline: "Camera-first products powered by movement",
   email: "aswerd2@gmail.com",
   currentFocus:
-    "Shipping couch multiplayer and tighter on-device pose filters for Jiku Tennis, while keeping the mobile frame budget honest.",
+    "Available for product engineering and applied computer vision work where software has to understand the physical world.",
   socials: [
     { label: "X", href: "https://x.com/2Swerdy" },
     {
@@ -82,6 +99,73 @@ export const projectGroups: ProjectGroup[] = [
       "Desktop-friendly games that do not need a camera. Still built for feel and timing.",
   },
 ];
+
+/** Concrete product proof shown before implementation detail. */
+export const projectProofById: Record<string, ProjectProof> = {
+  "jiku-tennis": {
+    built:
+      "Body-tracked browser tennis with a five-rival ladder, pass-and-play, shot placement, and a full scoring loop.",
+    changed:
+      "Rival contact now uses swept-path detection, while placement, pressure, and reachable distance decide whether a return is earned.",
+    impact:
+      "Comfortable balls come back consistently; wide or pressured shots create misses the player can actually read.",
+    validation: ["33 gameplay tests", "5-rival progression", "Adaptive quality ladder"],
+  },
+  "jiku-fitness": {
+    built:
+      "A camera fitness system spanning timed shadow-boxing rounds, push-ups, pull-ups, form feedback, and persistent progression.",
+    changed:
+      "Round completion, rest, results, timed rep phases, full-body confidence gates, and tracking-loss recovery were rebuilt as explicit states.",
+    impact:
+      "A lost landmark or a finished round no longer leaves the athlete guessing whether the session is still running.",
+    validation: ["8 boxing tests", "Timed rep phases", "Tracking-loss recovery"],
+  },
+  "form-pickleball": {
+    built:
+      "Side-view biomechanics coaching and endline court analysis with shot events, debriefs, player DNA, and drill recommendations.",
+    changed:
+      "Capture modes, shot types, metrics, debrief coverage, and the new wall-target workflow now share complete typed mappings.",
+    impact:
+      "Every supported workflow reaches a useful explanation instead of dropping data between capture and coaching.",
+    validation: ["695 tests passed", "Typecheck clean", "Mode-aware analysis"],
+  },
+  "ar-baseball": {
+    built:
+      "A camera-only three-inning baseball game with pitching, active-swing contact, runners, fielding outcomes, and a rival score.",
+    changed:
+      "Stationary bats can no longer hit. Fresh pose data, coherent swing paths, sharper innings, and deterministic outcome rules now govern play.",
+    impact:
+      "Contact feels forgiving without feeling automatic, and every at-bat contributes to a legible game rather than a disconnected physics demo.",
+    validation: ["250k seeded simulations", "3-inning game loop", "0 production vulnerabilities"],
+  },
+  "ar-slicer": {
+    built:
+      "A hand-tracked slicing game with combos, bombs, particle feedback, daily challenges, and on-device vision.",
+    changed:
+      "The camera is isolated from WebGL, startup and stream interruptions recover cleanly, and quality now steps down under sustained load.",
+    impact:
+      "A renderer or model problem can no longer silently replace the player with a black screen.",
+    validation: ["Independent camera layer", "Stream recovery", "Thermal-aware quality"],
+  },
+  "asl-hero": {
+    built:
+      "A paced ASL lesson loop that evaluates handshape and motion with geometric rules plus a learned-model fallback.",
+    changed:
+      "MediaPipe and ONNX assets are self-hosted, and the lesson, server-inference, and final decision paths are exercised together.",
+    impact:
+      "Core lessons no longer depend on a third-party runtime CDN, making repeat sessions faster and more dependable.",
+    validation: ["Self-hosted vision runtime", "400-class fallback", "Decision-path tests"],
+  },
+  "arcade-runner": {
+    built:
+      "A one-input arcade runner with procedural courses, unlockable skins, replay data, and shareable ghost challenges.",
+    changed:
+      "Course generation is seeded and pure, render-time randomness is gone, and death, restart, and frame-loop state are guarded.",
+    impact:
+      "The same seed now means the same course, so scores and ghost races can be compared fairly.",
+    validation: ["Seeded generation", "Shareable ghost runs", "Lint + PWA build"],
+  },
+};
 
 /** Live playable titles, grouped for scanning */
 export const matrixGames: PortfolioProject[] = [
@@ -114,7 +198,7 @@ export const matrixGames: PortfolioProject[] = [
     liveUrl: "https://artennisgame.vercel.app/",
     preview: {
       src: "/previews/jiku-tennis.png",
-      alt: "Jiku Tennis — player swinging into a browser AR tennis court",
+      alt: "Jiku Tennis, with a player swinging into a browser tennis court",
       aspectRatio: "16/10",
       type: "image",
     },
@@ -123,13 +207,13 @@ export const matrixGames: PortfolioProject[] = [
   },
   {
     id: "jiku-fitness",
-    title: "Jiku: Cyber-Athletic Engine",
+    title: "Jiku Fitness",
     glyph: "🥊",
     year: "2025",
     group: "camera-play",
     launchMode: "camera",
     narrative:
-      "Shadow boxing that turns your camera into a 3D target range. Every punch feeds an Impact Metric built from wrist acceleration so power feels earned, not guessed.",
+      "Shadow boxing that turns your camera into a 3D target range. Targets arrive in quick combinations, while speed, accuracy, and clean form build your score.",
     spatialMechanics:
       "Pose and velocity tracking drive procedural, audio-reactive targets in the room with you. Hesitation and acceleration feed a flow-state difficulty layer that should feel responsive without flipping into unfair spikes. Ghost multiplayer lets you race a past personal best in the same space. Particle VFX are budgeted hard so mid-range phones still keep a readable hit feel.",
     challenges: [
@@ -146,10 +230,10 @@ export const matrixGames: PortfolioProject[] = [
       "Dynamic Hitboxes",
     ],
     placement: "matrix",
-    liveUrl: "https://posture-app-nms-projects-e9ba3578.vercel.app/#academy",
+    liveUrl: "https://posture-app-nms-projects-e9ba3578.vercel.app/#dojo",
     preview: {
       src: "/previews/jiku-fitness.png",
-      alt: "Jiku Fitness — shadow boxing targets in a live camera feed",
+      alt: "Jiku Fitness training dashboard shown in a phone frame",
       aspectRatio: "16/10",
       type: "image",
     },
@@ -158,13 +242,13 @@ export const matrixGames: PortfolioProject[] = [
   },
   {
     id: "form-pickleball",
-    title: "Form — Pickleball Coach",
+    title: "Form: Pickleball Coach",
     glyph: "🥒",
     year: "2025",
     group: "camera-play",
     launchMode: "camera",
     narrative:
-      "Biomechanics coaching for pickleball that reads elbow angles, hip-shoulder separation, and swing events from court video. Built for side-angle form work and endline court placement, not a generic pose demo.",
+      "A pickleball coach that reads your swing from court video and turns it into clear, useful feedback. Use a side view to work on form or an endline view to study placement.",
     spatialMechanics:
       "Two capture modes share the same pipeline: Decision mode for side-angle pose coaching, and Court Cam from the endline. Background subtraction, object detection, and audio fusion pin swing events to wrist velocity peaks, then place trajectories on a court model for heatmaps that map to real space instead of abstract joint charts.",
     challenges: [
@@ -184,7 +268,7 @@ export const matrixGames: PortfolioProject[] = [
     liveUrl: "https://pickleball-coach-three.vercel.app/",
     preview: {
       src: "/previews/form-pickleball.png",
-      alt: "Form — pickleball biomechanics overlay on court footage",
+      alt: "Form pickleball coaching over court footage",
       aspectRatio: "16/10",
       type: "image",
     },
@@ -199,16 +283,16 @@ export const matrixGames: PortfolioProject[] = [
     group: "camera-play",
     launchMode: "camera",
     narrative:
-      "Swing a virtual bat in the browser and feel contact through Rapier physics. Built to test spatial device motion, collision timing, and hit feedback before those ideas graduate into a fuller title.",
+      "A camera-controlled three-inning baseball game built around real swings. Read the pitcher, drive the ball into gaps, chase hit streaks, and hold off a rival club as every inning gets sharper.",
     spatialMechanics:
-      "Device motion and spatial anchors feed a React-Three-Fiber scene where bat and ball live under Rapier. The goal is readable contact: when you commit to a swing, the ball should leave with momentum that matches what your hands just did, without a heavy install path.",
+      "Step into view and swing your hands like a bat. The game reads the motion, keeps contact forgiving, and rewards timing and placement with fielding plays, extra-base hits, and home runs.",
     challenges: [
-      "Mapping noisy device motion into a stable bat pose",
-      "Rapier collisions that feel snappy instead of spongy",
-      "Keeping physics + WebGL inside a phone-friendly budget",
-      "Spatial anchors that survive small room drift",
+      "Reading an intentional swing without reacting to camera jitter",
+      "Keeping contact generous while rewarding better timing",
+      "Making fielding outcomes feel earned and easy to read",
+      "Running pose tracking, physics, and the stadium smoothly on a phone",
     ],
-    requirements: "Camera or device motion · Chrome / Safari",
+    requirements: "Camera · Upper body in view · Chrome / Safari",
     techSpecs: [
       "React-Three-Fiber",
       "Rapier Physics",
@@ -218,7 +302,7 @@ export const matrixGames: PortfolioProject[] = [
     liveUrl: "https://ar-baseball.vercel.app/",
     preview: {
       src: "/previews/ar-baseball.png",
-      alt: "AR Baseball — virtual bat and ball in a browser scene",
+      alt: "AR Baseball with a virtual bat and ball in a browser stadium",
       aspectRatio: "16/10",
       type: "image",
     },
@@ -233,7 +317,7 @@ export const matrixGames: PortfolioProject[] = [
     group: "camera-play",
     launchMode: "camera",
     narrative:
-      "A fast 3D arcade of dodging and slicing in your camera space. Dynamic controllers, ghost runs, floating feedback, and particle breakups built to stress-test hit feel under motion.",
+      "A fast camera game where your hands become blades. Slice fruit, dodge bombs, build combos, and chase your best run as the pace climbs.",
     spatialMechanics:
       "Three.js and React-Three-Fiber drive procedural targets and particle destruction while the player moves through the scene. Ghost replays and floating score feedback keep the loop readable when the camera and hands are both busy.",
     challenges: [
@@ -253,7 +337,7 @@ export const matrixGames: PortfolioProject[] = [
     liveUrl: "https://ar-fruit-slicer-orpin.vercel.app/",
     preview: {
       src: "/previews/ar-slicer.png",
-      alt: "AR Slicer — slice mode select screen in a phone frame",
+      alt: "AR Slicer mode select screen in a phone frame",
       aspectRatio: "16/10",
       type: "image",
     },
@@ -288,7 +372,7 @@ export const matrixGames: PortfolioProject[] = [
     liveUrl: "https://asl-web-fawn.vercel.app/lesson?id=basics-1",
     preview: {
       src: "/previews/asl-hero.png",
-      alt: "ASL Hero — hand landmark overlay teaching sign language",
+      alt: "ASL Hero hand tracking during a sign language lesson",
       aspectRatio: "16/10",
       type: "image",
     },
@@ -297,7 +381,7 @@ export const matrixGames: PortfolioProject[] = [
   },
   {
     id: "arcade-runner",
-    title: "Arcade Runner",
+    title: "Orbitap",
     glyph: "🏃",
     year: "2025",
     group: "browser-arcade",
@@ -318,7 +402,7 @@ export const matrixGames: PortfolioProject[] = [
     liveUrl: "https://arcadegame-kappa.vercel.app/",
     preview: {
       src: "/previews/arcade-runner.png",
-      alt: "Arcade Runner — endless obstacle course title screen",
+      alt: "Orbitap neon obstacle course title screen",
       aspectRatio: "16/10",
       type: "image",
     },
@@ -337,15 +421,56 @@ export const caseStudies: PortfolioProject[] = [
     group: "camera-play",
     launchMode: "link",
     narrative:
-      "Mission Control for broadcast sports: turn ordinary single-camera match footage into calibrated 3D skeletal telemetry, real-time counterfactual ghost positioning, and generative next-shot physics without wearable sensors or on-court tracking hardware. Built for institutional analysts, coaching staffs, and broadcast producers who demand physical SI units and defensible possession value.",
+      "I built a sports analysis system that turns ordinary match footage into a measured, searchable 3D record of what happened on the court. It is designed to give coaches useful spatial and tactical answers without asking an athlete to wear a sensor or a team to install a special camera rig.",
     spatialMechanics:
-      "Standard broadcast cameras constantly pan, zoom, and switch angles. Bio-Tactical Edge locks onto court lines in 3D, converting flat 2D television feeds into real-world meters (±10cm accuracy) without requiring athletes to wear sensors or venues to install tracking hardware.\n\nFrom this calibrated foundation, the system operates across four core intelligence engines:\n\n1. 3D Digital Twin & Ghost Defender: Renders full-body athlete skeletal rigs in an interactive 360° orbit at 60 FPS. When a ball is struck, the engine calculates the mathematically ideal recovery position (angle-of-bisection) and renders a holographic ghost avatar—measuring exact positional deficit (meters), reaction delay (ms), and exposed court angle.\n\n2. Next-Shot AI Predictor: A physics-conditioned generative diffusion model that predicts counterfactual shot trajectories and landing distributions, calculating win probability swings (ΔERWP) for alternative tactical choices (e.g. crosscourt angle vs. down-the-line drive).\n\n3. Biometric Load & Fatigue Profiling: Analyzes movement efficiency, acceleration spikes, and metabolic power across 5-set matches to pinpoint mechanical degradation and injury risk before unforced errors happen.\n\n4. Live Voice Coach & Semantic Search: Streams real-time tactical alerts via synthetic voice and allows analysts to query match telemetry in plain English (e.g. 'find all defensive recoveries over 2.5 meters').",
+      "Broadcast video is easy to watch and surprisingly hard to measure. The camera moves, the zoom changes, players overlap, and a few pixels near the far baseline represent a very different real distance than the same pixels near the camera. I wanted to turn that moving picture into a stable model of the point: where every athlete was, how far they moved, which space was open, and what options were available next.\n\nThe system rebuilds the court beneath the video, projects tracked movement into real court coordinates, and keeps the video, data, and 3D replay synchronized on one timeline. Instead of only reporting that a player hit a forehand, it can show the movement that created the forehand, the recovery that followed it, and the next decision that recovery made possible—or took away.",
+    caseStudySections: [
+      {
+        step: "01",
+        title: "Start with footage teams already have",
+        body:
+          "The input can be a normal HD or 4K broadcast feed. The pipeline finds the court, players, ball, and body landmarks frame by frame. There is no wearable setup and no requirement to film the match again from a fixed research camera.",
+      },
+      {
+        step: "02",
+        title: "Hold the court still while the camera moves",
+        body:
+          "Court lines become the measuring frame. When the broadcast camera pans, tilts, or zooms, the system continually re-locks the image to known court geometry. That converts screen pixels into real positions and distances instead of treating the television frame as a flat map.",
+      },
+      {
+        step: "03",
+        title: "Turn movement into usable measurements",
+        body:
+          "Once the geometry is stable, each player path can be measured in court space. The timeline surfaces distance covered, acceleration, recovery time, spacing, workload, and repeated movement patterns. A coach can move from a broad match view down to the exact frames behind one difficult recovery.",
+      },
+      {
+        step: "04",
+        title: "Replay the decision, not just the shot",
+        body:
+          "A synchronized Three.js court recreates the point in 3D. It shows the position a player actually chose, a stronger recovery position based on the available angles, and a range of likely next shots. The prediction is presented as a set of possibilities—not a fake claim that sport has one certain answer.",
+      },
+      {
+        step: "05",
+        title: "Find the pattern and share the evidence",
+        body:
+          "An analyst can search in ordinary language for moments such as long defensive recoveries, late contact after extended rallies, or repeated attacks into one zone. The result links back to the relevant clips and can be turned into a scouting view or a one-click PDF dossier for a coach or athlete.",
+      },
+    ],
+    caseStudyQuestions: [
+      "How far did each player really travel during the point?",
+      "Did the player recover to the best space, or leave the next court open?",
+      "Which shot options were available from that body position?",
+      "Where does movement quality start to drop during long rallies?",
+      "Which patterns repeat under pressure, not just across the whole match?",
+      "Can I jump directly to every clip that supports the conclusion?",
+    ],
     challenges: [
-      "Locking 3D court geometry across fast broadcast cuts, zooms, and camera motion",
-      "Rendering 60 FPS zero-allocation 3D skeletal kinematics with smooth matrix transforms",
-      "Vectorizing coordinate projection across 30,000+ telemetry frames in sub-milliseconds",
-      "Predicting next-shot trajectory distributions conditioned on striker biomechanics",
-      "Automating plain-English tactical search and 1-click PDF scouting dossiers",
+      "Keeping one trustworthy court coordinate system through broadcast pans, zooms, cuts, and partial line occlusion.",
+      "Combining noisy player, ball, and body detections without letting one bad frame create impossible speed or distance.",
+      "Projecting more than 30,000 telemetry frames quickly enough for scrubbing and comparison to feel immediate.",
+      "Rendering smooth 60 FPS skeletal and court replays without creating garbage or stalling the browser.",
+      "Predicting several realistic next-shot paths while communicating uncertainty instead of presenting one guess as fact.",
+      "Turning dense spatial data into plain-English search results and scouting reports a coach can use immediately.",
     ],
     requirements: "Broadcast HD/4K Feed · GPU Accelerated Inference · Real-Time WebSockets",
     techSpecs: [
@@ -356,18 +481,50 @@ export const caseStudies: PortfolioProject[] = [
       "FastAPI + TimescaleDB",
       "WebSockets / Live Telemetry",
     ],
+    techDetails: [
+      {
+        label: "Monocular homography + CRLB",
+        explanation:
+          "Maps a single moving camera view onto known court dimensions, while tracking how trustworthy that calibration is.",
+      },
+      {
+        label: "Three.js 3D digital twin",
+        explanation:
+          "Replays the point on a clean virtual court so spacing, recovery paths, and player relationships are easier to see.",
+      },
+      {
+        label: "Next-shot diffusion model",
+        explanation:
+          "Produces a distribution of plausible next shots from court position and striker movement instead of forcing one brittle prediction.",
+      },
+      {
+        label: "Angle-of-bisection kinematics",
+        explanation:
+          "Estimates the recovery position that best balances the opponent's available shot angles, then compares it with the path the player took.",
+      },
+      {
+        label: "FastAPI + TimescaleDB",
+        explanation:
+          "Runs the analysis services and stores time-indexed tracking data so long matches remain fast to query and scrub.",
+      },
+      {
+        label: "WebSockets + live telemetry",
+        explanation:
+          "Streams new measurements and replay state into the workspace without forcing the analyst to refresh or wait for a full export.",
+      },
+    ],
     placement: "case-study",
     liveUrl: null,
     preview: {
       src: "/previews/citadel.jpg",
-      alt: "Bio-Tactical Edge — spatial analytics workstation and 3D digital twin",
+      alt: "Bio-Tactical Edge sports analysis workspace and 3D replay",
       aspectRatio: "1024/630",
       type: "image",
     },
     caseStudyGallery: [
       {
         src: "/previews/citadel.jpg",
-        alt: "Bio-Tactical Edge workstation — 3D digital twin, biometric radar, and decision intelligence",
+        alt: "Bio-Tactical Edge workstation with 3D replay and movement analysis",
         aspectRatio: "1024/630",
         caption: "Bio-Tactical Workstation · Monocular 3D Digital Twin & Decision Intelligence",
       },

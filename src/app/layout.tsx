@@ -26,11 +26,11 @@ const siteUrl = "https://ari-swerdlow.vercel.app";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Ari Swerdlow · Browser AR & Computer Vision",
+    default: "Ari Swerdlow · Camera-First Product Engineer",
     template: "%s · Ari Swerdlow",
   },
   description:
-    "Ari Swerdlow builds browser AR games and on-device computer vision: tennis you swing with your arm, shadow boxing with an impact metric, ASL lessons checked by hand landmarks, and pickleball biomechanics from court video.",
+    "Ari Swerdlow builds camera-first products at the intersection of computer vision, game systems, and product design—from browser fitness and AR baseball to sports intelligence.",
   keywords: [
     "Ari Swerdlow",
     "WebXR",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ari Swerdlow",
     description:
-      "Browser AR tennis, shadow boxing, ASL training, and biomechanics coaching. Live in your phone camera, no app store.",
+      "Camera-first product engineering: browser fitness, AR baseball, and sports intelligence from ordinary video.",
     type: "website",
     url: siteUrl,
     siteName: "Ari Swerdlow",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ari Swerdlow",
     description:
-      "Browser AR and on-device computer vision: games, boxing, ASL, biomechanics.",
+      "Camera-first product engineering across browser fitness, AR games, coaching, and sports intelligence.",
     creator: "@2Swerdy",
   },
   robots: { index: true, follow: true },

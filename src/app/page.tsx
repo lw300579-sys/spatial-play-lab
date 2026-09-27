@@ -1,8 +1,8 @@
 import { DeviceBanner } from "@/components/hero/device-banner";
 import { Hero } from "@/components/hero/hero";
 import { HowItWorks } from "@/components/how/how-it-works";
+import { FlagshipShowcase } from "@/components/flagships/flagship-showcase";
 import { GameMatrix } from "@/components/game-card/game-matrix";
-import { FeaturedCaseStudy } from "@/components/case-study/featured-case-study";
 import { Principles } from "@/components/craft/principles";
 import { BioContact } from "@/components/bio/bio-contact";
 import { SiteNav } from "@/components/ui/site-nav";
@@ -12,19 +12,19 @@ export default function Home() {
   return (
     <>
       <a
-        href="#games"
+        href="#flagships"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:border-2 focus:border-charcoal focus:bg-ochre focus:px-4 focus:py-2 focus:font-mono focus:text-sm"
       >
-        Skip to games
+        Skip to selected work
       </a>
       <ScrollProgress />
       <SiteNav />
       <DeviceBanner />
       <main className="flex-1">
         <Hero />
+        <FlagshipShowcase />
         <HowItWorks />
         <GameMatrix />
-        <FeaturedCaseStudy />
         <Principles />
         <BioContact />
       </main>

@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import type { PortfolioProject } from "@/data/games";
+import { projectProofById, type PortfolioProject } from "@/data/games";
+import type { LiveProjectStatus } from "./game-matrix";
 import { useDevice } from "@/hooks/use-device";
 import { reduced, spring } from "@/lib/motion";
 import { StickerCard } from "@/components/ui/sticker-card";
@@ -16,9 +17,10 @@ const tilts = [-1.2, 0.8, -0.6, 1.1, -0.9];
 interface GameCardProps {
   project: PortfolioProject;
   index: number;
+  liveStatus?: LiveProjectStatus;
 }
 
-export function GameCard({ project, index }: GameCardProps) {
+export function GameCard({ project, index, liveStatus }: GameCardProps) {
   const { isMobile, ready } = useDevice();
   const reduce = useReducedMotion();
   const [qrOpen, setQrOpen] = useState(false);
@@ -29,6 +31,7 @@ export function GameCard({ project, index }: GameCardProps) {
   const isCaseStudy = project.placement === "case-study" || !hasLive;
   const isLinkLaunch = project.launchMode === "link";
   const n = String(index + 1).padStart(2, "0");
+  const proof = projectProofById[project.id];
 
   return (
     <>
@@ -47,7 +50,18 @@ export function GameCard({ project, index }: GameCardProps) {
             <>
               <span className="spec-badge bg-paper/95">{n}</span>
               {project.status === "live" ? (
-                <span className="spec-badge bg-lawn">LIVE</span>
+                <span
+                  className={`spec-badge ${
+                    liveStatus?.state === "degraded" ? "bg-ochre" : "bg-lawn"
+                  }`}
+                  title={
+                    liveStatus
+                      ? `Production shell checked ${new Date(liveStatus.checkedAt).toLocaleString()}; core journey requires the release gate`
+                      : "Production link available"
+                  }
+                >
+                  {liveStatus?.state === "degraded" ? "CHECK MANUALLY" : "AVAILABLE"}
+                </span>
               ) : (
                 <span className="spec-badge bg-paper">CASE STUDY</span>
               )}
@@ -77,15 +91,31 @@ export function GameCard({ project, index }: GameCardProps) {
             </p>
           </div>
 
+          {proof ? (
+            <div className="grid grid-cols-3 border-2 border-charcoal/15 bg-paper-ink">
+              {proof.validation.map((item) => (
+                <span
+                  key={item}
+                  className="flex min-h-14 items-center justify-center border-r border-charcoal/15 px-2 py-2 text-center font-mono text-[0.7rem] font-semibold leading-tight last:border-r-0"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          ) : null}
+
           <div className="flex flex-wrap gap-1.5">
-            {project.techSpecs.map((spec) => (
+            {project.techSpecs.slice(0, 3).map((spec) => (
               <span key={spec} className="spec-badge">
                 {spec}
               </span>
             ))}
+            {project.techSpecs.length > 3 ? (
+              <span className="spec-badge">+{project.techSpecs.length - 3} in breakdown</span>
+            ) : null}
           </div>
 
-          <p className="font-mono text-[0.65rem] leading-relaxed text-muted">
+          <p className="font-mono text-xs leading-relaxed text-muted">
             {project.requirements}
           </p>
 
@@ -151,15 +181,35 @@ export function GameCard({ project, index }: GameCardProps) {
                 <div className="space-y-4 border-t-2 border-charcoal/15 pt-4">
                   <div>
                     <p className="mb-2 font-mono text-[0.65rem] uppercase tracking-widest text-cobalt">
-                      How it works
+                      What I built
                     </p>
                     <p className="text-sm leading-relaxed text-charcoal/85">
-                      {project.spatialMechanics}
+                      {proof?.built ?? project.spatialMechanics}
                     </p>
                   </div>
+                  {proof ? (
+                    <>
+                      <div>
+                        <p className="mb-2 font-mono text-[0.65rem] uppercase tracking-widest text-coral">
+                          What changed
+                        </p>
+                        <p className="text-sm leading-relaxed text-charcoal/85">
+                          {proof.changed}
+                        </p>
+                      </div>
+                      <div className="border-l-4 border-lawn bg-paper-ink p-3">
+                        <p className="mb-1 font-mono text-[0.65rem] uppercase tracking-widest text-charcoal/65">
+                          Why it matters
+                        </p>
+                        <p className="text-sm font-medium leading-relaxed text-charcoal/90">
+                          {proof.impact}
+                        </p>
+                      </div>
+                    </>
+                  ) : null}
                   <div>
                     <p className="mb-2 font-mono text-[0.65rem] uppercase tracking-widest text-coral">
-                      Technical challenges
+                      Hard parts
                     </p>
                     <ul className="space-y-1.5">
                       {project.challenges.map((c) => (
@@ -172,6 +222,13 @@ export function GameCard({ project, index }: GameCardProps) {
                         </li>
                       ))}
                     </ul>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 border-t border-charcoal/15 pt-3">
+                    {project.techSpecs.map((spec) => (
+                      <span key={spec} className="spec-badge">
+                        {spec}
+                      </span>
+                    ))}
                   </div>
                   <p className="font-mono text-[0.65rem] leading-relaxed text-muted">
                     {project.launchMode === "camera"

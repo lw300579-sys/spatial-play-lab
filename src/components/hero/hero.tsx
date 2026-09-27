@@ -42,9 +42,9 @@ export function Hero() {
             variants={reduce ? undefined : fadeUp}
             className="max-w-xl font-display text-xl font-medium leading-snug text-charcoal/90 sm:text-2xl"
           >
-            Browser AR you can{" "}
+            I build software that can{" "}
             <span className="relative inline-block">
-              <span className="relative z-10 italic">feel</span>
+              <span className="relative z-10 italic">understand movement</span>
               <motion.span
                 className="absolute inset-x-0 bottom-1 -z-0 h-3 bg-ochre/85 sm:bottom-1.5 sm:h-4"
                 aria-hidden
@@ -54,30 +54,52 @@ export function Hero() {
                 style={{ originX: 0 }}
               />
             </span>
-            . Swing, punch, sign, and coach from a phone camera.
+            —then answer with game feel, coaching, or evidence.
           </motion.p>
 
           <motion.p
             variants={reduce ? undefined : fadeUp}
             className="max-w-lg text-base leading-relaxed text-charcoal/80 sm:text-lg"
           >
-            I ship live titles and research prototypes where your body is the
-            controller. Pose and hand models stay on-device. Distribution is a
-            link, not an App Store listing. The work spans tennis, shadow boxing,
-            ASL lessons, pickleball biomechanics, and broadcast sports analytics.
+            My work sits where computer vision, game systems, and product design
+            meet. The strongest examples are a browser fitness product, a
+            camera-controlled baseball game, and a sports-intelligence platform
+            built from ordinary match video.
           </motion.p>
 
           <motion.div
             variants={reduce ? undefined : fadeUp}
             className="flex flex-wrap gap-3"
           >
-            <TactileLink href="#games" accent="coral">
-              Explore games
+            <TactileLink href="#flagships" accent="coral">
+              See selected work
             </TactileLink>
-            <TactileLink href="#citadel" variant="secondary">
-              Bio-Tactical OS
+            <TactileLink href="#contact" variant="secondary">
+              Work with me
             </TactileLink>
           </motion.div>
+
+          <motion.dl
+            variants={reduce ? undefined : fadeUp}
+            className="grid max-w-xl grid-cols-2 border-2 border-charcoal bg-paper/85 sm:grid-cols-4"
+          >
+            {[
+              ["3", "flagship systems"],
+              ["250k", "baseball sims"],
+              ["695", "coach tests"],
+              ["5", "camera products"],
+            ].map(([value, label]) => (
+              <div
+                key={label}
+                className="border-b border-r border-charcoal/20 px-3 py-2 last:border-r-0 sm:border-b-0"
+              >
+                <dt className="font-mono text-[0.65rem] uppercase tracking-wide text-muted">
+                  {label}
+                </dt>
+                <dd className="font-display text-xl font-semibold text-charcoal">{value}</dd>
+              </div>
+            ))}
+          </motion.dl>
 
           <motion.p
             variants={reduce ? undefined : fadeUp}

@@ -79,6 +79,14 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
+}
+
+#games,
+#flagships,
+#citadel,
+#contact {
+  scroll-margin-top: 6.5rem;
 }
 
 body {

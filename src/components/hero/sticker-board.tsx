@@ -91,7 +91,7 @@ function DraggableToken({ token }: { token: Token }) {
       whileHover={reduce ? undefined : { scale: 1.05 }}
       whileDrag={reduce ? undefined : { scale: 1.12, rotate: token.rotate + 6, zIndex: 30 }}
       transition={spring}
-      aria-label={`Drag ${token.label} token`}
+      aria-hidden="true"
     >
       <span className="mr-1.5 text-base" aria-hidden>
         {token.emoji}
@@ -107,7 +107,7 @@ export function StickerBoard() {
   return (
     <div
       className="relative h-56 w-full overflow-hidden border-2 border-charcoal bg-paper-deep sm:h-72"
-      aria-label="Sticker board: drag the tokens"
+      aria-hidden="true"
     >
       <svg
         className="pointer-events-none absolute inset-0 h-full w-full opacity-25"

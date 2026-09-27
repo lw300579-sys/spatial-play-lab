@@ -70,52 +70,106 @@ export function FeaturedCaseStudy() {
             />
           </div>
 
-          <div className="grid gap-8 border-t-2 border-charcoal bg-paper p-6 sm:grid-cols-[1.2fr_0.8fr] sm:p-8">
-            <div>
+          <div className="border-t-2 border-charcoal bg-paper p-6 sm:p-8">
+            <div className="max-w-4xl">
               <p className="mb-2 font-mono text-[0.65rem] uppercase tracking-widest text-cobalt">
-                How it works
+                The problem I wanted to solve
               </p>
-              <p className="text-sm leading-relaxed text-charcoal/85 sm:text-[0.95rem] whitespace-pre-line">
+              <p className="whitespace-pre-line text-sm leading-relaxed text-charcoal/85 sm:text-base">
                 {project.spatialMechanics}
               </p>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                {project.techSpecs.map((s) => (
-                  <span key={s} className="spec-badge">
-                    {s}
-                  </span>
+            </div>
+
+            <div className="mt-8">
+              <p className="mb-3 font-mono text-[0.65rem] uppercase tracking-widest text-cobalt">
+                How it works, step by step
+              </p>
+              <div className="grid gap-3 md:grid-cols-2">
+                {project.caseStudySections?.map((section) => (
+                  <article
+                    key={section.step}
+                    className="border border-charcoal/20 bg-paper-ink p-4"
+                  >
+                    <span className="font-mono text-[0.65rem] font-bold text-cobalt">
+                      {section.step}
+                    </span>
+                    <h3 className="mt-1 font-display text-lg font-semibold tracking-tight">
+                      {section.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-charcoal/80">
+                      {section.body}
+                    </p>
+                  </article>
                 ))}
               </div>
             </div>
 
-            <div>
-              <p className="mb-2 font-mono text-[0.65rem] uppercase tracking-widest text-coral">
-                Technical challenges
+            <div className="mt-8 grid gap-8 lg:grid-cols-2">
+              <div>
+                <p className="mb-3 font-mono text-[0.65rem] uppercase tracking-widest text-coral">
+                  Questions it can answer
+                </p>
+                <ul className="space-y-2">
+                  {project.caseStudyQuestions?.map((question) => (
+                    <li
+                      key={question}
+                      className="flex gap-3 border border-charcoal/20 bg-paper-ink px-3 py-2.5 text-sm leading-snug"
+                    >
+                      <span aria-hidden className="font-mono font-bold text-coral">→</span>
+                      <span>{question}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <p className="mb-3 font-mono text-[0.65rem] uppercase tracking-widest text-cobalt">
+                  What the technical pieces actually do
+                </p>
+                <dl className="space-y-2">
+                  {project.techDetails?.map((item) => (
+                    <div
+                      key={item.label}
+                      className="border border-charcoal/20 bg-paper-ink px-3 py-2.5"
+                    >
+                      <dt className="font-display text-sm font-semibold">{item.label}</dt>
+                      <dd className="mt-1 text-sm leading-relaxed text-charcoal/75">
+                        {item.explanation}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </div>
+
+            <div className="mt-8 border-t border-charcoal/20 pt-7">
+              <p className="mb-3 font-mono text-[0.65rem] uppercase tracking-widest text-coral">
+                The hard engineering problems
               </p>
-              <ul className="space-y-2">
-                {project.challenges.map((c) => (
+              <ul className="grid gap-2 md:grid-cols-2">
+                {project.challenges.map((challenge) => (
                   <li
-                    key={c}
-                    className="border border-charcoal/20 bg-paper-ink px-3 py-2 text-sm leading-snug"
+                    key={challenge}
+                    className="border border-charcoal/20 bg-paper-ink px-3 py-2.5 text-sm leading-relaxed"
                   >
-                    {c}
+                    {challenge}
                   </li>
                 ))}
               </ul>
+            </div>
+
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <TactileButton accent="cobalt" onClick={() => setOpen(true)}>
+                Explore the analysis workspace
+              </TactileButton>
               <a
                 href={project.preview.src}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 inline-block font-mono text-[0.7rem] text-cobalt underline-offset-2 hover:underline"
+                className="font-mono text-[0.7rem] text-cobalt underline-offset-2 hover:underline"
               >
                 Open full-resolution capture ↗
               </a>
-              <TactileButton
-                accent="cobalt"
-                className="mt-5 w-full"
-                onClick={() => setOpen(true)}
-              >
-                Expand terminal gallery
-              </TactileButton>
             </div>
           </div>
         </motion.div>
