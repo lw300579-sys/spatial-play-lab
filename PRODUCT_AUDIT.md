@@ -4,6 +4,57 @@ Audit date: 2026-09-26
 Scope: the portfolio and all seven linked live titles, plus the Bio-Tactical case study.
 Methods: live desktop and narrow-viewport smoke tests, camera-path tests where available, accessibility-tree inspection, HTTP/header inspection, deployed-source inspection, local repository review, lint/typecheck/build/test runs, and bundle-size sampling.
 
+## Evidence, conversion, and editorial completion pass
+
+Completion date: 2026-09-27
+
+The follow-on portfolio pass implements every repository-scoped item from the four-phase handoff while preserving the boundary between engineering evidence and human validation.
+
+### Phase 1 - evidence sprint infrastructure
+
+- Published a dated evidence ledger separating engineering checks from user outcomes.
+- Added reusable usability-session and device/browser CSV templates.
+- Added a public Bio-Tactical golden-rally acceptance checklist from source provenance through one-page export.
+- Added method and measurement dates directly beside every flagship proof point.
+- Added three-view product evidence sections; Bio-Tactical uses three distinct current prototype views.
+- Left first-attempt success, completion, retention, real-user quotes, real-device endurance, and the source-linked golden rally explicitly unmeasured or unpublished. These require real people, devices, footage, and publication permission.
+
+### Phase 2 - functional reliability and privacy
+
+- Expanded the release gate from 11 shell checks to 19 portfolio, asset, API, metadata, and production-shell checks.
+- Added mobile overflow, structured-data, share-image, evidence-table, privacy-copy, résumé, template, sitemap, CSP, custom-404, and telemetry-allowlist assertions.
+- Added structured JSON release evidence as a GitHub Actions artifact.
+- Added a Content Security Policy, HSTS, and the existing restrictive permissions policy across the portfolio.
+- Standardized visible privacy boundaries beside every launch action.
+- Added a no-cookie, first-party, allowlisted conversion-event endpoint.
+- Kept linked-product checks labeled as production-shell health; product-native recorded-camera gates remain the source of camera-journey evidence.
+
+### Phase 3 - conversion
+
+- Clarified the target role as Product Engineer / Applied Computer Vision.
+- Added a visually verified one-page résumé PDF with portfolio-backed claims.
+- Added focused contact actions, résumé entry points, and one primary CTA per flagship.
+- Added a public evidence destination for technical reviewers and hiring managers.
+- Preserved GitHub as the professional work-history destination; no LinkedIn URL was invented.
+
+### Phase 4 - editorial and presentation
+
+- Added sticky case-study section progress and descriptive media captions.
+- Added precise availability, device, maturity, privacy, and last-verified language.
+- Added dated evidence tables directly beneath flagship claims.
+- Added dedicated generated Open Graph art for every flagship.
+- Added `Person`, `WebSite`, `CreativeWork`, and `SoftwareApplication` structured data.
+- Replaced build-time sitemap dates with real content modification dates.
+- Added a tactile custom 404 and a plain-language privacy page.
+- Let desktop visitors open camera products directly while retaining phone QR handoff.
+
+### Remaining external decisions
+
+- A custom domain requires the owner to choose and configure a domain.
+- Calendar and LinkedIn links require real destination URLs.
+- Real-world outcome rows require observed sessions and participant permission.
+- Bio-Tactical cannot become a public golden rally until an attributable source clip and evidence package exist.
+
 ## Remediation status
 
 The implementation pass is complete. Every changed product was built on Vercel as a preview, verified through the public deployment path, promoted, and matched to its production alias on September 26, 2026.

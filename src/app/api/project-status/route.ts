@@ -1,6 +1,9 @@
 import { matrixGames } from "@/data/games";
 
-export const revalidate = 300;
+// This health check must not be prerendered during `next build`: a temporary
+// build-time network failure would otherwise ship every product as degraded.
+// The response remains edge-cacheable through the Cache-Control header below.
+export const dynamic = "force-dynamic";
 
 type ProjectStatus = {
   state: "operational" | "degraded";

@@ -15,18 +15,31 @@ export interface FlagshipCaseStudy {
   timeframe: string;
   maturity: string;
   privacy: string;
+  availability: string;
+  lastVerified: string;
+  verificationScope: string;
+  updatedAt: string;
   accent: AccentTone;
   preview: {
     src: string;
     alt: string;
     aspectRatio: `${number}/${number}`;
+    caption: string;
   };
+  media?: {
+    src: string;
+    alt: string;
+    aspectRatio: `${number}/${number}`;
+    caption: string;
+  }[];
   liveUrl: string | null;
   technologies: string[];
   proof: {
     value: string;
     label: string;
     detail: string;
+    measuredAt: string;
+    method: string;
   }[];
   problem: string;
   built: string;
@@ -60,11 +73,17 @@ export const flagshipCaseStudies: FlagshipCaseStudy[] = [
     timeframe: "2025–2026",
     maturity: "Live product prototype",
     privacy: "Camera inference runs on-device; raw camera frames are not required for the core loop.",
+    availability: "Live demo · camera required · best on phone",
+    lastVerified: "2026-09-26",
+    verificationScope: "Recorded replay, deterministic state tests, and production shell",
+    updatedAt: "2026-09-26",
     accent: "coral",
     preview: {
       src: "/previews/jiku-fitness.png",
       alt: "Jiku Fitness training dashboard shown in a phone frame",
       aspectRatio: "16/10",
+      caption:
+        "The training dashboard keeps the active round, target rhythm, and recovery state visible around the athlete.",
     },
     liveUrl: "https://posture-app-nms-projects-e9ba3578.vercel.app/#dojo",
     technologies: [
@@ -80,18 +99,24 @@ export const flagshipCaseStudies: FlagshipCaseStudy[] = [
         label: "target occupancy",
         detail:
           "Observed across 347 samples from a 45-second recorded boxing replay.",
+        measuredAt: "2026-09-26",
+        method: "Recorded 45-second camera replay · 347 samples",
       },
       {
         value: "0.88s",
         label: "longest empty interval",
         detail:
           "The liveness watchdog repaired six potential phrase-queue stalls in the same replay.",
+        measuredAt: "2026-09-26",
+        method: "Recorded replay with watchdog instrumentation",
       },
       {
         value: "8",
         label: "boxing tests",
         detail:
           "Deterministic coverage for spawn recovery and the round-state sequence.",
+        measuredAt: "2026-09-26",
+        method: "Automated deterministic test suite",
       },
     ],
     problem:
@@ -166,11 +191,17 @@ export const flagshipCaseStudies: FlagshipCaseStudy[] = [
     timeframe: "2025–2026",
     maturity: "Live product prototype",
     privacy: "Pose inference runs in the browser; the core batting loop does not require uploading camera frames.",
+    availability: "Live demo · camera required · best on phone",
+    lastVerified: "2026-09-26",
+    verificationScope: "Recorded camera path, seeded simulation, and production shell",
+    updatedAt: "2026-09-26",
     accent: "ochre",
     preview: {
       src: "/previews/ar-baseball.png",
       alt: "AR Baseball showing a virtual bat and stadium over a camera view",
       aspectRatio: "16/10",
+      caption:
+        "The camera view, detected grip path, and virtual stadium stay in one frame so contact remains attributable to the player’s motion.",
     },
     liveUrl: "https://ar-baseball.vercel.app/",
     technologies: [
@@ -186,18 +217,24 @@ export const flagshipCaseStudies: FlagshipCaseStudy[] = [
         label: "seeded simulations",
         detail:
           "Deterministic gameplay runs used to test outcome distribution and game-state completion.",
+        measuredAt: "2026-09-26",
+        method: "Seeded simulation harness with bounded game completion",
       },
       {
         value: "3",
         label: "complete innings",
         detail:
           "At-bats feed visible fielding, runners, rival scoring, and an ending—not an isolated batting toy.",
+        measuredAt: "2026-09-26",
+        method: "Deterministic full-game state traversal",
       },
       {
         value: "1",
         label: "recorded-camera gate",
         detail:
           "A production replay verifies that a real swing can survive the deployed camera path.",
+        measuredAt: "2026-09-26",
+        method: "Prerecorded camera input through the production build",
       },
     ],
     problem:
@@ -272,12 +309,41 @@ export const flagshipCaseStudies: FlagshipCaseStudy[] = [
     timeframe: "2025–2026",
     maturity: "Validated R&D prototype; public demo not yet released",
     privacy: "Data handling depends on deployment; production retention and deletion policy still needs to be published.",
+    availability: "R&D case study · public golden rally in progress",
+    lastVerified: "2026-09-26",
+    verificationScope: "Local tests and implementation review; no public end-to-end rally yet",
+    updatedAt: "2026-09-26",
     accent: "cobalt",
     preview: {
       src: "/previews/citadel.jpg",
       alt: "Bio-Tactical Edge workspace with match video, movement metrics, and a 3D court replay",
       aspectRatio: "1024/630",
+      caption:
+        "The analysis workspace keeps source video, court-space movement, derived metrics, and the 3D replay on one timeline.",
     },
+    media: [
+      {
+        src: "/previews/bio-tactical.jpg",
+        alt: "Bio-Tactical dashboard with a 3D court, tactical ghost, heatmap, and telemetry",
+        aspectRatio: "16/10",
+        caption:
+          "Analysis view: actual and counterfactual recovery positions sit beside the spatial evidence used to compare them.",
+      },
+      {
+        src: "/previews/citadel.png",
+        alt: "Bio-Tactical digital-twin terminal with court trajectory and engineering telemetry",
+        aspectRatio: "16/10",
+        caption:
+          "Engineering view: court homography, tracked contact, trajectory, and derived values remain inspectable together.",
+      },
+      {
+        src: "/previews/citadel-ballistics.png",
+        alt: "Ball trajectory reconstructed across a calibrated tennis court",
+        aspectRatio: "16/10",
+        caption:
+          "Reconstruction view: contact and flight are projected onto court geometry instead of left as image-space pixels.",
+      },
+    ],
     liveUrl: null,
     technologies: [
       "Monocular homography",
@@ -292,18 +358,24 @@ export const flagshipCaseStudies: FlagshipCaseStudy[] = [
         label: "automated tests",
         detail:
           "The underlying analytics project passes its current test suite, lint, and production build.",
+        measuredAt: "2026-09-26",
+        method: "Automated analytics test suite, lint, and production build",
       },
       {
         value: "30k+",
         label: "timeline frames",
         detail:
           "The workspace is designed to keep long telemetry sequences responsive for scrubbing and comparison.",
+        measuredAt: "2026-09-26",
+        method: "Implementation capacity target; not a human-outcome metric",
       },
       {
         value: "1",
         label: "shared timeline",
         detail:
           "Video, court coordinates, metrics, 3D replay, and evidence references stay aligned around the same moment.",
+        measuredAt: "2026-09-26",
+        method: "Implementation review of synchronized analysis surfaces",
       },
     ],
     problem:

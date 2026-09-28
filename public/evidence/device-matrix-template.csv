@@ -1,0 +1,2 @@
+date,product,device,os,browser,orientation,camera_ready,first_action,sustained_minutes,background_foreground_recovered,rotation_recovered,webgl_loss,memory_or_thermal_note,result,evidence_link
+YYYY-MM-DD,Product,Device model,OS version,Browser version,portrait,not tested,not tested,0,not tested,not tested,not observed,Not measured,not tested,

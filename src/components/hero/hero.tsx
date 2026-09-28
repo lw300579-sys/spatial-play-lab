@@ -6,6 +6,7 @@ import { SITE } from "@/data/games";
 import { StickerBoard } from "./sticker-board";
 import { AmbientCanvas } from "./ambient-canvas";
 import { TactileLink } from "@/components/ui/tactile-button";
+import { TrackedLink } from "@/components/ui/tracked-link";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -28,7 +29,7 @@ export function Hero() {
             variants={reduce ? undefined : fadeUp}
             className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-cobalt"
           >
-            {SITE.tagline}
+            Product Engineer · Applied Computer Vision
           </motion.p>
 
           <motion.h1
@@ -77,6 +78,15 @@ export function Hero() {
             <TactileLink href="#contact" variant="secondary">
               Work with me
             </TactileLink>
+            <TrackedLink
+              href="/ari-swerdlow-resume.pdf"
+              download
+              eventName="resume_download"
+              eventTarget="hero"
+              className="tactile-press tactile-lift inline-flex items-center justify-center border-2 border-charcoal bg-surface-raised px-4 py-2.5 text-sm font-semibold text-charcoal no-underline sticker-sm"
+            >
+              Download résumé ↓
+            </TrackedLink>
           </motion.div>
 
           <motion.dl
@@ -100,6 +110,14 @@ export function Hero() {
               </div>
             ))}
           </motion.dl>
+
+          <motion.p
+            variants={reduce ? undefined : fadeUp}
+            className="max-w-xl font-mono text-[0.62rem] leading-relaxed text-muted"
+          >
+            Engineering validation as of 2026-09-26. Simulation and test counts
+            measure system rigor—not user outcomes. <a href="/evidence" className="text-cobalt underline">See methods and open gaps.</a>
+          </motion.p>
 
           <motion.p
             variants={reduce ? undefined : fadeUp}

@@ -3,10 +3,11 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { SITE } from "@/data/games";
 import { spring } from "@/lib/motion";
+import { TrackedLink } from "@/components/ui/tracked-link";
 
 const LINKS = [
   { href: "#flagships", label: "Selected" },
-  { href: "#games", label: "More work" },
+  { href: "/evidence", label: "Evidence" },
   { href: "#contact", label: "Contact" },
 ] as const;
 
@@ -47,6 +48,15 @@ export function SiteNav() {
               {link.label}
             </a>
           ))}
+          <TrackedLink
+            href="/ari-swerdlow-resume.pdf"
+            download
+            eventName="resume_download"
+            eventTarget="navigation"
+            className="hidden border-2 border-charcoal bg-ochre px-2 py-1.5 font-mono text-[0.62rem] font-bold uppercase tracking-wide text-charcoal no-underline sticker-sm sm:inline-flex sm:px-3 sm:text-xs"
+          >
+            Résumé
+          </TrackedLink>
         </nav>
       </div>
     </motion.header>

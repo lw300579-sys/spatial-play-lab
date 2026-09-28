@@ -22,6 +22,10 @@ export interface PortfolioProject {
   spatialMechanics: string;
   challenges: string[];
   requirements: string;
+  availabilityLabel: string;
+  privacyNote: string;
+  lastVerified: string;
+  verificationLabel: string;
   techSpecs: TechSpec[];
   placement: ProjectPlacement;
   group: ProjectGroupId;
@@ -187,6 +191,10 @@ export const matrixGames: PortfolioProject[] = [
       "Pass & Play state sync across a single shared camera session",
     ],
     requirements: "Camera · Portrait phone · Safari / Chrome",
+    availabilityLabel: "Live demo · best on phone",
+    privacyNote: "Pose inference runs on-device for the core play loop; camera permission is requested only after launch.",
+    lastVerified: "2026-09-26",
+    verificationLabel: "Production shell + gameplay tests",
     techSpecs: [
       "MediaPipe Pose",
       "Body Tracking",
@@ -223,6 +231,10 @@ export const matrixGames: PortfolioProject[] = [
       "Ghost replays that stay temporally aligned with live pose",
     ],
     requirements: "Camera · Standing space · Chrome / Safari",
+    availabilityLabel: "Live demo · best on phone",
+    privacyNote: "Core pose inference runs on-device; raw camera frames are not required to leave the browser.",
+    lastVerified: "2026-09-26",
+    verificationLabel: "Recorded replay + production shell",
     techSpecs: [
       "Pose & Velocity Tracking",
       "TensorFlow.js",
@@ -258,6 +270,10 @@ export const matrixGames: PortfolioProject[] = [
       "Court heatmaps grounded to real spatial placements",
     ],
     requirements: "Webcam or phone · Side or endline angle",
+    availabilityLabel: "Validated prototype · camera or upload",
+    privacyNote: "Capture and analysis modes can differ; review the product’s in-context policy before using identifiable footage.",
+    lastVerified: "2026-09-26",
+    verificationLabel: "695 tests + production shell",
     techSpecs: [
       "MediaPipe 33-Landmark",
       "YOLOv8n + EfficientDet",
@@ -293,6 +309,10 @@ export const matrixGames: PortfolioProject[] = [
       "Running pose tracking, physics, and the stadium smoothly on a phone",
     ],
     requirements: "Camera · Upper body in view · Chrome / Safari",
+    availabilityLabel: "Live demo · best on phone",
+    privacyNote: "Pose inference runs in the browser; the core batting loop does not require uploading camera frames.",
+    lastVerified: "2026-09-26",
+    verificationLabel: "Recorded camera gate + production shell",
     techSpecs: [
       "React-Three-Fiber",
       "Rapier Physics",
@@ -327,6 +347,10 @@ export const matrixGames: PortfolioProject[] = [
       "Readable feedback in a busy AR overlay",
     ],
     requirements: "Camera · Standing space · Chrome / Safari",
+    availabilityLabel: "Live demo · best on phone",
+    privacyNote: "Hand and person inference runs on-device for the game loop; camera recovery remains visible and user-controlled.",
+    lastVerified: "2026-09-26",
+    verificationLabel: "Camera recovery + production shell",
     techSpecs: [
       "Three.js",
       "React-Three-Fiber",
@@ -362,6 +386,10 @@ export const matrixGames: PortfolioProject[] = [
       "Telemetry flywheel that improves hitboxes from failures",
     ],
     requirements: "Camera · Good lighting · Front-facing hands",
+    availabilityLabel: "Live learning prototype · camera required",
+    privacyNote: "Hand tracking runs in-browser; the learned-model fallback may use a server path, so do not assume all derived data stays local.",
+    lastVerified: "2026-09-26",
+    verificationLabel: "Decision-path tests + production shell",
     techSpecs: [
       "MediaPipe Hand/Pose Landmarks",
       "Next.js 16",
@@ -397,6 +425,10 @@ export const matrixGames: PortfolioProject[] = [
       "Session length that invites \"one more run\" without grinding",
     ],
     requirements: "Desktop or phone browser · No camera",
+    availabilityLabel: "Live demo · no camera",
+    privacyNote: "No camera or microphone access is required for play.",
+    lastVerified: "2026-09-26",
+    verificationLabel: "Seeded replay + production shell",
     techSpecs: ["Canvas / Web game loop", "Procedural course", "Touch + click"],
     placement: "matrix",
     liveUrl: "https://arcadegame-kappa.vercel.app/",
@@ -473,6 +505,10 @@ export const caseStudies: PortfolioProject[] = [
       "Turning dense spatial data into plain-English search results and scouting reports a coach can use immediately.",
     ],
     requirements: "Broadcast HD/4K Feed · GPU Accelerated Inference · Real-Time WebSockets",
+    availabilityLabel: "R&D case study · public demo in progress",
+    privacyNote: "Production retention, deletion, and model-transmission policy must be defined before identifiable footage is used.",
+    lastVerified: "2026-09-26",
+    verificationLabel: "77 tests + implementation review",
     techSpecs: [
       "Monocular Homography (CRLB)",
       "Three.js 3D Digital Twin",

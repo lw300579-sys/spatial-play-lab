@@ -13,7 +13,7 @@ function detectDevice(): DeviceKind {
   const mobileUa =
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
 
-  if (mobileUa || (coarse && narrow)) return "mobile";
+  if (mobileUa || narrow || coarse) return "mobile";
   return "desktop";
 }
 

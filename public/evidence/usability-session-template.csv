@@ -1,0 +1,2 @@
+session_id,date,product,device,browser,first_attempt_success,time_to_camera_ready_seconds,first_action_recognized,session_completed,recovery_needed,tracking_losses,recovery_success,participant_quote_permission,observation,follow_up
+EXAMPLE-REMOVE,YYYY-MM-DD,Jiku Fitness,device model,browser and version,not measured,not measured,not measured,not measured,not measured,not measured,not measured,no,Replace this row with observed behavior,Record the next product change

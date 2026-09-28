@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { JsonLd } from "@/components/seo/json-ld";
+import { SITE } from "@/data/games";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -70,12 +72,43 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": `${siteUrl}/#person`,
+        name: SITE.name,
+        url: siteUrl,
+        email: `mailto:${SITE.email}`,
+        jobTitle: "Product Engineer · Applied Computer Vision",
+        sameAs: SITE.socials.map((social) => social.href),
+        knowsAbout: [
+          "Computer vision",
+          "Browser-based augmented reality",
+          "Game systems",
+          "Human-computer interaction",
+          "Sports intelligence",
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        name: `${SITE.name} portfolio`,
+        url: siteUrl,
+        description: metadata.description,
+        author: { "@id": `${siteUrl}/#person` },
+      },
+    ],
+  };
+
   return (
     <html
       lang="en"
       className={`${fraunces.variable} ${jakarta.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="relative min-h-full font-sans text-charcoal">
+        <JsonLd data={structuredData} />
         <div className="grain-overlay" aria-hidden="true" />
         <div className="paper-canvas flex min-h-full flex-col">{children}</div>
       </body>

@@ -9,8 +9,9 @@ import { useDevice } from "@/hooks/use-device";
 import { reduced, spring } from "@/lib/motion";
 import { StickerCard } from "@/components/ui/sticker-card";
 import { MediaFrame } from "@/components/ui/media-frame";
-import { TactileButton, TactileLink } from "@/components/ui/tactile-button";
+import { TactileButton } from "@/components/ui/tactile-button";
 import { QrModal } from "@/components/qr-modal/qr-modal";
+import { TrackedLink } from "@/components/ui/tracked-link";
 
 const tilts = [-1.2, 0.8, -0.6, 1.1, -0.9];
 
@@ -29,7 +30,6 @@ export function GameCard({ project, index, liveStatus }: GameCardProps) {
 
   const hasLive = Boolean(project.liveUrl);
   const isCaseStudy = project.placement === "case-study" || !hasLive;
-  const isLinkLaunch = project.launchMode === "link";
   const n = String(index + 1).padStart(2, "0");
   const proof = projectProofById[project.id];
 
@@ -60,7 +60,9 @@ export function GameCard({ project, index, liveStatus }: GameCardProps) {
                       : "Production link available"
                   }
                 >
-                  {liveStatus?.state === "degraded" ? "CHECK MANUALLY" : "AVAILABLE"}
+                  {liveStatus?.state === "degraded"
+                    ? "CHECK MANUALLY"
+                    : project.availabilityLabel.split(" · ")[0].toUpperCase()}
                 </span>
               ) : (
                 <span className="spec-badge bg-paper">CASE STUDY</span>
@@ -119,6 +121,18 @@ export function GameCard({ project, index, liveStatus }: GameCardProps) {
             {project.requirements}
           </p>
 
+          <div className="border-l-4 border-cobalt bg-paper-ink p-3">
+            <p className="font-mono text-[0.6rem] uppercase tracking-wider text-cobalt">
+              Privacy at launch
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-charcoal/70">
+              {project.privacyNote}
+            </p>
+            <p className="mt-2 font-mono text-[0.6rem] text-muted">
+              Last verified {project.lastVerified} · {project.verificationLabel}
+            </p>
+          </div>
+
           <div className="mt-auto flex flex-col gap-2 pt-1 sm:flex-row sm:flex-wrap">
             {isCaseStudy ? (
               <TactileButton
@@ -128,35 +142,28 @@ export function GameCard({ project, index, liveStatus }: GameCardProps) {
               >
                 View Case Study
               </TactileButton>
-            ) : isLinkLaunch && project.liveUrl ? (
-              <TactileLink
+            ) : project.liveUrl ? (
+              <TrackedLink
                 href={project.liveUrl}
-                accent={project.accent}
-                className="flex-1"
                 target="_blank"
                 rel="noopener noreferrer"
+                eventName="live_product_open"
+                eventTarget={project.id}
+                className="tactile-press tactile-lift inline-flex flex-1 cursor-pointer items-center justify-center border-2 border-charcoal bg-coral px-4 py-2.5 text-center text-sm font-semibold text-white no-underline sticker-sm"
               >
-                Open game
-              </TactileLink>
-            ) : ready && isMobile && project.liveUrl ? (
-              <TactileLink
-                href={project.liveUrl}
-                accent={project.accent}
-                className="flex-1"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Tap to Launch Game
-              </TactileLink>
-            ) : (
+                {ready && isMobile ? "Launch on this device" : "Open live demo ↗"}
+              </TrackedLink>
+            ) : null}
+
+            {project.liveUrl && project.launchMode === "camera" && ready && !isMobile ? (
               <TactileButton
-                accent={project.accent}
+                variant="secondary"
                 onClick={() => setQrOpen(true)}
                 className="flex-1"
               >
-                Scan QR to Play
+                Open phone QR
               </TactileButton>
-            )}
+            ) : null}
 
             <TactileButton
               variant="secondary"

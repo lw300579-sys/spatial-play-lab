@@ -25,7 +25,7 @@ export function GameMatrix() {
 
   useEffect(() => {
     const controller = new AbortController();
-    fetch("/api/project-status", { signal: controller.signal })
+    fetch("/api/project-status", { signal: controller.signal, cache: "no-store" })
       .then((response) => (response.ok ? response.json() : Promise.reject()))
       .then((data: { projects?: Record<string, LiveProjectStatus> }) => {
         if (data.projects) setStatuses(data.projects);

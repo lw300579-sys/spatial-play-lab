@@ -49,3 +49,11 @@ jobs:
 
       - name: Check portfolio routes and production products
         run: npm run test:release
+
+      - name: Upload release evidence
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: portfolio-release-gate
+          path: .artifacts/release-gate.json
+          if-no-files-found: warn

@@ -5,6 +5,7 @@ import { SITE } from "@/data/games";
 import { useCopyToClipboard } from "@/hooks/use-copy";
 import { fadeUp, reduced, springSnappy, staggerContainer } from "@/lib/motion";
 import { TactileButton, TactileLink } from "@/components/ui/tactile-button";
+import { TrackedLink } from "@/components/ui/tracked-link";
 
 export function BioContact() {
   const reduce = useReducedMotion();
@@ -117,6 +118,24 @@ export function BioContact() {
                 {s.label === "X" ? "X / Twitter" : s.label}
               </TactileLink>
             ))}
+
+            <TrackedLink
+              href="/ari-swerdlow-resume.pdf"
+              download
+              eventName="resume_download"
+              eventTarget="contact"
+              className="tactile-press tactile-lift inline-flex w-full items-center justify-center border-2 border-charcoal bg-ochre px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline sticker-sm"
+            >
+              Download one-page résumé ↓
+            </TrackedLink>
+            <TrackedLink
+              href={`mailto:${SITE.email}?subject=Product%20engineering%20conversation`}
+              eventName="contact_intent"
+              eventTarget="contact-email"
+              className="tactile-press tactile-lift inline-flex w-full items-center justify-center border-2 border-charcoal bg-coral px-4 py-2.5 text-center text-sm font-semibold text-white no-underline sticker-sm"
+            >
+              Start an email →
+            </TrackedLink>
           </motion.div>
         </motion.div>
 
@@ -127,6 +146,10 @@ export function BioContact() {
           <p className="font-mono text-[0.65rem] text-muted">
             {SITE.tagline} · {new Date().getFullYear()}
           </p>
+          <div className="flex flex-wrap justify-center gap-4 font-mono text-[0.65rem] uppercase tracking-wider">
+            <a href="/evidence" className="text-cobalt">Evidence ledger</a>
+            <a href="/privacy" className="text-cobalt">Privacy</a>
+          </div>
           <a
             href="#top"
             className="font-mono text-[0.7rem] uppercase tracking-wider text-cobalt no-underline hover:underline"

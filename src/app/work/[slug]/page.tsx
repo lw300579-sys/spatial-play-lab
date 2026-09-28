@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CaseStudyEvidenceGallery } from "@/components/case-study/case-study-evidence-gallery";
+import { CaseStudyProgress } from "@/components/case-study/case-study-progress";
+import { JsonLd } from "@/components/seo/json-ld";
+import { TrackedLink } from "@/components/ui/tracked-link";
 import {
   flagshipCaseStudies,
   flagshipSlugs,
@@ -56,6 +60,7 @@ export async function generateMetadata({
 
   const title = `${caseStudy.title} case study`;
   const url = `${siteUrl}/work/${caseStudy.slug}`;
+  const socialImage = `${url}/opengraph-image`;
 
   return {
     title,
@@ -66,13 +71,13 @@ export async function generateMetadata({
       description: caseStudy.summary,
       type: "article",
       url,
-      images: [],
+      images: [{ url: socialImage, width: 1200, height: 630, alt: `${caseStudy.title} case study` }],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: `${caseStudy.title} · ${caseStudy.thesis}`,
       description: caseStudy.summary,
-      images: [],
+      images: [socialImage],
     },
   };
 }
@@ -89,9 +94,39 @@ export default async function WorkPage({
 
   const style = accentStyles[caseStudy.accent];
   const related = flagshipCaseStudies.filter((item) => item.slug !== caseStudy.slug);
+  const caseStudyUrl = `${siteUrl}/work/${caseStudy.slug}`;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CreativeWork",
+        name: `${caseStudy.title} case study`,
+        headline: caseStudy.thesis,
+        description: caseStudy.summary,
+        url: caseStudyUrl,
+        dateModified: caseStudy.updatedAt,
+        author: { "@type": "Person", name: SITE.name, url: siteUrl },
+        image: `${siteUrl}${caseStudy.preview.src}`,
+      },
+      ...(caseStudy.liveUrl
+        ? [
+            {
+              "@type": "SoftwareApplication",
+              name: caseStudy.title,
+              applicationCategory: "MultimediaApplication",
+              operatingSystem: "Modern mobile and desktop web browsers",
+              url: caseStudy.liveUrl,
+              description: caseStudy.summary,
+              creator: { "@type": "Person", name: SITE.name, url: siteUrl },
+            },
+          ]
+        : []),
+    ],
+  };
 
   return (
     <>
+      <JsonLd data={structuredData} />
       <a
         href="#case-study"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:border-2 focus:border-charcoal focus:bg-ochre focus:px-4 focus:py-2 focus:font-mono focus:text-sm"
@@ -123,18 +158,22 @@ export default async function WorkPage({
             >
               All flagships
             </Link>
-            <a
+            <TrackedLink
               href={`mailto:${SITE.email}?subject=${encodeURIComponent(`About ${caseStudy.title}`)}`}
+              eventName="contact_intent"
+              eventTarget={caseStudy.slug}
               className={`border-2 border-charcoal px-3 py-1.5 text-sm font-semibold no-underline sticker-sm ${style.bg}`}
             >
               Contact Ari
-            </a>
+            </TrackedLink>
           </nav>
         </div>
       </header>
 
+      <CaseStudyProgress />
+
       <main id="case-study">
-        <section className="border-b-2 border-charcoal px-4 py-12 sm:px-6 sm:py-20">
+        <section id="overview" className="scroll-mt-28 border-b-2 border-charcoal px-4 py-12 sm:px-6 sm:py-20">
           <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div>
               <p className={`font-mono text-[0.7rem] uppercase tracking-[0.2em] ${style.text}`}>
@@ -152,14 +191,16 @@ export default async function WorkPage({
 
               <div className="mt-7 flex flex-wrap gap-3">
                 {caseStudy.liveUrl ? (
-                  <a
+                  <TrackedLink
                     href={caseStudy.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    eventName="live_product_open"
+                    eventTarget={caseStudy.productId}
                     className={`inline-flex items-center justify-center border-2 border-charcoal px-5 py-2.5 text-sm font-semibold no-underline sticker-sm transition-transform hover:-translate-y-0.5 ${style.bg}`}
                   >
-                    Open live product ↗
-                  </a>
+                    Try {caseStudy.title} ↗
+                  </TrackedLink>
                 ) : (
                   <span className="inline-flex items-center border-2 border-charcoal bg-paper-ink px-4 py-2.5 font-mono text-xs uppercase tracking-wide">
                     Public demo in progress
@@ -172,6 +213,9 @@ export default async function WorkPage({
                   Back to selected work
                 </Link>
               </div>
+              <p className="mt-4 max-w-2xl font-mono text-[0.65rem] leading-relaxed text-muted">
+                {caseStudy.availability}. Last verified {caseStudy.lastVerified}: {caseStudy.verificationScope.toLowerCase()}.
+              </p>
             </div>
 
             <figure className={`sticker ${style.shadow} overflow-hidden bg-charcoal p-2`}>
@@ -189,7 +233,7 @@ export default async function WorkPage({
                 />
               </div>
               <figcaption className="border-t-2 border-charcoal bg-paper px-3 py-2 font-mono text-[0.65rem] leading-relaxed text-muted">
-                Product capture · current prototype
+                {caseStudy.preview.caption}
               </figcaption>
             </figure>
           </div>
@@ -197,13 +241,14 @@ export default async function WorkPage({
 
         <section className="border-b-2 border-charcoal bg-paper-ink/55 px-4 py-10 sm:px-6 sm:py-14">
           <div className="mx-auto max-w-6xl">
-            <dl className="grid border-2 border-charcoal bg-paper sm:grid-cols-2 lg:grid-cols-5">
+            <dl className="grid border-2 border-charcoal bg-paper sm:grid-cols-2 lg:grid-cols-6">
               {[
                 ["Role", caseStudy.role],
                 ["Team", caseStudy.team],
                 ["Timeline", caseStudy.timeframe],
                 ["Maturity", caseStudy.maturity],
                 ["Camera data", caseStudy.privacy],
+                ["Verified", `${caseStudy.lastVerified} · ${caseStudy.verificationScope}`],
               ].map(([label, value]) => (
                 <div
                   key={label}
@@ -255,7 +300,9 @@ export default async function WorkPage({
           </div>
         </section>
 
-        <section className="border-b-2 border-charcoal bg-charcoal px-4 py-16 text-paper sm:px-6 sm:py-24">
+        <CaseStudyEvidenceGallery caseStudy={caseStudy} />
+
+        <section id="system" className="scroll-mt-28 border-b-2 border-charcoal bg-charcoal px-4 py-16 text-paper sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ochre">
               System walkthrough
@@ -282,7 +329,7 @@ export default async function WorkPage({
           </div>
         </section>
 
-        <section className="border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-24">
+        <section id="evidence" className="scroll-mt-28 border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-6 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
               <div>
@@ -318,10 +365,45 @@ export default async function WorkPage({
                 </div>
               ))}
             </dl>
+
+            <div className="mt-10 overflow-x-auto border-2 border-charcoal bg-paper">
+              <table className="w-full min-w-[720px] border-collapse text-left text-sm">
+                <thead className="bg-charcoal text-paper">
+                  <tr>
+                    {[
+                      "Metric",
+                      "Result",
+                      "Measured",
+                      "Method / scope",
+                    ].map((heading) => (
+                      <th key={heading} className="px-4 py-3 font-mono text-xs uppercase tracking-wider">
+                        {heading}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {caseStudy.proof.map((item) => (
+                    <tr key={item.label} className="border-t border-charcoal/20 align-top">
+                      <th className="px-4 py-4 font-semibold">{item.label}</th>
+                      <td className="px-4 py-4 font-display text-2xl font-semibold">{item.value}</td>
+                      <td className="px-4 py-4 font-mono text-xs">{item.measuredAt}</td>
+                      <td className="max-w-lg px-4 py-4 text-charcoal/75">{item.method}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <Link
+              href="/evidence"
+              className="mt-5 inline-flex font-mono text-xs uppercase tracking-wider text-cobalt underline-offset-4 hover:underline"
+            >
+              Open the public evidence ledger →
+            </Link>
           </div>
         </section>
 
-        <section className="border-b-2 border-charcoal bg-paper-ink/55 px-4 py-16 sm:px-6 sm:py-24">
+        <section id="decisions" className="scroll-mt-28 border-b-2 border-charcoal bg-paper-ink/55 px-4 py-16 sm:px-6 sm:py-24">
           <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:gap-16">
             <div>
               <p className={`font-mono text-[0.7rem] uppercase tracking-[0.2em] ${style.text}`}>
@@ -371,7 +453,7 @@ export default async function WorkPage({
           </div>
         </section>
 
-        <section className="border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-24">
+        <section id="next" className="scroll-mt-28 border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-24">
           <div className={`mx-auto max-w-6xl border-2 border-charcoal p-7 sticker-lg sm:p-10 ${style.bg}`}>
             <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] opacity-75">
               Best next move
@@ -379,6 +461,14 @@ export default async function WorkPage({
             <p className="mt-3 max-w-4xl font-display text-3xl font-semibold leading-tight sm:text-4xl">
               {caseStudy.nextMove}
             </p>
+            <TrackedLink
+              href={`mailto:${SITE.email}?subject=${encodeURIComponent(`Product engineering conversation · ${caseStudy.title}`)}`}
+              eventName="contact_intent"
+              eventTarget={`${caseStudy.slug}-case-study`}
+              className="mt-7 inline-flex border-2 border-charcoal bg-paper px-5 py-3 text-sm font-bold text-charcoal no-underline sticker-sm transition-transform hover:-translate-y-0.5"
+            >
+              Discuss a problem like this →
+            </TrackedLink>
           </div>
         </section>
 

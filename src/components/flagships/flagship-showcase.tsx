@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import { flagshipCaseStudies } from "@/data/case-studies";
 import { SITE } from "@/data/games";
+import { TrackedLink } from "@/components/ui/tracked-link";
 
 const accentStyles = {
   coral: {
@@ -93,6 +93,9 @@ export function FlagshipShowcase() {
                   <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted">
                     {caseStudy.label} · {caseStudy.maturity}
                   </p>
+                  <p className="mt-2 inline-flex w-fit border border-charcoal/30 bg-paper-ink px-2 py-1 font-mono text-[0.6rem] uppercase tracking-wide text-charcoal/70">
+                    {caseStudy.availability}
+                  </p>
                   <h3 className="mt-2 font-display text-3xl font-semibold tracking-tight">
                     {caseStudy.title}
                   </h3>
@@ -118,23 +121,30 @@ export function FlagshipShowcase() {
                       </div>
                     ))}
                   </dl>
+                  <p className="mt-2 font-mono text-[0.6rem] leading-relaxed text-muted">
+                    Engineering validation · last verified {caseStudy.lastVerified} · {caseStudy.verificationScope}
+                  </p>
 
                   <div className="mt-6 flex flex-wrap gap-3">
-                    <Link
+                    <TrackedLink
                       href={`/work/${caseStudy.slug}`}
+                      eventName="case_study_open"
+                      eventTarget={caseStudy.slug}
                       className={`inline-flex items-center justify-center border-2 border-charcoal px-5 py-2.5 text-sm font-semibold no-underline sticker-sm transition-transform hover:-translate-y-0.5 ${style.link}`}
                     >
                       Read the case study
-                    </Link>
+                    </TrackedLink>
                     {caseStudy.liveUrl ? (
-                      <a
+                      <TrackedLink
                         href={caseStudy.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
+                        eventName="live_product_open"
+                        eventTarget={caseStudy.productId}
                         className="inline-flex items-center justify-center border-2 border-charcoal bg-surface-raised px-5 py-2.5 text-sm font-semibold no-underline sticker-sm transition-transform hover:-translate-y-0.5"
                       >
-                        Open live product ↗
-                      </a>
+                        Try {caseStudy.title} ↗
+                      </TrackedLink>
                     ) : null}
                   </div>
                 </div>
@@ -143,7 +153,7 @@ export function FlagshipShowcase() {
           })}
         </div>
 
-        <div className="mt-8 grid gap-5 border-2 border-charcoal bg-charcoal p-6 text-paper sticker-lg sm:p-8 md:grid-cols-[1fr_auto] md:items-center">
+        <div className="mt-8 grid gap-5 border-2 border-charcoal bg-charcoal p-6 text-paper sticker-lg sm:p-8 md:grid-cols-[1fr_auto_auto] md:items-center">
           <div>
             <p className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-ochre">
               Available for the next hard problem
@@ -153,12 +163,22 @@ export function FlagshipShowcase() {
               where software has to understand the physical world.
             </p>
           </div>
-          <a
+          <TrackedLink
+            href="/evidence"
+            eventName="evidence_open"
+            eventTarget="flagship-ledger"
+            className="inline-flex items-center justify-center border-2 border-paper bg-paper px-4 py-3 font-mono text-xs font-bold uppercase tracking-wider text-charcoal no-underline shadow-[4px_4px_0_var(--ochre)] transition-transform hover:-translate-y-0.5"
+          >
+            Inspect the evidence ledger
+          </TrackedLink>
+          <TrackedLink
             href={`mailto:${SITE.email}?subject=Let%27s%20build%20something%20camera-first`}
+            eventName="contact_intent"
+            eventTarget="flagship-cta"
             className="inline-flex items-center justify-center border-2 border-paper bg-ochre px-5 py-3 text-sm font-bold text-charcoal no-underline shadow-[4px_4px_0_var(--paper)] transition-transform hover:-translate-y-0.5"
           >
             Start a conversation
-          </a>
+          </TrackedLink>
         </div>
       </div>
     </section>
