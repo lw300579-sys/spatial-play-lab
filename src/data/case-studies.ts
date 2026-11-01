@@ -173,7 +173,7 @@ export const flagshipCaseStudies: FlagshipCaseStudy[] = [
       "Session history and trend views are not yet a complete training program.",
     ],
     nextMove:
-      "Make movement quality the progression currency: one clear post-session insight, one targeted mission, and a re-test that proves whether control, range, or consistency improved.",
+      "After each workout, show one thing you did better or worse than last time.",
   },
   {
     slug: "ar-baseball",

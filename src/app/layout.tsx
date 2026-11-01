@@ -28,26 +28,22 @@ const siteUrl = "https://ari-swerdlow.vercel.app";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Ari Swerdlow · Camera-First Product Engineer",
+    default: "Ari Swerdlow · Product engineer",
     template: "%s · Ari Swerdlow",
   },
   description:
-    "Ari Swerdlow builds camera-first products at the intersection of computer vision, game systems, and product design—from browser fitness and AR baseball to sports intelligence.",
+    "I build browser games and training apps you control with your body. No install. Just a link and a camera.",
   keywords: [
     "Ari Swerdlow",
-    "WebXR",
-    "browser AR",
-    "MediaPipe",
+    "browser games",
     "computer vision",
-    "pose tracking",
-    "ASL",
+    "camera apps",
     "portfolio",
   ],
   authors: [{ name: "Ari Swerdlow" }],
   openGraph: {
     title: "Ari Swerdlow",
-    description:
-      "Camera-first product engineering: browser fitness, AR baseball, and sports intelligence from ordinary video.",
+    description: "Browser apps you control by moving.",
     type: "website",
     url: siteUrl,
     siteName: "Ari Swerdlow",
@@ -56,8 +52,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Ari Swerdlow",
-    description:
-      "Camera-first product engineering across browser fitness, AR games, coaching, and sports intelligence.",
+    description: "Browser apps you control by moving.",
     creator: "@2Swerdy",
   },
   robots: { index: true, follow: true },
@@ -81,7 +76,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         name: SITE.name,
         url: siteUrl,
         email: `mailto:${SITE.email}`,
-        jobTitle: "Product Engineer · Applied Computer Vision",
+        jobTitle: "Product engineer",
         sameAs: SITE.socials.map((social) => social.href),
         knowsAbout: [
           "Computer vision",

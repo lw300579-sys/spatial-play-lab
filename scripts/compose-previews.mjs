@@ -10,7 +10,7 @@ import sharp from "sharp";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CAPTURES = path.join(__dirname, "captures");
-const OUT = path.join(__dirname, "../public/previews");
+const OUT = path.join(__dirname, "captures/framed");
 const W = 1600;
 const H = 1000;
 
@@ -297,7 +297,7 @@ async function main() {
   for (const job of jobs) {
     if (await composePhone(job)) ok += 1;
   }
-  await composeCitadel();
+  console.log("Skipped generated Bio-Tactical art. That product has no public capture.");
   console.log(`done — ${ok}/${jobs.length} phone frames`);
   if (ok === 0) {
     console.error("No live captures found. Run: node scripts/capture-live.mjs");

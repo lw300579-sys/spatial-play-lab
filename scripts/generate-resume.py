@@ -93,7 +93,7 @@ def project(pdf, title, role, body, evidence, x, y, width, accent):
 def build():
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     pdf = canvas.Canvas(str(OUTPUT), pagesize=letter)
-    pdf.setTitle("Ari Swerdlow - Product Engineer - Applied Computer Vision")
+    pdf.setTitle("Ari Swerdlow - Product engineer")
     pdf.setAuthor("Ari Swerdlow")
     pdf.setSubject("One-page product engineering resume and selected work")
 
@@ -114,10 +114,10 @@ def build():
     pdf.drawString(88, PAGE_H - 53, "ARI SWERDLOW")
     pdf.setFillColor(OCHRE)
     pdf.setFont("Helvetica-Bold", 11)
-    pdf.drawString(89, PAGE_H - 73, "PRODUCT ENGINEER  /  APPLIED COMPUTER VISION")
+    pdf.drawString(89, PAGE_H - 73, "PRODUCT ENGINEER  /  COMPUTER VISION AND BROWSER GAMES")
     pdf.setFillColor(HexColor("#D4D4D8"))
     pdf.setFont("Helvetica", 8)
-    pdf.drawString(89, PAGE_H - 92, "Browser products where movement becomes input - built for noisy signals, real devices, and clear recovery.")
+    pdf.drawString(89, PAGE_H - 92, "I build apps where a phone camera is the controller. Bad lighting, lost tracking, slow phones.")
 
     # Contact strip
     contact_y = PAGE_H - 108
@@ -151,7 +151,7 @@ def build():
     y = top - 15
     y = paragraph(
         pdf,
-        "Independent product engineer working across computer vision, interaction design, game systems, and release reliability. I turn uncertain camera input into sessions people can understand and recover.",
+        "Independent product engineer. I take messy camera input and turn it into something a normal person can use without reading instructions.",
         left_x,
         y,
         left_w,
@@ -234,8 +234,8 @@ def build():
         pdf,
         "Jiku Fitness",
         "Product + engineering",
-        "Built a browser training loop for boxing, push-ups, and pull-ups around explicit play, rest, completion, results, confidence, and tracking-loss states.",
-        "84% target occupancy across 347 recorded-replay samples  /  8 deterministic boxing tests",
+        "Built a browser workout for boxing, push-ups and pull-ups that handles lost tracking and rest without freezing.",
+        "20 boxing tests  /  real-phone testing pending",
         right_x,
         y,
         right_w,
@@ -246,8 +246,8 @@ def build():
         pdf,
         "AR Baseball",
         "Game + pose systems",
-        "Built a camera-controlled three-inning baseball game with readiness calibration, fresh-frame swing recognition, fielding, runners, rival scoring, and bounded completion.",
-        "250k seeded simulations  /  recorded-camera production gate  /  complete three-inning loop",
+        "Built a three-inning baseball game controlled by your swing, with fielding, runners and a rival team.",
+        "250,000 simulated games  /  21 tests",
         right_x,
         y,
         right_w,
@@ -258,8 +258,8 @@ def build():
         pdf,
         "Bio-Tactical Edge",
         "Research + product architecture",
-        "Designed a sports-intelligence workspace linking broadcast video, court calibration, player paths, synchronized 3D replay, counterfactual recovery, search, and report evidence.",
-        "77 automated tests  /  public source-linked golden rally remains the next acceptance artifact",
+        "Designed a tool that turns match video into court positions, player paths, a 3D replay and searchable clips.",
+        "77 tests",
         right_x,
         y,
         right_w,
@@ -305,15 +305,15 @@ def build():
     capabilities = [
         (
             "Prototype the hard input",
-            "Turn gesture, pose, video, or physical motion into a legible interaction loop.",
+            "Get gestures, pose or video working as a real control.",
         ),
         (
             "Make it trustworthy",
-            "Design confidence, failure, privacy, and recovery as product states rather than edge cases.",
+            "Plan for bad lighting, lost tracking and privacy from day one.",
         ),
         (
             "Ship with evidence",
-            "Use replay, simulation, browser gates, and honest metrics to protect the complete journey.",
+            "Tests, replays and numbers that say what they don't cover.",
         ),
     ]
     for index, (title, body) in enumerate(capabilities):
@@ -344,7 +344,7 @@ def build():
     rule(pdf, 36, footer_y + 15, PAGE_W - 36, color=INK, width=1)
     pdf.setFillColor(MUTED)
     pdf.setFont("Helvetica", 6.5)
-    pdf.drawString(36, footer_y, "Engineering metrics, not user-outcome claims. Methods and open evidence gaps: ari-swerdlow.vercel.app/evidence")
+    pdf.drawString(36, footer_y, "These are engineering numbers, not user results. More at ari-swerdlow.vercel.app/evidence")
     pdf.setFillColor(CORAL)
     pdf.setFont("Helvetica-Bold", 7)
     pdf.drawRightString(PAGE_W - 36, footer_y, "AVAILABLE FOR PRODUCT ENGINEERING + APPLIED CV")

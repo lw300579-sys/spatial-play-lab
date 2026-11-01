@@ -1,46 +1,134 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CaseStudyEvidenceGallery } from "@/components/case-study/case-study-evidence-gallery";
-import { CaseStudyProgress } from "@/components/case-study/case-study-progress";
 import { JsonLd } from "@/components/seo/json-ld";
+import { AppMedia } from "@/components/ui/app-media";
 import { TrackedLink } from "@/components/ui/tracked-link";
-import {
-  flagshipCaseStudies,
-  flagshipSlugs,
-  getFlagshipCaseStudy,
-} from "@/data/case-studies";
+import { appClips } from "@/data/clips";
 import { SITE } from "@/data/games";
+import { flagshipSlugs, getFlagshipCaseStudy } from "@/data/case-studies";
 
 const siteUrl = "https://ari-swerdlow.vercel.app";
 
-const accentStyles = {
-  coral: {
-    text: "text-coral",
-    bg: "bg-coral text-white",
-    border: "border-coral",
-    shadow: "sticker-coral",
+interface WorkCopy {
+  kicker: string;
+  title: string;
+  description: string;
+  sub: string;
+  shots: { src: string; alt: string }[];
+  caption: string;
+  how: [string, string, string];
+  status: string;
+  liveUrl: string | null;
+  tryLabel: string | null;
+  tryNote: string | null;
+  mailLabel: string | null;
+  clipId: string;
+  next: { href: string; label: string }[];
+}
+
+const workCopy: Record<string, WorkCopy> = {
+  jiku: {
+    kicker: "Case study · fitness",
+    title: "Jiku Fitness",
+    description: "A browser gym. Box, do push-ups and pull-ups, and your phone camera keeps count.",
+    sub: "A gym in your browser. Box, do push-ups and pull-ups. Your phone camera keeps count.",
+    shots: [
+      {
+        src: "/shots/jiku-fitness-start-desktop.webp",
+        alt: "Jiku Fitness start screen. It asks before it turns the camera on.",
+      },
+      {
+        src: "/shots/jiku-fitness-boxing-setup-desktop.webp",
+        alt: "Jiku Fitness boxing setup. One punch, one clear response.",
+      },
+    ],
+    caption: "The start screen. It asks before it turns the camera on.",
+    how: [
+      "Your phone camera tracks your body, and it all runs on the phone.",
+      "Each round has a clear start, rest and finish, so you always know if it's still running.",
+      "A rep only counts if your whole body went through it, not just your elbow.",
+    ],
+    status: "Live prototype. Tested in code; still needs more real-phone sessions.",
+    liveUrl: "https://posture-app-nms-projects-e9ba3578.vercel.app/",
+    tryLabel: "Try Jiku Fitness",
+    tryNote: "Best on a phone. Needs your camera.",
+    mailLabel: null,
+    clipId: "jiku-fitness",
+    next: [
+      { href: "/work/ar-baseball", label: "AR Baseball" },
+      { href: "/work/bio-tactical-edge", label: "Bio-Tactical Edge" },
+    ],
   },
-  cobalt: {
-    text: "text-cobalt",
-    bg: "bg-cobalt text-white",
-    border: "border-cobalt",
-    shadow: "sticker-cobalt",
+  "ar-baseball": {
+    kicker: "Case study · game",
+    title: "AR Baseball",
+    description: "A baseball game you play by swinging at your phone. Three innings, no bat required.",
+    sub: "A baseball game you play by swinging at your phone. Three innings, a rival team, no bat.",
+    shots: [
+      {
+        src: "/shots/ar-baseball-stadium-desktop.webp",
+        alt: "AR Baseball calibration. A 3D stadium waits until it can see you.",
+      },
+      {
+        src: "/shots/ar-baseball-menu-desktop.webp",
+        alt: "AR Baseball menu, with the rival ladder.",
+      },
+    ],
+    caption: "Calibration. It waits until it can see you before it pitches.",
+    how: [
+      "A quick pose at the start tells the game how big you are and which hand you bat with.",
+      "It looks for a real swing, so standing still with your hands up doesn't get you a hit.",
+      "Contact turns into actual baseball: fielders, runners, runs and a final score.",
+    ],
+    status: "Live prototype. 250,000 simulated games run clean; real-phone testing is next.",
+    liveUrl: "https://ar-baseball.vercel.app/",
+    tryLabel: "Step up to bat",
+    tryNote: "Best on a phone. Needs your camera.",
+    mailLabel: null,
+    clipId: "ar-baseball",
+    next: [
+      { href: "/work/jiku", label: "Jiku Fitness" },
+      { href: "/work/bio-tactical-edge", label: "Bio-Tactical Edge" },
+    ],
   },
-  lawn: {
-    text: "text-lawn",
-    bg: "bg-lawn text-charcoal",
-    border: "border-lawn",
-    shadow: "sticker-lawn",
+  "bio-tactical-edge": {
+    kicker: "Case study · sports analysis",
+    title: "Bio-Tactical Edge",
+    description: "Turns ordinary match video into court positions, player paths and a 3D replay.",
+    sub: "Takes ordinary match video and works out where everyone actually was.",
+    shots: [
+      {
+        src: "/shots/bio-tactical-analysis-desktop.webp",
+        alt: "Bio-Tactical Edge development screen, with a court replay and measurements.",
+      },
+      {
+        src: "/shots/bio-tactical-engineering-desktop.webp",
+        alt: "Bio-Tactical Edge engineering view of the court and telemetry.",
+      },
+      {
+        src: "/shots/bio-tactical-reconstruction-desktop.webp",
+        alt: "Bio-Tactical Edge reconstruction of a ball path on a court.",
+      },
+    ],
+    caption: "Development screens. There's no public demo yet.",
+    how: [
+      "It finds the court lines in each frame and maps the picture onto a real court.",
+      "Players and the ball become positions on that court, lined up with the video.",
+      "You can scrub a 3D replay and every number links back to the frame it came from.",
+    ],
+    status: "Research prototype. The next step is one public 20-second rally you can scrub end to end.",
+    liveUrl: null,
+    tryLabel: null,
+    tryNote: null,
+    mailLabel: "Ask me about it",
+    clipId: "bio-tactical-edge",
+    next: [
+      { href: "/work/jiku", label: "Jiku Fitness" },
+      { href: "/work/ar-baseball", label: "AR Baseball" },
+    ],
   },
-  ochre: {
-    text: "text-[#9a6900]",
-    bg: "bg-ochre text-charcoal",
-    border: "border-ochre",
-    shadow: "sticker-ochre",
-  },
-} as const;
+};
 
 export const dynamicParams = false;
 
@@ -54,30 +142,23 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const caseStudy = getFlagshipCaseStudy(slug);
-
-  if (!caseStudy) return {};
-
-  const title = `${caseStudy.title} case study`;
-  const url = `${siteUrl}/work/${caseStudy.slug}`;
-  const socialImage = `${url}/opengraph-image`;
-
+  const page = workCopy[slug];
+  if (!page) return {};
+  const url = `${siteUrl}/work/${slug}`;
   return {
-    title,
-    description: caseStudy.summary,
+    title: page.title,
+    description: page.description,
     alternates: { canonical: url },
     openGraph: {
-      title: `${caseStudy.title} · ${caseStudy.thesis}`,
-      description: caseStudy.summary,
+      title: page.title,
+      description: page.description,
       type: "article",
       url,
-      images: [{ url: socialImage, width: 1200, height: 630, alt: `${caseStudy.title} case study` }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${caseStudy.title} · ${caseStudy.thesis}`,
-      description: caseStudy.summary,
-      images: [socialImage],
+      title: page.title,
+      description: page.description,
     },
   };
 }
@@ -88,451 +169,125 @@ export default async function WorkPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const page = workCopy[slug];
   const caseStudy = getFlagshipCaseStudy(slug);
+  if (!page || !caseStudy) notFound();
 
-  if (!caseStudy) notFound();
-
-  const style = accentStyles[caseStudy.accent];
-  const related = flagshipCaseStudies.filter((item) => item.slug !== caseStudy.slug);
-  const caseStudyUrl = `${siteUrl}/work/${caseStudy.slug}`;
+  const pageUrl = `${siteUrl}/work/${slug}`;
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "CreativeWork",
-        name: `${caseStudy.title} case study`,
-        headline: caseStudy.thesis,
-        description: caseStudy.summary,
-        url: caseStudyUrl,
+        name: page.title,
+        headline: page.sub,
+        description: page.description,
+        url: pageUrl,
         dateModified: caseStudy.updatedAt,
         author: { "@type": "Person", name: SITE.name, url: siteUrl },
-        image: `${siteUrl}${caseStudy.preview.src}`,
+        image: `${siteUrl}${page.shots[0].src}`,
       },
-      ...(caseStudy.liveUrl
-        ? [
-            {
-              "@type": "SoftwareApplication",
-              name: caseStudy.title,
-              applicationCategory: "MultimediaApplication",
-              operatingSystem: "Modern mobile and desktop web browsers",
-              url: caseStudy.liveUrl,
-              description: caseStudy.summary,
-              creator: { "@type": "Person", name: SITE.name, url: siteUrl },
-            },
-          ]
-        : []),
     ],
   };
 
   return (
     <>
       <JsonLd data={structuredData} />
-      <a
-        href="#case-study"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:border-2 focus:border-charcoal focus:bg-ochre focus:px-4 focus:py-2 focus:font-mono focus:text-sm"
-      >
-        Skip to case study
-      </a>
-
-      <header className="sticky top-0 z-50 border-b-2 border-charcoal bg-paper/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          <Link
-            href="/"
-            className="group flex items-center gap-2.5 no-underline"
-            aria-label={`${SITE.name}, back to portfolio`}
-          >
-            <span
-              className="flex h-8 w-8 items-center justify-center border-2 border-charcoal bg-coral text-sm font-bold text-white sticker-sm transition-transform group-hover:-rotate-6"
-              aria-hidden
-            >
-              {SITE.shortName}
-            </span>
-            <span className="hidden font-display text-lg font-semibold tracking-tight text-charcoal sm:inline">
-              {SITE.name}
-            </span>
+      <header className="border-b-2 border-charcoal">
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+          <Link href="/" className="font-display text-lg font-semibold no-underline">
+            {SITE.name}
           </Link>
-          <nav className="flex items-center gap-3" aria-label="Case study">
-            <Link
-              href="/#flagships"
-              className="font-mono text-[0.68rem] uppercase tracking-wider text-charcoal/75 no-underline hover:text-charcoal hover:underline"
-            >
-              All flagships
+          <nav className="flex gap-4 font-mono text-[0.68rem] uppercase tracking-wide" aria-label="Case study">
+            <Link href="/#apps" className="text-charcoal/70 no-underline">
+              Work
             </Link>
-            <TrackedLink
-              href={`mailto:${SITE.email}?subject=${encodeURIComponent(`About ${caseStudy.title}`)}`}
-              eventName="contact_intent"
-              eventTarget={caseStudy.slug}
-              className={`border-2 border-charcoal px-3 py-1.5 text-sm font-semibold no-underline sticker-sm ${style.bg}`}
-            >
-              Contact Ari
-            </TrackedLink>
+            <Link href="/evidence" className="text-charcoal/70 no-underline">
+              Notes
+            </Link>
           </nav>
         </div>
       </header>
+      <main className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+        <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-cobalt">{page.kicker}</p>
+        <h1 className="mt-3 font-display text-5xl font-semibold tracking-tight sm:text-6xl">{page.title}</h1>
+        <p className="mt-4 text-lg leading-relaxed text-charcoal/85">{page.sub}</p>
 
-      <CaseStudyProgress />
-
-      <main id="case-study">
-        <section id="overview" className="scroll-mt-28 border-b-2 border-charcoal px-4 py-12 sm:px-6 sm:py-20">
-          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-            <div>
-              <p className={`font-mono text-[0.7rem] uppercase tracking-[0.2em] ${style.text}`}>
-                {caseStudy.label} · flagship case study
-              </p>
-              <h1 className="mt-3 max-w-3xl font-display text-[clamp(3rem,7vw,5.5rem)] font-semibold leading-[0.95] tracking-tight">
-                {caseStudy.title}
-              </h1>
-              <p className="mt-5 max-w-2xl font-display text-2xl font-medium leading-snug text-charcoal/90 sm:text-3xl">
-                {caseStudy.thesis}
-              </p>
-              <p className="mt-5 max-w-2xl text-base leading-relaxed text-charcoal/80 sm:text-lg">
-                {caseStudy.summary}
-              </p>
-
-              <div className="mt-7 flex flex-wrap gap-3">
-                {caseStudy.liveUrl ? (
-                  <TrackedLink
-                    href={caseStudy.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    eventName="live_product_open"
-                    eventTarget={caseStudy.productId}
-                    className={`inline-flex items-center justify-center border-2 border-charcoal px-5 py-2.5 text-sm font-semibold no-underline sticker-sm transition-transform hover:-translate-y-0.5 ${style.bg}`}
-                  >
-                    Try {caseStudy.title} ↗
-                  </TrackedLink>
-                ) : (
-                  <span className="inline-flex items-center border-2 border-charcoal bg-paper-ink px-4 py-2.5 font-mono text-xs uppercase tracking-wide">
-                    Public demo in progress
-                  </span>
-                )}
-                <Link
-                  href="/#flagships"
-                  className="inline-flex items-center justify-center border-2 border-charcoal bg-surface-raised px-5 py-2.5 text-sm font-semibold no-underline sticker-sm transition-transform hover:-translate-y-0.5"
-                >
-                  Back to selected work
-                </Link>
-              </div>
-              <p className="mt-4 max-w-2xl font-mono text-[0.65rem] leading-relaxed text-muted">
-                {caseStudy.availability}. Last verified {caseStudy.lastVerified}: {caseStudy.verificationScope.toLowerCase()}.
-              </p>
+        <figure className="mt-8">
+          <div className="overflow-hidden rounded-lg border-2 border-charcoal bg-charcoal">
+            <AppMedia
+              clip={appClips[page.clipId]}
+              desktop={page.shots[0].src}
+              alt={page.shots[0].alt}
+              priority
+            />
+          </div>
+          {page.shots.length > 1 ? (
+            <div className={`mt-3 grid gap-3 ${page.shots.length > 2 ? "md:grid-cols-2" : "sm:grid-cols-2"}`}>
+              {page.shots.slice(1).map((shot) => (
+                <div key={shot.src} className="overflow-hidden rounded-lg border-2 border-charcoal bg-charcoal">
+                  <img src={shot.src} alt={shot.alt} width={1280} height={800} className="aspect-[16/10] w-full object-cover object-top" />
+                </div>
+              ))}
             </div>
+          ) : null}
+          <figcaption className="mt-2 font-mono text-[0.7rem] leading-relaxed text-muted">{page.caption}</figcaption>
+        </figure>
 
-            <figure className={`sticker ${style.shadow} overflow-hidden bg-charcoal p-2`}>
-              <div
-                className="relative w-full overflow-hidden bg-[#020617]"
-                style={{ aspectRatio: caseStudy.preview.aspectRatio }}
+        <h2 className="mt-10 font-display text-2xl font-semibold">How it works</h2>
+        <ol className="mt-4 space-y-3 text-base leading-relaxed text-charcoal/85">
+          {page.how.map((sentence) => (
+            <li key={sentence}>{sentence}</li>
+          ))}
+        </ol>
+
+        <p className="mt-8 text-sm leading-relaxed text-charcoal/75">
+          {page.status}{" "}
+          <Link href="/evidence" className="text-cobalt underline underline-offset-2">
+            Details in Notes →
+          </Link>
+        </p>
+
+        <div className="mt-6 flex flex-col items-start gap-2">
+          {page.liveUrl && page.tryLabel ? (
+            <>
+              <TrackedLink
+                href={page.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                eventName="live_product_open"
+                eventTarget={caseStudy.productId}
+                className="inline-flex border-2 border-charcoal bg-coral px-5 py-2.5 text-sm font-semibold text-white no-underline"
               >
-                <Image
-                  src={caseStudy.preview.src}
-                  alt={caseStudy.preview.alt}
-                  fill
-                  priority
-                  className={caseStudy.slug === "bio-tactical-edge" ? "object-contain" : "object-cover"}
-                  sizes="(max-width: 1024px) 100vw, 48vw"
-                />
-              </div>
-              <figcaption className="border-t-2 border-charcoal bg-paper px-3 py-2 font-mono text-[0.65rem] leading-relaxed text-muted">
-                {caseStudy.preview.caption}
-              </figcaption>
-            </figure>
-          </div>
-        </section>
-
-        <section className="border-b-2 border-charcoal bg-paper-ink/55 px-4 py-10 sm:px-6 sm:py-14">
-          <div className="mx-auto max-w-6xl">
-            <dl className="grid border-2 border-charcoal bg-paper sm:grid-cols-2 lg:grid-cols-6">
-              {[
-                ["Role", caseStudy.role],
-                ["Team", caseStudy.team],
-                ["Timeline", caseStudy.timeframe],
-                ["Maturity", caseStudy.maturity],
-                ["Camera data", caseStudy.privacy],
-                ["Verified", `${caseStudy.lastVerified} · ${caseStudy.verificationScope}`],
-              ].map(([label, value]) => (
-                <div
-                  key={label}
-                  className="border-b border-charcoal/25 p-4 last:border-b-0 sm:border-r lg:border-b-0 lg:last:border-r-0"
-                >
-                  <dt className={`font-mono text-[0.65rem] uppercase tracking-wider ${style.text}`}>
-                    {label}
-                  </dt>
-                  <dd className="mt-2 text-sm font-medium leading-relaxed text-charcoal/85">
-                    {value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </section>
-
-        <section className="border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-24">
-          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-            <div>
-              <p className={`font-mono text-[0.7rem] uppercase tracking-[0.2em] ${style.text}`}>
-                The product
-              </p>
-              <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-                The problem was never just detection.
-              </h2>
-              <p className="mt-5 text-base leading-relaxed text-charcoal/80">
-                {caseStudy.problem}
-              </p>
-            </div>
-            <div className={`sticker ${style.shadow} bg-surface-raised p-6 sm:p-8`}>
-              <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted">
-                What I built
-              </p>
-              <p className="mt-3 font-display text-2xl font-medium leading-snug">
-                {caseStudy.outcome}
-              </p>
-              <p className="mt-4 text-base leading-relaxed text-charcoal/80">
-                {caseStudy.built}
-              </p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {caseStudy.technologies.map((technology) => (
-                  <span key={technology} className="spec-badge">
-                    {technology}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <CaseStudyEvidenceGallery caseStudy={caseStudy} />
-
-        <section id="system" className="scroll-mt-28 border-b-2 border-charcoal bg-charcoal px-4 py-16 text-paper sm:px-6 sm:py-24">
-          <div className="mx-auto max-w-6xl">
-            <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ochre">
-              System walkthrough
-            </p>
-            <h2 className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-              From physical signal to a result the person can trust.
-            </h2>
-
-            <div className="mt-10 grid gap-px border-2 border-paper/70 bg-paper/30 md:grid-cols-2">
-              {caseStudy.system.map((step) => (
-                <article key={step.step} className="bg-charcoal p-6 sm:p-7">
-                  <span className={`inline-flex border-2 border-charcoal px-2 py-1 font-mono text-[0.65rem] font-bold ${style.bg}`}>
-                    {step.step}
-                  </span>
-                  <h3 className="mt-4 font-display text-2xl font-semibold">
-                    {step.title}
-                  </h3>
-                  <p className="mt-3 text-base leading-relaxed text-paper/75">
-                    {step.body}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="evidence" className="scroll-mt-28 border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-24">
-          <div className="mx-auto max-w-6xl">
-            <div className="grid gap-6 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
-              <div>
-                <p className={`font-mono text-[0.7rem] uppercase tracking-[0.2em] ${style.text}`}>
-                  Evidence, with boundaries
-                </p>
-                <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-                  What has actually been verified.
-                </h2>
-              </div>
-              <p className="max-w-2xl text-base leading-relaxed text-charcoal/75">
-                These are engineering checks from the current implementation.
-                They are not user-success, retention, recognition-accuracy, or
-                commercial-impact claims.
-              </p>
-            </div>
-
-            <dl className="mt-8 grid gap-5 md:grid-cols-3">
-              {caseStudy.proof.map((item) => (
-                <div
-                  key={item.label}
-                  className={`sticker border-b-8 bg-surface-raised p-6 ${style.border}`}
-                >
-                  <dt className="font-display text-4xl font-semibold tracking-tight">
-                    {item.value}
-                  </dt>
-                  <dd className={`mt-1 font-mono text-xs uppercase tracking-wider ${style.text}`}>
-                    {item.label}
-                  </dd>
-                  <p className="mt-4 text-sm leading-relaxed text-charcoal/75">
-                    {item.detail}
-                  </p>
-                </div>
-              ))}
-            </dl>
-
-            <div className="mt-10 overflow-x-auto border-2 border-charcoal bg-paper">
-              <table className="w-full min-w-[720px] border-collapse text-left text-sm">
-                <thead className="bg-charcoal text-paper">
-                  <tr>
-                    {[
-                      "Metric",
-                      "Result",
-                      "Measured",
-                      "Method / scope",
-                    ].map((heading) => (
-                      <th key={heading} className="px-4 py-3 font-mono text-xs uppercase tracking-wider">
-                        {heading}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {caseStudy.proof.map((item) => (
-                    <tr key={item.label} className="border-t border-charcoal/20 align-top">
-                      <th className="px-4 py-4 font-semibold">{item.label}</th>
-                      <td className="px-4 py-4 font-display text-2xl font-semibold">{item.value}</td>
-                      <td className="px-4 py-4 font-mono text-xs">{item.measuredAt}</td>
-                      <td className="max-w-lg px-4 py-4 text-charcoal/75">{item.method}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <Link
-              href="/evidence"
-              className="mt-5 inline-flex font-mono text-xs uppercase tracking-wider text-cobalt underline-offset-4 hover:underline"
-            >
-              Open the public evidence ledger →
-            </Link>
-          </div>
-        </section>
-
-        <section id="decisions" className="scroll-mt-28 border-b-2 border-charcoal bg-paper-ink/55 px-4 py-16 sm:px-6 sm:py-24">
-          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <p className={`font-mono text-[0.7rem] uppercase tracking-[0.2em] ${style.text}`}>
-                Product decisions
-              </p>
-              <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight">
-                The choices behind the system.
-              </h2>
-              <div className="mt-7 space-y-3">
-                {caseStudy.decisions.map((decision) => (
-                  <article
-                    key={decision.title}
-                    className="border-2 border-charcoal bg-paper p-5"
-                  >
-                    <h3 className="font-display text-xl font-semibold">
-                      {decision.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-charcoal/75">
-                      {decision.body}
-                    </p>
-                  </article>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-coral">
-                Honest limitations
-              </p>
-              <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight">
-                What the current prototype does not prove.
-              </h2>
-              <ul className="mt-7 space-y-3">
-                {caseStudy.limitations.map((limitation) => (
-                  <li
-                    key={limitation}
-                    className="flex gap-3 border-l-4 border-coral bg-paper px-4 py-3 text-base leading-relaxed text-charcoal/80"
-                  >
-                    <span aria-hidden className="font-mono font-bold text-coral">
-                      —
-                    </span>
-                    <span>{limitation}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section id="next" className="scroll-mt-28 border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-24">
-          <div className={`mx-auto max-w-6xl border-2 border-charcoal p-7 sticker-lg sm:p-10 ${style.bg}`}>
-            <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] opacity-75">
-              Best next move
-            </p>
-            <p className="mt-3 max-w-4xl font-display text-3xl font-semibold leading-tight sm:text-4xl">
-              {caseStudy.nextMove}
-            </p>
+                {page.tryLabel} ↗
+              </TrackedLink>
+              {page.tryNote ? <p className="font-mono text-[0.7rem] text-muted">{page.tryNote}</p> : null}
+            </>
+          ) : null}
+          {page.mailLabel ? (
             <TrackedLink
-              href={`mailto:${SITE.email}?subject=${encodeURIComponent(`Product engineering conversation · ${caseStudy.title}`)}`}
+              href={`mailto:${SITE.email}?subject=${encodeURIComponent(page.title)}`}
               eventName="contact_intent"
-              eventTarget={`${caseStudy.slug}-case-study`}
-              className="mt-7 inline-flex border-2 border-charcoal bg-paper px-5 py-3 text-sm font-bold text-charcoal no-underline sticker-sm transition-transform hover:-translate-y-0.5"
+              eventTarget={slug}
+              className="inline-flex border-2 border-charcoal bg-cobalt px-5 py-2.5 text-sm font-semibold text-white no-underline"
             >
-              Discuss a problem like this →
+              {page.mailLabel} →
             </TrackedLink>
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:px-6 sm:py-20">
-          <div className="mx-auto max-w-6xl">
-            <div className="flex flex-wrap items-end justify-between gap-5">
-              <div>
-                <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-muted">
-                  Continue exploring
-                </p>
-                <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight">
-                  Two more ways movement becomes software.
-                </h2>
-              </div>
-              <Link
-                href="/#contact"
-                className="font-mono text-xs uppercase tracking-wider text-cobalt underline-offset-4 hover:underline"
-              >
-                Contact Ari →
-              </Link>
-            </div>
-
-            <div className="mt-8 grid gap-5 md:grid-cols-2">
-              {related.map((item) => (
-                <Link
-                  key={item.slug}
-                  href={`/work/${item.slug}`}
-                  className="group grid grid-cols-[7rem_1fr] overflow-hidden border-2 border-charcoal bg-surface-raised text-charcoal no-underline sticker-sm sm:grid-cols-[10rem_1fr]"
-                >
-                  <div className="relative min-h-32 bg-charcoal">
-                    <Image
-                      src={item.preview.src}
-                      alt=""
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      sizes="160px"
-                    />
-                  </div>
-                  <div className="p-4 sm:p-5">
-                    <p className="font-mono text-[0.62rem] uppercase tracking-wider text-muted">
-                      {item.label}
-                    </p>
-                    <h3 className="mt-1 font-display text-xl font-semibold sm:text-2xl">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-charcoal/70">
-                      {item.thesis}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer className="border-t-2 border-charcoal bg-charcoal px-4 py-8 text-paper sm:px-6">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4">
-          <p className="font-display text-lg font-semibold">{SITE.name}</p>
-          <p className="font-mono text-[0.65rem] text-paper/65">
-            Camera-first product engineering · {new Date().getFullYear()}
-          </p>
+          ) : null}
         </div>
-      </footer>
+
+        <p className="mt-12 font-mono text-[0.75rem] text-muted">
+          More:{" "}
+          {page.next.map((item, index) => (
+            <span key={item.href}>
+              {index > 0 ? " · " : null}
+              <Link href={item.href} className="text-cobalt underline underline-offset-2">
+                {item.label}
+              </Link>
+            </span>
+          ))}
+        </p>
+      </main>
     </>
   );
 }

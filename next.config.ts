@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
     const contentSecurityPolicy = [
       "default-src 'self'",
       "base-uri 'self'",
+      // Signup posts to /api/subscribe. The provider URL stays server-side
+      // (NEWSLETTER_ACTION), so the browser form target stays on this origin.
       "form-action 'self' mailto:",
       "frame-ancestors 'none'",
       "object-src 'none'",

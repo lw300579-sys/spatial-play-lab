@@ -16,21 +16,24 @@ export const publishedBenchmarks = flagshipCaseStudies.flatMap((caseStudy) =>
 export const humanOutcomeGaps = [
   {
     product: "Jiku Fitness",
-    metric: "Session completion without manual recovery",
+    metric: "Can someone finish a session without help?",
     status: "Not yet measured",
-    nextSample: "5 structured sessions on real phones",
+    nextSample: "5 sessions on real phones",
+    nextMove: "After each workout, show one thing you did better or worse than last time.",
   },
   {
     product: "AR Baseball",
-    metric: "First-attempt swing recognition",
+    metric: "Does the swing feel right on a real phone?",
     status: "Not yet measured",
-    nextSample: "5 structured sessions across handedness and room setup",
+    nextSample: "Test runs BB01–BB04 with lefties and righties",
+    nextMove: "",
   },
   {
     product: "Bio-Tactical Edge",
-    metric: "Reconstruction error and evidence-finding time",
+    metric: "How accurate is it, and how fast can you find the moment you want?",
     status: "Not yet published",
-    nextSample: "1 source-linked golden rally with ground-truth notes",
+    nextSample: "One public rally with notes",
+    nextMove: "",
   },
 ] as const;
 
@@ -38,37 +41,37 @@ export const goldenRallyStages = [
   {
     step: "01",
     title: "Source",
-    requirement: "One unedited 20-second rally clip with provenance and permission to publish.",
+    requirement: "One unedited 20-second rally, with permission to publish.",
     status: "Required",
   },
   {
     step: "02",
     title: "Calibration",
-    requirement: "Court anchors, confidence, player tracks, and visible failure flags on the shared timeline.",
+    requirement: "Court lines found, with a confidence score.",
     status: "Prototype capability",
   },
   {
     step: "03",
     title: "Reconstruction",
-    requirement: "Synchronized source frames, court coordinates, and a 3D replay that can be scrubbed together.",
+    requirement: "Video, court and 3D replay scrub together.",
     status: "Prototype capability",
   },
   {
     step: "04",
     title: "Question",
-    requirement: "One narrow tactical question declared before inspecting the final result.",
+    requirement: "One question, written down before looking.",
     status: "Required",
   },
   {
     step: "05",
     title: "Answer",
-    requirement: "A bounded conclusion with uncertainty and direct links back to the supporting frames.",
+    requirement: "An answer that links back to the frames.",
     status: "Required",
   },
   {
     step: "06",
     title: "Export",
-    requirement: "A one-page report containing the claim, evidence frames, method, limitations, and date.",
+    requirement: "A one-page report.",
     status: "Required",
   },
 ] as const;
@@ -77,16 +80,16 @@ export const evidenceDownloads = [
   {
     label: "Usability observation sheet",
     href: "/evidence/usability-session-template.csv",
-    description: "First-attempt success, timing, recovery, and qualitative notes for each participant.",
+    description: "Blank sheet for a session with a real person.",
   },
   {
     label: "Device and browser matrix",
     href: "/evidence/device-matrix-template.csv",
-    description: "Camera readiness, sustained operation, interruption recovery, and thermal observations.",
+    description: "Blank sheet for phones and browsers.",
   },
   {
     label: "Golden-rally acceptance checklist",
     href: "/evidence/golden-rally-checklist.md",
-    description: "The minimum evidence package required before Bio-Tactical is presented as validated publicly.",
+    description: "Checklist before calling Bio-Tactical done.",
   },
 ] as const;

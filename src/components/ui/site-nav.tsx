@@ -1,34 +1,19 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import { SITE } from "@/data/games";
-import { spring } from "@/lib/motion";
-import { TrackedLink } from "@/components/ui/tracked-link";
 
 const LINKS = [
-  { href: "#flagships", label: "Selected" },
-  { href: "/evidence", label: "Evidence" },
+  { href: "#apps", label: "Work" },
+  { href: "/evidence", label: "Notes" },
+  { href: "/resume", label: "Résumé" },
   { href: "#contact", label: "Contact" },
 ] as const;
 
 export function SiteNav() {
-  const reduce = useReducedMotion();
-
   return (
-    <motion.header
-      className="sticky top-0 z-50 border-b-2 border-charcoal bg-paper/90 backdrop-blur-md"
-      initial={reduce ? false : { y: -12, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={spring}
-    >
+    <header className="sticky top-0 z-50 border-b-2 border-charcoal bg-paper/95 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 py-3 sm:gap-4 sm:px-6">
-        <a
-          href="#top"
-          className="group flex items-center gap-2.5 no-underline"
-          aria-label={`${SITE.name}, back to top`}
-        >
+        <a href="#top" className="group flex items-center gap-2.5 no-underline" aria-label="Ari Swerdlow, home">
           <span
-            className="flex h-8 w-8 items-center justify-center border-2 border-charcoal bg-coral text-sm font-bold text-white sticker-sm transition-transform group-hover:-rotate-6"
+            className="flex h-8 w-8 items-center justify-center border-2 border-charcoal bg-coral text-sm font-bold text-white"
             aria-hidden
           >
             {SITE.shortName}
@@ -37,28 +22,18 @@ export function SiteNav() {
             {SITE.name}
           </span>
         </a>
-
         <nav className="flex items-center gap-1 sm:gap-2" aria-label="Primary">
           {LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="px-2 py-1.5 font-mono text-[0.62rem] uppercase tracking-wide text-charcoal/70 no-underline transition-colors hover:bg-paper-ink hover:text-charcoal sm:px-3 sm:text-xs sm:tracking-wider"
+              className="px-2 py-1.5 font-mono text-[0.62rem] uppercase tracking-wide text-charcoal/70 no-underline hover:text-charcoal sm:px-3 sm:text-xs"
             >
               {link.label}
             </a>
           ))}
-          <TrackedLink
-            href="/ari-swerdlow-resume.pdf"
-            download
-            eventName="resume_download"
-            eventTarget="navigation"
-            className="hidden border-2 border-charcoal bg-ochre px-2 py-1.5 font-mono text-[0.62rem] font-bold uppercase tracking-wide text-charcoal no-underline sticker-sm sm:inline-flex sm:px-3 sm:text-xs"
-          >
-            Résumé
-          </TrackedLink>
         </nav>
       </div>
-    </motion.header>
+    </header>
   );
 }
