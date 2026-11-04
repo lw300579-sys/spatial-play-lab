@@ -9,22 +9,19 @@ const fraunces = Fraunces({
   subsets: ["latin"],
   // optional: never block H1 LCP on the display face under slow networks
   display: "optional",
-  weight: ["600"],
-  // skip SOFT/WONK axes — they inflate the preload woff2 ~3× without changing the look much
+  // variable wght only — no SOFT/WONK axes (smaller preload; static weight broke CI font fetch)
 });
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
   display: "optional",
-  weight: ["400", "600", "700"],
 });
 
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
   display: "optional",
-  weight: ["400", "500"],
 });
 
 const siteUrl = "https://ari-swerdlow.vercel.app";
