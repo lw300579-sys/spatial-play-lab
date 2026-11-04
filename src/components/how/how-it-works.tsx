@@ -1,23 +1,50 @@
 const STEPS = [
-  { n: "01", title: "Open the link", body: "Nothing to install." },
-  { n: "02", title: "Allow the camera", body: "It stays on your phone for the game itself." },
-  { n: "03", title: "Move", body: "Your swing, punch or hand is the controller." },
+  {
+    n: "01",
+    title: "Open the link.",
+    body: "No download, no account.",
+  },
+  {
+    n: "02",
+    title: "Let it use your camera.",
+    body: "The tracking runs on your phone and nothing gets uploaded.",
+  },
+  {
+    n: "03",
+    title: "Move.",
+    body: "That's the controller.",
+  },
 ] as const;
 
 export function HowItWorks() {
   return (
-    <section id="how" className="border-b-2 border-charcoal px-4 py-14 sm:px-6 sm:py-20">
+    <section id="how" className="border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-20 lg:py-28">
       <div className="mx-auto max-w-6xl">
-        <h2 className="font-display text-3xl font-semibold tracking-tight">How they work</h2>
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+          How these work
+        </h2>
+        <ol className="relative mt-10 grid gap-8 md:grid-cols-3 md:gap-6">
+          <span
+            className="pointer-events-none absolute left-[8%] right-[8%] top-7 hidden h-px bg-charcoal/20 md:block"
+            aria-hidden
+          />
           {STEPS.map((step) => (
-            <article key={step.n} className="border-2 border-charcoal bg-surface-raised p-5">
-              <p className="font-mono text-[0.65rem] text-muted">{step.n}</p>
-              <h3 className="mt-2 font-display text-xl font-semibold tracking-tight">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-charcoal/80">{step.body}</p>
-            </article>
+            <li key={step.n} className="relative flex gap-4 md:flex-col md:gap-3">
+              <span
+                className="font-mono text-4xl font-medium leading-none text-charcoal/25 md:text-5xl"
+                aria-hidden
+              >
+                {step.n}
+              </span>
+              <div>
+                <h3 className="font-display text-xl font-semibold tracking-tight">{step.title}</h3>
+                <p className="mt-2 max-w-[68ch] text-base leading-relaxed text-charcoal/80">
+                  {step.body}
+                </p>
+              </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

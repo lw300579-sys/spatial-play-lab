@@ -1,8 +1,8 @@
 import { SITE } from "@/data/games";
 
 const LINKS = [
-  { href: "#apps", label: "Work" },
-  { href: "/evidence", label: "Notes" },
+  { href: "#apps", label: "Apps" },
+  { href: "/testing", label: "Testing" },
   { href: "/resume", label: "Résumé" },
   { href: "#contact", label: "Contact" },
 ] as const;
@@ -27,7 +27,7 @@ export function SiteNav() {
             <a
               key={link.href}
               href={link.href}
-              className="px-2 py-1.5 font-mono text-[0.62rem] uppercase tracking-wide text-charcoal/70 no-underline hover:text-charcoal sm:px-3 sm:text-xs"
+              className="min-h-11 px-2 py-2 font-mono text-[0.62rem] uppercase tracking-wide text-charcoal/70 no-underline hover:text-charcoal sm:px-3 sm:text-xs"
             >
               {link.label}
             </a>

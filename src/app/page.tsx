@@ -1,4 +1,5 @@
 import { Hero } from "@/components/hero/hero";
+import { FlagshipBands } from "@/components/flagships/flagship-bands";
 import { HowItWorks } from "@/components/how/how-it-works";
 import { ProductIndex } from "@/components/work/product-index";
 import { Principles } from "@/components/craft/principles";
@@ -29,6 +30,7 @@ export default async function Home({
       <SiteNav />
       <main className="flex-1">
         <Hero />
+        <FlagshipBands />
         <ProductIndex />
         <HowItWorks />
         <Principles />
