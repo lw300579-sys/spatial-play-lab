@@ -14,7 +14,8 @@ concurrency:
 
 jobs:
   production-journeys:
-    runs-on: ubuntu-latest
+    # Pin 24.04: ubuntu-latest moved to 26.04 where Playwright 1.55 cannot install Chromium.
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
 
     steps:

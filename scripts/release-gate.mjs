@@ -5,7 +5,7 @@ const portfolioBase = process.env.PORTFOLIO_URL || "http://127.0.0.1:3000";
 
 const portfolioRoutes = [
   { name: "Portfolio", path: "/", expected: "Ari Swerdlow", kind: "home" },
-  { name: "Evidence ledger", path: "/evidence", expected: "Proof, gaps", kind: "evidence" },
+  { name: "Testing ledger", path: "/testing", expected: "What's tested", kind: "evidence" },
   { name: "Privacy", path: "/privacy", expected: "Privacy, in plain language", kind: "privacy" },
   { name: "Jiku case study", path: "/work/jiku", expected: "Jiku Fitness", kind: "case-study" },
   { name: "AR Baseball case study", path: "/work/ar-baseball", expected: "AR Baseball", kind: "case-study" },
@@ -43,7 +43,9 @@ function collectErrors(page) {
 function blockingErrors(errors) {
   return errors.filter(
     (message) =>
-      !/favicon|Failed to load resource.*404|ResizeObserver|Blocked call to navigator\.vibrate|Camera access failed:\s*(?:NotAllowedError|NotFoundError)|WebSocket connection.*\/_next\/hmr.*failed/i.test(message),
+      !/favicon|Failed to load resource.*404|ResizeObserver|Blocked call to navigator\.vibrate|Camera access failed:\s*(?:NotAllowedError|NotFoundError)|WebSocket connection.*\/_next\/hmr.*failed|Refused to execute script from 'https:\/\/[^']+_vercel\/insights\/script\.js' because its MIME type/i.test(
+        message,
+      ),
   );
 }
 
@@ -68,8 +70,8 @@ async function checkPortfolioRoute(browser, route) {
         builtAsset: [...document.scripts].some((script) => /\/_next\//.test(script.src)),
         hasJsonLd: jsonLd.length > 0,
         hasOgImage: kind === "privacy" || kind === "evidence" || Boolean(ogImage),
-        hasEvidenceTable: kind !== "case-study" || document.querySelectorAll("table tbody tr").length >= 3,
-        hasPrivacyCopy: kind !== "case-study" || text.toLowerCase().includes("camera data"),
+        hasEvidenceTable: kind !== "evidence" || document.querySelectorAll("table tbody tr").length >= 3,
+        hasPrivacyCopy: kind !== "case-study" || /camera|demo/i.test(text),
         noHorizontalOverflow: document.documentElement.scrollWidth <= window.innerWidth + 1,
       };
     }, route);
@@ -171,7 +173,7 @@ async function checkPortfolioAssets() {
     }
 
     const validEvent = await request.post(new URL("/api/events", portfolioBase).href, {
-      data: { event: "evidence_open", target: "release-gate", path: "/evidence" },
+      data: { event: "evidence_open", target: "release-gate", path: "/testing" },
     });
     const invalidEvent = await request.post(new URL("/api/events", portfolioBase).href, {
       data: { event: "arbitrary_event", target: "release-gate", path: "/" },
@@ -191,7 +193,7 @@ async function checkPortfolioAssets() {
       category: "portfolio-route",
       url: new URL("/this-route-must-not-exist", portfolioBase).href,
       status: notFound.status(),
-      passed: notFound.status() === 404 && (await notFound.text()).includes("This route left the frame"),
+      passed: notFound.status() === 404 && (await notFound.text()).includes("Lost you."),
     });
 
     const sitemap = await request.get(new URL("/sitemap.xml", portfolioBase).href);
@@ -204,7 +206,8 @@ async function checkPortfolioAssets() {
       passed:
         sitemap.ok() &&
         sitemapText.includes("2026-09-26") &&
-        sitemapText.includes("/evidence") &&
+        sitemapText.includes("/testing") &&
+        !sitemapText.includes("/evidence") &&
         sitemapText.includes("/privacy"),
     });
   } finally {

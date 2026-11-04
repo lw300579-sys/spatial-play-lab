@@ -5,10 +5,21 @@ const nextConfig: NextConfig = {
     // PNGs only in portfolio previews — avoid SVG attachment disposition issues
     formats: ["image/avif", "image/webp"],
   },
+  async redirects() {
+    return [
+      {
+        source: "/evidence",
+        destination: "/testing",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     const contentSecurityPolicy = [
       "default-src 'self'",
       "base-uri 'self'",
+      // Signup posts to /api/subscribe. The provider URL stays server-side
+      // (NEWSLETTER_ACTION), so the browser form target stays on this origin.
       "form-action 'self' mailto:",
       "frame-ancestors 'none'",
       "object-src 'none'",

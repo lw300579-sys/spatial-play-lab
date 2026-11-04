@@ -1,10 +1,13 @@
 import { ImageResponse } from "next/og";
+import { shotDataUri } from "@/lib/og-shot";
 
-export const alt = "Ari Swerdlow · Browser AR & Computer Vision";
+export const alt = "AR Baseball running in a browser: a 3D stadium waiting for your swing.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpenGraphImage() {
+export default async function OpenGraphImage() {
+  const shot = await shotDataUri("ar-baseball-stadium-desktop.webp");
+
   return new ImageResponse(
     (
       <div
@@ -12,82 +15,29 @@ export default function OpenGraphImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          background: "#FFFDF7",
-          padding: 64,
-          border: "12px solid #18181B",
+          background: "#102027",
+          color: "#fffdf7",
         }}
       >
         <div
           style={{
+            width: 500,
+            height: "100%",
             display: "flex",
-            alignItems: "center",
-            gap: 16,
-            fontSize: 28,
-            fontFamily: "monospace",
-            letterSpacing: 4,
-            textTransform: "uppercase",
-            color: "#1E3A8A",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            padding: "56px 48px",
           }}
         >
-          <div
-            style={{
-              width: 48,
-              height: 48,
-              background: "#E15A46",
-              border: "3px solid #18181B",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "white",
-              fontWeight: 700,
-              fontSize: 20,
-            }}
-          >
-            AS
+          <div style={{ display: "flex", fontSize: 22, letterSpacing: 3, fontWeight: 700 }}>
+            ARI SWERDLOW
           </div>
-          Ari Swerdlow
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          <div
-            style={{
-              fontSize: 72,
-              fontWeight: 700,
-              lineHeight: 1.05,
-              color: "#18181B",
-              maxWidth: 980,
-            }}
-          >
-            Browser AR you play with your body.
+          <div style={{ display: "flex", fontSize: 52, fontWeight: 700, lineHeight: 1.05, letterSpacing: -1 }}>
+            Browser apps you control by moving.
           </div>
-          <div style={{ fontSize: 28, color: "#52525B", maxWidth: 720 }}>
-            Tennis · shadow boxing · ASL · biomechanics · broadcast CV
-          </div>
+          <div style={{ display: "flex", fontSize: 18, color: "#d6d3d1" }}>ari-swerdlow.vercel.app</div>
         </div>
-
-        <div
-          style={{
-            display: "flex",
-            gap: 12,
-            fontFamily: "monospace",
-            fontSize: 18,
-          }}
-        >
-          {["MediaPipe", "On-device", "60fps", "No app store"].map((t) => (
-            <div
-              key={t}
-              style={{
-                border: "2px solid #18181B",
-                padding: "8px 14px",
-                background: "#EFE9DC",
-              }}
-            >
-              {t}
-            </div>
-          ))}
-        </div>
+        <img src={shot} alt="" width={700} height={630} style={{ objectFit: "cover" }} />
       </div>
     ),
     { ...size },

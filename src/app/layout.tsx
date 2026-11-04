@@ -7,20 +7,21 @@ import "./globals.css";
 const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
-  display: "swap",
-  axes: ["SOFT", "WONK"],
+  // optional: never block H1 LCP on the display face under slow networks
+  display: "optional",
+  // variable wght only — no SOFT/WONK axes (smaller preload; static weight broke CI font fetch)
 });
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
 });
 
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
 });
 
 const siteUrl = "https://ari-swerdlow.vercel.app";
@@ -28,26 +29,22 @@ const siteUrl = "https://ari-swerdlow.vercel.app";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Ari Swerdlow · Camera-First Product Engineer",
+    default: "Ari Swerdlow · Product engineer",
     template: "%s · Ari Swerdlow",
   },
   description:
-    "Ari Swerdlow builds camera-first products at the intersection of computer vision, game systems, and product design—from browser fitness and AR baseball to sports intelligence.",
+    "I build browser games and training apps you control with your body. No install. Just a link and a camera.",
   keywords: [
     "Ari Swerdlow",
-    "WebXR",
-    "browser AR",
-    "MediaPipe",
+    "browser games",
     "computer vision",
-    "pose tracking",
-    "ASL",
+    "camera apps",
     "portfolio",
   ],
   authors: [{ name: "Ari Swerdlow" }],
   openGraph: {
     title: "Ari Swerdlow",
-    description:
-      "Camera-first product engineering: browser fitness, AR baseball, and sports intelligence from ordinary video.",
+    description: "Browser apps you control by moving.",
     type: "website",
     url: siteUrl,
     siteName: "Ari Swerdlow",
@@ -56,8 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Ari Swerdlow",
-    description:
-      "Camera-first product engineering across browser fitness, AR games, coaching, and sports intelligence.",
+    description: "Browser apps you control by moving.",
     creator: "@2Swerdy",
   },
   robots: { index: true, follow: true },
@@ -65,11 +61,16 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FFFDF7",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F7F3EC" },
+    { media: "(prefers-color-scheme: dark)", color: "#121211" },
+  ],
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
 };
+
+const themeBootScript = `(function(){try{var s=localStorage.getItem('theme');var d=s==='dark'||(s!=='light'&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d)document.documentElement.classList.add('dark');}catch(e){}})();`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   const structuredData = {
@@ -81,14 +82,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         name: SITE.name,
         url: siteUrl,
         email: `mailto:${SITE.email}`,
-        jobTitle: "Product Engineer · Applied Computer Vision",
+        jobTitle: "Product engineer",
         sameAs: SITE.socials.map((social) => social.href),
         knowsAbout: [
-          "Computer vision",
-          "Browser-based augmented reality",
-          "Game systems",
-          "Human-computer interaction",
-          "Sports intelligence",
+          "computer vision",
+          "browser games",
+          "pose tracking",
+          "MediaPipe",
+          "TensorFlow.js",
+          "Three.js",
         ],
       },
       {
@@ -105,8 +107,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${fraunces.variable} ${jakarta.variable} ${jetbrains.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+      </head>
       <body className="relative min-h-full font-sans text-charcoal">
         <JsonLd data={structuredData} />
         <div className="grain-overlay" aria-hidden="true" />

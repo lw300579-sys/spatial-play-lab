@@ -16,7 +16,7 @@ export function CaseStudyEvidenceGallery({
             Product evidence · three views
           </p>
           <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-            See the interface, the signal path, and the recovery contract.
+            Here&apos;s what it looks like.
           </h2>
         </div>
 
@@ -62,12 +62,12 @@ export function CaseStudyEvidenceGallery({
               </figcaption>
               <div className="mt-5 flex flex-1 flex-col justify-center gap-2">
                 {caseStudy.system.map((step, index) => (
-                  <div key={step.step} className="flex items-center gap-3">
+                  <div key={step} className="flex items-start gap-3">
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center border border-paper/50 font-mono text-[0.65rem]">
-                      {step.step}
+                      {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="border-l-2 border-cobalt pl-3 text-sm font-semibold">
-                      {step.title}
+                    <span className="border-l-2 border-cobalt pl-3 text-sm leading-snug">
+                      {step}
                     </span>
                     {index < caseStudy.system.length - 1 ? (
                       <span className="ml-auto text-paper/35" aria-hidden>↓</span>

@@ -70,10 +70,10 @@ export interface ProjectProof {
 export const SITE = {
   name: "Ari Swerdlow",
   shortName: "AS",
-  tagline: "Camera-first products powered by movement",
+  tagline: "I build browser apps you control by moving.",
   email: "aswerd2@gmail.com",
   currentFocus:
-    "Available for product engineering and applied computer vision work where software has to understand the physical world.",
+    "I'm open to product engineering and computer vision work, especially when the input is a real person moving around.",
   socials: [
     { label: "X", href: "https://x.com/2Swerdy" },
     {

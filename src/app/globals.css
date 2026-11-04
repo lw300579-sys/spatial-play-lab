@@ -1,34 +1,32 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────
-   Tactile Digital Artifact — Design Tokens
+   Design tokens — light / dark
    ───────────────────────────────────────────── */
 
 :root {
-  /* Base canvas */
-  --paper: #fffdf7;
-  --paper-deep: #f7f4eb;
-  --paper-ink: #efe9dc;
-
-  /* Accent primaries */
-  --cobalt: #1e3a8a;
-  --coral: #e15a46;
+  --bg: #f7f3ec;
+  --paper: #f7f3ec;
+  --paper-deep: #efe9df;
+  --paper-ink: #e8e1d5;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --ink: #1d1c1a;
+  --charcoal: #1d1c1a;
+  --muted: #5b5853;
+  --muted-soft: #7a766f;
+  --line: #e3ddd2;
+  --border: #1d1c1a;
+  --accent: #c2412d;
+  --coral: #c2412d;
+  --coral-ink: #ffffff;
+  --link: #2747c8;
+  --cobalt: #2747c8;
   --lawn: #22c55e;
   --ochre: #eab308;
-  --charcoal: #18181b;
-
-  /* Surfaces */
-  --surface: #fffdf7;
-  --surface-raised: #ffffff;
-  --border: #18181b;
-  --muted: #71717a;
-  --muted-soft: #a1a1aa;
-
-  /* Semantic aliases */
-  --background: var(--paper);
-  --foreground: var(--charcoal);
-
-  /* Tactile shadows */
+  --frame: #111111;
+  --background: var(--bg);
+  --foreground: var(--ink);
   --shadow-offset: 4px;
   --shadow-hard: 4px 4px 0px var(--charcoal);
   --shadow-hard-sm: 2px 2px 0px var(--charcoal);
@@ -37,14 +35,38 @@
   --shadow-cobalt: 4px 4px 0px var(--cobalt);
   --shadow-lawn: 4px 4px 0px var(--lawn);
   --shadow-ochre: 4px 4px 0px var(--ochre);
-
-  /* Motion */
   --spring-stiffness: 300;
   --spring-damping: 15;
   --ease-tactile: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-reveal: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --grain-opacity: 0.02;
+}
 
-  /* Grain */
+html.dark {
+  --bg: #121211;
+  --paper: #121211;
+  --paper-deep: #0e0e0d;
+  --paper-ink: #1b1b19;
+  --surface: #1b1b19;
+  --surface-raised: #1b1b19;
+  --ink: #edeae4;
+  --charcoal: #edeae4;
+  --muted: #a8a49c;
+  --muted-soft: #8a8680;
+  --line: #2c2b28;
+  --border: #2c2b28;
+  --accent: #e2624c;
+  --coral: #e2624c;
+  --coral-ink: #121211;
+  --link: #8ea2ff;
+  --cobalt: #8ea2ff;
+  --lawn: #4ade80;
+  --ochre: #f0c43a;
+  --frame: #2a2a28;
+  --background: var(--bg);
+  --foreground: var(--ink);
   --grain-opacity: 0.035;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -63,6 +85,8 @@
   --color-border: var(--border);
   --color-muted: var(--muted);
   --color-muted-soft: var(--muted-soft);
+  --color-line: var(--line);
+  --color-frame: var(--frame);
 
   --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
   --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
@@ -82,28 +106,48 @@ html {
   scroll-padding-top: 6.5rem;
 }
 
+#apps,
+#everything-else,
+#how,
+#craft,
+#signup,
+#contact,
 #games,
 #flagships,
-#citadel,
-#contact {
+#citadel {
   scroll-margin-top: 6.5rem;
 }
 
 body {
-  background: var(--paper);
-  color: var(--charcoal);
+  background: var(--bg);
+  color: var(--ink);
   font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (min-width: 1024px) {
+  body {
+    font-size: 18px;
+  }
+}
+
 ::selection {
   background: var(--ochre);
-  color: var(--charcoal);
+  color: var(--ink);
+}
+
+/* Coral buttons: white text in light, dark ink in dark */
+.bg-coral.text-white,
+button.bg-coral,
+a.bg-coral {
+  color: var(--coral-ink) !important;
 }
 
 /* ─────────────────────────────────────────────
-   Paper grain overlay (SVG noise)
+   Paper grain overlay (inline SVG, <5KB)
    ───────────────────────────────────────────── */
 
 .grain-overlay {
@@ -118,14 +162,17 @@ body {
   background-size: 180px 180px;
 }
 
-/* Soft paper wash behind content */
+html.dark .grain-overlay {
+  mix-blend-mode: soft-light;
+}
+
 .paper-canvas {
   background:
-    radial-gradient(ellipse 80% 50% at 10% 0%, rgba(225, 90, 70, 0.06), transparent 50%),
-    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(30, 58, 138, 0.05), transparent 45%),
-    radial-gradient(ellipse 50% 30% at 50% 100%, rgba(234, 179, 8, 0.07), transparent 50%),
+    radial-gradient(ellipse 80% 50% at 10% 0%, color-mix(in srgb, var(--coral) 8%, transparent), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, color-mix(in srgb, var(--cobalt) 6%, transparent), transparent 45%),
     linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
   min-height: 100dvh;
+  overflow-x: clip;
 }
 
 /* ─────────────────────────────────────────────
@@ -184,13 +231,81 @@ body {
   box-shadow: var(--shadow-ochre);
 }
 
-/* Press / lift affordances (non-motion fallback) */
 .tactile-press:active {
   transform: scale(0.96);
 }
 
 .tactile-lift:hover {
   transform: translateY(-3px);
+}
+
+/* ─────────────────────────────────────────────
+   Motion
+   ───────────────────────────────────────────── */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 400ms var(--ease-reveal),
+    transform 400ms var(--ease-reveal);
+}
+
+.reveal[data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-phone {
+  animation: hero-settle 600ms var(--ease-reveal) both;
+}
+
+.hero-field-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: field-draw 1.2s var(--ease-reveal) 0.2s forwards;
+}
+
+@keyframes hero-settle {
+  from {
+    transform: rotate(-6deg);
+  }
+  to {
+    transform: rotate(-3deg);
+  }
+}
+
+@keyframes field-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.btn-arrow {
+  display: inline-block;
+  transition: transform 150ms ease;
+}
+
+a:hover .btn-arrow,
+button:hover .btn-arrow {
+  transform: translateX(2px);
+}
+
+details summary {
+  transition: color 150ms ease;
+}
+
+details[open] > *:not(summary) {
+  animation: details-in 150ms ease;
+}
+
+@keyframes details-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -200,30 +315,32 @@ body {
 
   .sticker,
   .tactile-press,
-  .tactile-lift {
+  .tactile-lift,
+  .reveal,
+  .btn-arrow {
     transition: none;
   }
 
-  .tactile-lift:hover {
+  .reveal {
+    opacity: 1;
     transform: none;
   }
-}
 
-/* ─────────────────────────────────────────────
-   Spec badge chips
-   ───────────────────────────────────────────── */
+  .hero-phone,
+  .hero-field-line,
+  details[open] > *:not(summary) {
+    animation: none;
+  }
 
-.spec-badge {
-  display: inline-flex;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  padding: 0.3rem 0.5rem;
-  border: 1.5px solid var(--charcoal);
-  background: var(--paper-ink);
-  white-space: nowrap;
+  .tactile-lift:hover,
+  a:hover .btn-arrow,
+  button:hover .btn-arrow {
+    transform: none;
+  }
+
+  .group:hover img {
+    transform: none !important;
+  }
 }
 
 /* ─────────────────────────────────────────────
@@ -231,6 +348,11 @@ body {
    ───────────────────────────────────────────── */
 
 :focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 3px;
+}
+
+summary:focus-visible {
   outline: 2px solid var(--cobalt);
   outline-offset: 3px;
 }
@@ -262,7 +384,6 @@ body {
   white-space: normal;
 }
 
-/* Washed section tape accent */
 .section-tape {
   position: relative;
 }
@@ -279,11 +400,4 @@ body {
   transform: rotate(-2deg);
   opacity: 0.85;
   pointer-events: none;
-}
-
-/* Smooth image hover without layout shift */
-@media (prefers-reduced-motion: reduce) {
-  .group:hover img {
-    transform: none !important;
-  }
 }

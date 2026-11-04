@@ -1,143 +1,76 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-import { fadeUp, reduced, spring, staggerContainer } from "@/lib/motion";
-import { SITE } from "@/data/games";
-import { StickerBoard } from "./sticker-board";
-import { AmbientCanvas } from "./ambient-canvas";
-import { TactileLink } from "@/components/ui/tactile-button";
-import { TrackedLink } from "@/components/ui/tracked-link";
+import Link from "next/link";
+import { DeviceFrame } from "@/components/ui/device-frame";
+import { appClips } from "@/data/clips";
 
 export function Hero() {
-  const reduce = useReducedMotion();
-
   return (
-    <section
-      id="top"
-      className="relative overflow-hidden border-b-2 border-charcoal"
-    >
-      <AmbientCanvas />
-
-      <div className="relative z-10 mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-14">
-        <motion.div
-          variants={reduce ? undefined : staggerContainer}
-          initial={reduce ? undefined : "hidden"}
-          animate={reduce ? undefined : "visible"}
-          className="flex flex-col gap-6"
-        >
-          <motion.p
-            variants={reduce ? undefined : fadeUp}
-            className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-cobalt"
-          >
-            Product Engineer · Applied Computer Vision
-          </motion.p>
-
-          <motion.h1
-            variants={reduce ? undefined : fadeUp}
-            className="font-display text-[clamp(2.75rem,7vw,5rem)] font-semibold leading-[1.02] tracking-tight text-balance text-charcoal"
-          >
-            {SITE.name}
-          </motion.h1>
-
-          <motion.p
-            variants={reduce ? undefined : fadeUp}
-            className="max-w-xl font-display text-xl font-medium leading-snug text-charcoal/90 sm:text-2xl"
-          >
-            I build software that can{" "}
-            <span className="relative inline-block">
-              <span className="relative z-10 italic">understand movement</span>
-              <motion.span
-                className="absolute inset-x-0 bottom-1 -z-0 h-3 bg-ochre/85 sm:bottom-1.5 sm:h-4"
-                aria-hidden
-                initial={reduce ? false : { scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={reduce ? reduced : { ...spring, delay: 0.35 }}
-                style={{ originX: 0 }}
-              />
-            </span>
-            —then answer with game feel, coaching, or evidence.
-          </motion.p>
-
-          <motion.p
-            variants={reduce ? undefined : fadeUp}
-            className="max-w-lg text-base leading-relaxed text-charcoal/80 sm:text-lg"
-          >
-            My work sits where computer vision, game systems, and product design
-            meet. The strongest examples are a browser fitness product, a
-            camera-controlled baseball game, and a sports-intelligence platform
-            built from ordinary match video.
-          </motion.p>
-
-          <motion.div
-            variants={reduce ? undefined : fadeUp}
-            className="flex flex-wrap gap-3"
-          >
-            <TactileLink href="#flagships" accent="coral">
-              See selected work
-            </TactileLink>
-            <TactileLink href="#contact" variant="secondary">
-              Work with me
-            </TactileLink>
-            <TrackedLink
-              href="/ari-swerdlow-resume.pdf"
-              download
-              eventName="resume_download"
-              eventTarget="hero"
-              className="tactile-press tactile-lift inline-flex items-center justify-center border-2 border-charcoal bg-surface-raised px-4 py-2.5 text-sm font-semibold text-charcoal no-underline sticker-sm"
+    <section id="top" className="border-b-2 border-charcoal">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:gap-10 sm:px-6 sm:py-20 lg:min-h-[85svh] lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+        <div className="flex flex-col gap-5 sm:gap-6">
+          <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-cobalt">
+            Ari Swerdlow · product engineer
+          </p>
+          <h1 className="font-display text-[clamp(2.75rem,6vw,5rem)] font-semibold leading-[1.02] tracking-[-0.02em] text-balance">
+            I build software you move.
+          </h1>
+          <p className="max-w-xl text-lg leading-relaxed text-charcoal/85 sm:text-xl">
+            Swing at a pitch. Box in your living room. Learn a sign. It all runs in the browser off your phone camera.
+          </p>
+          <p className="max-w-lg text-base leading-relaxed text-charcoal/75">
+            No app store. No sensors. Just you, waving at your phone like it owes you money.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <a
+              href="#apps"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-coral px-5 py-2.5 text-sm font-semibold no-underline"
             >
-              Download résumé ↓
-            </TrackedLink>
-          </motion.div>
-
-          <motion.dl
-            variants={reduce ? undefined : fadeUp}
-            className="grid max-w-xl grid-cols-2 border-2 border-charcoal bg-paper/85 sm:grid-cols-4"
-          >
-            {[
-              ["3", "flagship systems"],
-              ["250k", "baseball sims"],
-              ["695", "coach tests"],
-              ["5", "camera products"],
-            ].map(([value, label]) => (
-              <div
-                key={label}
-                className="border-b border-r border-charcoal/20 px-3 py-2 last:border-r-0 sm:border-b-0"
-              >
-                <dt className="font-mono text-[0.65rem] uppercase tracking-wide text-muted">
-                  {label}
-                </dt>
-                <dd className="font-display text-xl font-semibold text-charcoal">{value}</dd>
-              </div>
-            ))}
-          </motion.dl>
-
-          <motion.p
-            variants={reduce ? undefined : fadeUp}
-            className="max-w-xl font-mono text-[0.62rem] leading-relaxed text-muted"
-          >
-            Engineering validation as of 2026-09-26. Simulation and test counts
-            measure system rigor—not user outcomes. <a href="/evidence" className="text-cobalt underline">See methods and open gaps.</a>
-          </motion.p>
-
-          <motion.p
-            variants={reduce ? undefined : fadeUp}
-            className="font-mono text-[0.65rem] uppercase tracking-widest text-muted"
-          >
-            Drag the tokens → throw · stack · play
-          </motion.p>
-        </motion.div>
-
-        <motion.div
-          initial={reduce ? false : { opacity: 0, scale: 0.94, rotate: 1.5 }}
-          animate={{ opacity: 1, scale: 1, rotate: -0.5 }}
-          transition={reduce ? reduced : spring}
-          className="sticker sticker-coral relative bg-surface-raised p-2"
-        >
-          <div className="absolute -right-3 -top-3 z-20 rotate-6 border-2 border-charcoal bg-ochre px-2 py-1 font-mono text-[0.6rem] font-bold uppercase tracking-wide sticker-sm">
-            Drag me
+              Try the apps <span className="btn-arrow">↓</span>
+            </a>
+            <Link
+              href="/resume"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-paper px-5 py-2.5 text-sm font-semibold text-charcoal no-underline"
+            >
+              Résumé
+            </Link>
           </div>
-          <StickerBoard />
-        </motion.div>
+          <p className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">
+            Runs in the browser · camera stays on your phone · no app store
+          </p>
+        </div>
+
+        {/* Hidden below sm so the 390px viewport keeps CTAs above the fold and skips the shot. */}
+        <div className="relative mx-auto hidden w-full max-w-[280px] sm:block lg:max-w-[320px]">
+          <svg
+            className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-[0.12]"
+            viewBox="0 0 400 480"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M40 420 C120 280, 160 200, 200 40 C240 200, 280 280, 360 420"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              className="hero-field-line"
+              pathLength={1}
+            />
+            <path
+              d="M80 400 H320 M120 360 H280 M160 320 H240"
+              stroke="currentColor"
+              strokeWidth="1"
+            />
+          </svg>
+          <div className="hero-phone origin-bottom">
+            <DeviceFrame
+              variant="phone"
+              src="/shots/ar-baseball-stadium-mobile.webp"
+              alt="AR Baseball running in a browser: a 3D stadium waiting for your swing."
+              caption="Waiting on the pitch. The pitcher won't throw until tracking is ready."
+              clip={appClips["ar-baseball"]}
+              url="https://ar-baseball.vercel.app/"
+              sizes="(max-width: 639px) 0px, (max-width: 1024px) 280px, 320px"
+            />
+          </div>
+        </div>
       </div>
     </section>
   );

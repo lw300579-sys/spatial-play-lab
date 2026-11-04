@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy",
-  description: "How the portfolio itself handles interaction events and how linked camera products are described.",
+  description: "What this site stores, what the apps do with the camera, and what happens if you sign up for notes.",
   robots: { index: true, follow: true },
 };
 
@@ -21,28 +21,29 @@ export default function PrivacyPage() {
           <section>
             <h2 className="font-display text-2xl font-semibold text-charcoal">This portfolio</h2>
             <p className="mt-2">
-              The portfolio does not request camera or microphone access. It records a small
-              allow-listed set of interaction events—such as opening a case study, a live product,
-              the résumé, or contact—through a first-party endpoint. The event body contains the
-              action name, a product label, the current path, and a timestamp. It does not add
-              cookies, local-storage identifiers, advertising pixels, camera data, form contents,
-              or user-agent fields.
+              This site does not use the camera. It records a few clicks, such as opening a project,
+              the résumé, or email, through its own endpoint. The record is the action name, a label,
+              the path, and a time. No cookies, no ad pixels, no camera frames.
             </p>
           </section>
           <section>
             <h2 className="font-display text-2xl font-semibold text-charcoal">Linked products</h2>
             <p className="mt-2">
-              Camera permissions belong to the separately deployed products you choose to open.
-              Each launch surface states the known processing boundary next to the action. Where a
-              production retention, deletion, or model-transmission policy has not been established,
-              the portfolio says so rather than implying a stronger guarantee.
+              The camera belongs to the app you open. Each one says, next to the button, whether the
+              video stays on your phone or a check runs on a server.
+            </p>
+          </section>
+          <section>
+            <h2 className="font-display text-2xl font-semibold text-charcoal">Email signup</h2>
+            <p className="mt-2">
+              If the signup form is on, your email is sent to the newsletter provider configured for
+              this site. This site does not keep a copy. If the form is off, the link opens your email app.
             </p>
           </section>
           <section>
             <h2 className="font-display text-2xl font-semibold text-charcoal">Contact</h2>
             <p className="mt-2">
-              Contact actions open your email client or copy the published email address. The site
-              does not collect a message form or store message contents.
+              Email links open your mail app or copy the address. This site does not store the message.
             </p>
           </section>
           <p className="border-l-4 border-cobalt bg-paper-ink p-4 font-mono text-xs text-charcoal/75">

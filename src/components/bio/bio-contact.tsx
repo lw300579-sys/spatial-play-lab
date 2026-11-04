@@ -1,162 +1,72 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { SITE } from "@/data/games";
 import { useCopyToClipboard } from "@/hooks/use-copy";
-import { fadeUp, reduced, springSnappy, staggerContainer } from "@/lib/motion";
-import { TactileButton, TactileLink } from "@/components/ui/tactile-button";
 import { TrackedLink } from "@/components/ui/tracked-link";
 
 export function BioContact() {
-  const reduce = useReducedMotion();
   const { copied, copy } = useCopyToClipboard();
 
   return (
-    <section id="contact" className="px-4 py-16 sm:px-6 sm:py-24">
-      <div className="mx-auto max-w-6xl">
-        <motion.div
-          variants={reduce ? undefined : staggerContainer}
-          initial={reduce ? undefined : "hidden"}
-          whileInView={reduce ? undefined : "visible"}
-          viewport={{ once: true, margin: "-60px" }}
-          className="sticker sticker-cobalt grid gap-8 bg-surface-raised p-6 sm:grid-cols-[1.25fr_0.75fr] sm:p-10"
-        >
-          <div>
-            <motion.p
-              variants={reduce ? undefined : fadeUp}
-              className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-cobalt"
-            >
-              About
-            </motion.p>
-            <motion.h2
-              variants={reduce ? undefined : fadeUp}
-              className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl"
-            >
-              Code meeting muscle memory.
-            </motion.h2>
-            <motion.p
-              variants={reduce ? undefined : fadeUp}
-              className="mt-4 max-w-lg text-base leading-relaxed text-charcoal/85"
-            >
-              Hi, I&apos;m Ari Swerdlow. I build interactive systems where
-              movement is the input device: browser AR tennis, on-device boxing
-              engines, ASL trainers checked by hand landmarks, pickleball
-              coaching from court video, and broadcast sports analytics that
-              never asks an athlete to wear a sensor.
-            </motion.p>
-            <motion.p
-              variants={reduce ? undefined : fadeUp}
-              className="mt-3 max-w-lg text-base leading-relaxed text-charcoal/85"
-            >
-              The craft sits between computer vision, game feel, and accessible
-              web tech. I care about mid-range phones, honest frame budgets, and
-              sessions that start from a URL. I&apos;m available for product
-              engineering and applied computer vision work—especially when the
-              input is physical, noisy, and difficult to make trustworthy.
-            </motion.p>
+    <section id="contact" className="scroll-mt-28 border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-20">
+      <div className="mx-auto grid max-w-6xl gap-8 border-2 border-charcoal bg-surface-raised p-6 sm:grid-cols-[1.25fr_0.75fr] sm:p-10">
+        <div>
+          <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">About</h2>
+          <p className="mt-4 max-w-lg text-base leading-relaxed text-charcoal/85">
+            I&apos;m Ari. I build apps where your body is the controller: baseball, boxing, tennis, sign language, pickleball. Getting a phone camera to understand a person in a messy room is the hard part. That&apos;s the part I like.
+          </p>
+          <p className="mt-3 max-w-lg text-base leading-relaxed text-charcoal/85">
+            I&apos;m open to product engineering and computer vision work, especially when the input is a real person moving around.
+          </p>
+          <p className="mt-3 max-w-lg text-base leading-relaxed text-charcoal/85">
+            Mostly MediaPipe, TensorFlow.js and Three.js in the browser, with Next and TypeScript holding it together. Python when the video work gets heavy.
+          </p>
+        </div>
 
-            <motion.div
-              variants={reduce ? undefined : fadeUp}
-              className="mt-6"
-            >
-              <div className="inline-flex items-center gap-2 border-2 border-charcoal bg-paper-ink px-3 py-2">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lawn opacity-60" />
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full border border-charcoal bg-lawn" />
-                </span>
-                <div>
-                  <p className="font-mono text-[0.6rem] uppercase tracking-widest text-muted">
-                    Current focus
-                  </p>
-                  <p className="text-sm font-medium text-charcoal">
-                    {SITE.currentFocus}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          <motion.div
-            variants={reduce ? undefined : fadeUp}
-            className="flex flex-col justify-center gap-3"
+        <div className="flex flex-col justify-center gap-3">
+          <button
+            type="button"
+            onClick={() => copy(SITE.email)}
+            aria-label={copied ? "Email copied" : `Copy ${SITE.email}`}
+            className="min-h-11 border-2 border-charcoal bg-paper px-4 py-2.5 text-left text-sm font-semibold"
           >
-            <p className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">
-              Direct contact
-            </p>
-            <TactileButton
-              accent="coral"
-              fullWidth
-              onClick={() => copy(SITE.email)}
-              aria-label={`Copy email ${SITE.email}`}
+            {copied ? "Email copied" : SITE.email}
+          </button>
+          {SITE.socials.map((social) => (
+            <a
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="min-h-11 border-2 border-charcoal bg-surface-raised px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline"
             >
-              <AnimatePresence mode="wait" initial={false}>
-                {copied ? (
-                  <motion.span
-                    key="ok"
-                    initial={reduce ? false : { scale: 0.7, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={reduce ? reduced : springSnappy}
-                  >
-                    ✓ Email copied
-                  </motion.span>
-                ) : (
-                  <motion.span key="mail">{SITE.email}</motion.span>
-                )}
-              </AnimatePresence>
-            </TactileButton>
-
-            {SITE.socials.map((s) => (
-              <TactileLink
-                key={s.label}
-                href={s.href}
-                variant="secondary"
-                fullWidth
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {s.label === "X" ? "X / Twitter" : s.label}
-              </TactileLink>
-            ))}
-
-            <TrackedLink
-              href="/ari-swerdlow-resume.pdf"
-              download
-              eventName="resume_download"
-              eventTarget="contact"
-              className="tactile-press tactile-lift inline-flex w-full items-center justify-center border-2 border-charcoal bg-ochre px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline sticker-sm"
-            >
-              Download one-page résumé ↓
-            </TrackedLink>
-            <TrackedLink
-              href={`mailto:${SITE.email}?subject=Product%20engineering%20conversation`}
-              eventName="contact_intent"
-              eventTarget="contact-email"
-              className="tactile-press tactile-lift inline-flex w-full items-center justify-center border-2 border-charcoal bg-coral px-4 py-2.5 text-center text-sm font-semibold text-white no-underline sticker-sm"
-            >
-              Start an email →
-            </TrackedLink>
-          </motion.div>
-        </motion.div>
-
-        <footer className="mt-12 flex flex-col items-center gap-3 border-t-2 border-charcoal/10 pt-8 text-center">
-          <p className="font-display text-lg font-semibold tracking-tight">
-            {SITE.name}
-          </p>
-          <p className="font-mono text-[0.65rem] text-muted">
-            {SITE.tagline} · {new Date().getFullYear()}
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 font-mono text-[0.65rem] uppercase tracking-wider">
-            <a href="/evidence" className="text-cobalt">Evidence ledger</a>
-            <a href="/privacy" className="text-cobalt">Privacy</a>
-          </div>
+              {social.label === "X" ? "X" : social.label}
+            </a>
+          ))}
+          <TrackedLink
+            href="/ari-swerdlow-resume.pdf"
+            download
+            eventName="resume_download"
+            eventTarget="contact"
+            className="min-h-11 border-2 border-charcoal bg-ochre px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline"
+          >
+            Résumé (PDF)
+          </TrackedLink>
           <a
-            href="#top"
-            className="font-mono text-[0.7rem] uppercase tracking-wider text-cobalt no-underline hover:underline"
+            href="/resume"
+            className="min-h-11 border-2 border-charcoal bg-paper px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline"
           >
-            ↑ Back to top
+            Résumé (web)
           </a>
-        </footer>
+          <TrackedLink
+            href={`mailto:${SITE.email}?subject=${encodeURIComponent("Hello")}`}
+            eventName="contact_intent"
+            eventTarget="contact-email"
+            className="min-h-11 border-2 border-charcoal bg-coral px-4 py-2.5 text-center text-sm font-semibold no-underline"
+          >
+            Email me →
+          </TrackedLink>
+        </div>
       </div>
     </section>
   );
