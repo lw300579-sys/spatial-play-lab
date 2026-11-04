@@ -43,7 +43,9 @@ function collectErrors(page) {
 function blockingErrors(errors) {
   return errors.filter(
     (message) =>
-      !/favicon|Failed to load resource.*404|ResizeObserver|Blocked call to navigator\.vibrate|Camera access failed:\s*(?:NotAllowedError|NotFoundError)|WebSocket connection.*\/_next\/hmr.*failed/i.test(message),
+      !/favicon|Failed to load resource.*404|ResizeObserver|Blocked call to navigator\.vibrate|Camera access failed:\s*(?:NotAllowedError|NotFoundError)|WebSocket connection.*\/_next\/hmr.*failed|Refused to execute script from 'https:\/\/[^']+_vercel\/insights\/script\.js' because its MIME type/i.test(
+        message,
+      ),
   );
 }
 

@@ -346,9 +346,13 @@ export default async function WorkPage({
           </section>
 
           {page.shots.length > 1 ? (
-            <div className="mt-10 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:max-w-3xl sm:grid-cols-2 sm:overflow-visible sm:px-0">
+            <div className="mt-10 max-w-[100vw] sm:max-w-none">
+              <div className="-mx-4 flex max-w-[100vw] snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-4 pb-2 sm:mx-0 sm:max-w-3xl sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0">
               {page.shots.slice(1).map((shot) => (
-                <div key={shot.src} className="w-[85%] max-w-md shrink-0 snap-center sm:w-auto">
+                <div
+                  key={shot.src}
+                  className="w-[min(85%,20rem)] max-w-md shrink-0 snap-center sm:w-auto"
+                >
                   <DeviceFrame
                     variant="browser"
                     src={shot.src}
@@ -359,6 +363,7 @@ export default async function WorkPage({
                   />
                 </div>
               ))}
+              </div>
             </div>
           ) : null}
 
