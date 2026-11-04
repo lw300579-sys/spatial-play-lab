@@ -34,7 +34,7 @@ export default function PrivacyPage() {
             </p>
           </section>
           <section>
-            <h2 className="font-display text-2xl font-semibold text-charcoal">Notes signup</h2>
+            <h2 className="font-display text-2xl font-semibold text-charcoal">Email signup</h2>
             <p className="mt-2">
               If the signup form is on, your email is sent to the newsletter provider configured for
               this site. This site does not keep a copy. If the form is off, the link opens your email app.

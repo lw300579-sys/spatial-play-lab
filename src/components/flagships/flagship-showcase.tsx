@@ -164,7 +164,7 @@ export function FlagshipShowcase() {
             </p>
           </div>
           <TrackedLink
-            href="/evidence"
+            href="/testing"
             eventName="evidence_open"
             eventTarget="flagship-ledger"
             className="inline-flex items-center justify-center border-2 border-paper bg-paper px-4 py-3 font-mono text-xs font-bold uppercase tracking-wider text-charcoal no-underline shadow-[4px_4px_0_var(--ochre)] transition-transform hover:-translate-y-0.5"

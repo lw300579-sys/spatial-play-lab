@@ -79,11 +79,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         jobTitle: "Product engineer",
         sameAs: SITE.socials.map((social) => social.href),
         knowsAbout: [
-          "Computer vision",
-          "Browser-based augmented reality",
-          "Game systems",
-          "Human-computer interaction",
-          "Sports intelligence",
+          "computer vision",
+          "browser games",
+          "pose tracking",
+          "MediaPipe",
+          "TensorFlow.js",
+          "Three.js",
         ],
       },
       {

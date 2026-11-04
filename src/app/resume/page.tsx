@@ -72,8 +72,8 @@ export default function ResumePage() {
 
         <p className="mt-10 border-l-4 border-cobalt bg-paper-ink p-4 text-sm leading-relaxed text-charcoal/75">
           These are engineering numbers, not user results. More at{" "}
-          <Link href="/evidence" className="text-cobalt underline">
-            /evidence
+          <Link href="/testing" className="text-cobalt underline">
+            /testing
           </Link>
           .{" "}
           <a href="/ari-swerdlow-resume.pdf" download className="text-cobalt underline">

@@ -36,7 +36,7 @@ export default async function Home({
         <Principles />
         <SignupSection status={status} />
         <BioContact />
-        <SiteFooter status={status} />
+        <SiteFooter />
       </main>
     </>
   );

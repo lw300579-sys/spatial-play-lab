@@ -9,13 +9,20 @@ import {
 
 export const metadata: Metadata = {
   title: "What's tested and what isn't",
-  description: "Dated engineering checks for each project, plus what still needs real people to prove.",
-  alternates: { canonical: "/evidence" },
+  description:
+    "Here's every check I've run, with the date I ran it. Most of it is code and recorded video.",
+  alternates: { canonical: "/testing" },
 };
 
-export default function EvidencePage() {
+export default function TestingPage() {
   return (
     <main className="min-h-screen">
+      <a
+        href="#testing-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:border-2 focus:border-charcoal focus:bg-ochre focus:px-4 focus:py-2 focus:font-mono focus:text-sm"
+      >
+        Skip to testing content
+      </a>
       <header className="border-b-2 border-charcoal px-4 py-4 sm:px-6">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4">
           <Link href="/" className="font-display text-xl font-semibold no-underline">
@@ -27,14 +34,16 @@ export default function EvidencePage() {
         </div>
       </header>
 
-      <section className="border-b-2 border-charcoal px-4 py-14 sm:px-6 sm:py-20">
+      <section id="testing-content" className="border-b-2 border-charcoal px-4 py-14 sm:px-6 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-cobalt">Notes</p>
+          <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-cobalt">Testing</p>
           <h1 className="mt-3 max-w-4xl font-display text-5xl font-semibold leading-none tracking-tight sm:text-6xl">
-            What's tested, and what isn't
+            What&apos;s tested, and what isn&apos;t
           </h1>
           <p className="mt-6 max-w-3xl text-lg leading-relaxed text-charcoal/80">
-            Code tests prove an app runs. They don't prove people like it. This page keeps those separate.
+            Here&apos;s every check I&apos;ve run, with the date I ran it. Most of it is code and
+            recorded video. The stuff that needs real people trying it on real phones is listed
+            separately, because I haven&apos;t done it yet.
           </p>
         </div>
       </section>
@@ -111,7 +120,7 @@ export default function EvidencePage() {
         <div className="mx-auto max-w-6xl">
           <h2 className="font-display text-3xl font-semibold">Testing sheets</h2>
           <p className="mt-3 max-w-2xl leading-relaxed text-charcoal/75">
-            Blank sheets for the next round of testing. Nothing gets marked passed until it's tested.
+            Blank sheets for the next round of testing. Nothing gets marked passed until it&apos;s tested.
           </p>
           <div className="mt-7 grid gap-4 md:grid-cols-3">
             {evidenceDownloads.map((item) => (

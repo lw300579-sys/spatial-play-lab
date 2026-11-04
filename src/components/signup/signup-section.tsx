@@ -1,4 +1,5 @@
 import { NewsletterForm } from "@/components/newsletter-form";
+import { newsletterActionReady } from "@/lib/newsletter";
 
 export function SignupSection({ status }: { status?: "in" | "error" | null }) {
   return (
@@ -8,10 +9,10 @@ export function SignupSection({ status }: { status?: "in" | "error" | null }) {
           Get an email when I ship something
         </h2>
         <p className="mt-3 max-w-xl text-base leading-relaxed text-charcoal/80">
-          New app, big update, that's it. Maybe once a month. No spam, I don't have time either.
+          New app or a big update, that&apos;s it. Maybe once a month. No spam, I don&apos;t have time either.
         </p>
         <div className="mt-6">
-          <NewsletterForm id="newsletter-home" status={status} />
+          <NewsletterForm id="newsletter-home" status={status} ready={newsletterActionReady()} />
         </div>
       </div>
     </section>

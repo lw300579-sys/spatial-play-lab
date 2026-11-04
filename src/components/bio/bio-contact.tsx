@@ -18,7 +18,10 @@ export function BioContact() {
             I'm Ari. I build apps where your body is the controller: baseball, boxing, tennis, sign language, pickleball. Getting a phone camera to understand a person in a messy room is the hard part. That's the part I like.
           </p>
           <p className="mt-3 max-w-lg text-base leading-relaxed text-charcoal/85">
-            I'm open to product engineering and computer vision work, especially when the input is a real person moving around.
+            I&apos;m open to product engineering and computer vision work, especially when the input is a real person moving around.
+          </p>
+          <p className="mt-3 max-w-lg text-base leading-relaxed text-charcoal/85">
+            Mostly MediaPipe, TensorFlow.js and Three.js in the browser, with Next and TypeScript holding it together. Python when the video work gets heavy.
           </p>
         </div>
 

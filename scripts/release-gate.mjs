@@ -5,7 +5,7 @@ const portfolioBase = process.env.PORTFOLIO_URL || "http://127.0.0.1:3000";
 
 const portfolioRoutes = [
   { name: "Portfolio", path: "/", expected: "Ari Swerdlow", kind: "home" },
-  { name: "Evidence ledger", path: "/evidence", expected: "What's tested", kind: "evidence" },
+  { name: "Testing ledger", path: "/testing", expected: "What's tested", kind: "evidence" },
   { name: "Privacy", path: "/privacy", expected: "Privacy, in plain language", kind: "privacy" },
   { name: "Jiku case study", path: "/work/jiku", expected: "Jiku Fitness", kind: "case-study" },
   { name: "AR Baseball case study", path: "/work/ar-baseball", expected: "AR Baseball", kind: "case-study" },
@@ -171,7 +171,7 @@ async function checkPortfolioAssets() {
     }
 
     const validEvent = await request.post(new URL("/api/events", portfolioBase).href, {
-      data: { event: "evidence_open", target: "release-gate", path: "/evidence" },
+      data: { event: "evidence_open", target: "release-gate", path: "/testing" },
     });
     const invalidEvent = await request.post(new URL("/api/events", portfolioBase).href, {
       data: { event: "arbitrary_event", target: "release-gate", path: "/" },
@@ -204,7 +204,8 @@ async function checkPortfolioAssets() {
       passed:
         sitemap.ok() &&
         sitemapText.includes("2026-09-26") &&
-        sitemapText.includes("/evidence") &&
+        sitemapText.includes("/testing") &&
+        !sitemapText.includes("/evidence") &&
         sitemapText.includes("/privacy"),
     });
   } finally {

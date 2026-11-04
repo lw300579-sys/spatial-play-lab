@@ -5,6 +5,15 @@ const nextConfig: NextConfig = {
     // PNGs only in portfolio previews — avoid SVG attachment disposition issues
     formats: ["image/avif", "image/webp"],
   },
+  async redirects() {
+    return [
+      {
+        source: "/evidence",
+        destination: "/testing",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     const contentSecurityPolicy = [
       "default-src 'self'",
