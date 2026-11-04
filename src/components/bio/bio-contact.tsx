@@ -15,7 +15,7 @@ export function BioContact() {
         <div>
           <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">About</h2>
           <p className="mt-4 max-w-lg text-base leading-relaxed text-charcoal/85">
-            I'm Ari. I build apps where your body is the controller: baseball, boxing, tennis, sign language, pickleball. Getting a phone camera to understand a person in a messy room is the hard part. That's the part I like.
+            I&apos;m Ari. I build apps where your body is the controller: baseball, boxing, tennis, sign language, pickleball. Getting a phone camera to understand a person in a messy room is the hard part. That&apos;s the part I like.
           </p>
           <p className="mt-3 max-w-lg text-base leading-relaxed text-charcoal/85">
             I&apos;m open to product engineering and computer vision work, especially when the input is a real person moving around.

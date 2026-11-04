@@ -1,22 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 type Theme = "light" | "dark";
 
-function readTheme(): Theme {
-  if (typeof document === "undefined") return "light";
+function subscribe(onStoreChange: () => void) {
+  const media = window.matchMedia("(prefers-color-scheme: dark)");
+  media.addEventListener("change", onStoreChange);
+  window.addEventListener("storage", onStoreChange);
+  window.addEventListener("theme-change", onStoreChange);
+  return () => {
+    media.removeEventListener("change", onStoreChange);
+    window.removeEventListener("storage", onStoreChange);
+    window.removeEventListener("theme-change", onStoreChange);
+  };
+}
+
+function getThemeSnapshot(): Theme {
   return document.documentElement.classList.contains("dark") ? "dark" : "light";
 }
 
-export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("light");
-  const [ready, setReady] = useState(false);
+function getServerSnapshot(): Theme {
+  return "light";
+}
 
-  useEffect(() => {
-    setTheme(readTheme());
-    setReady(true);
-  }, []);
+export function ThemeToggle() {
+  const theme = useSyncExternalStore(subscribe, getThemeSnapshot, getServerSnapshot);
+  const pressed = theme === "dark";
+  const label = pressed ? "Switch to light mode" : "Switch to dark mode";
 
   function toggle() {
     const next: Theme = theme === "dark" ? "light" : "dark";
@@ -26,11 +37,8 @@ export function ThemeToggle() {
     } catch {
       // ignore storage failures
     }
-    setTheme(next);
+    window.dispatchEvent(new Event("theme-change"));
   }
-
-  const pressed = theme === "dark";
-  const label = pressed ? "Switch to light mode" : "Switch to dark mode";
 
   return (
     <button
@@ -41,7 +49,7 @@ export function ThemeToggle() {
       className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border-2 border-charcoal bg-paper text-charcoal focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cobalt"
     >
       <span aria-hidden className="font-mono text-[0.7rem] uppercase tracking-wide">
-        {ready ? (pressed ? "Light" : "Dark") : "Theme"}
+        {pressed ? "Light" : "Dark"}
       </span>
     </button>
   );

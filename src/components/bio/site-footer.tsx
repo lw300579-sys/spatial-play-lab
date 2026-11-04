@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SITE } from "@/data/games";
 
 export function SiteFooter() {
@@ -6,13 +7,13 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-6xl flex-col gap-6 border-t-2 border-charcoal/15 pt-8">
         <p className="font-mono text-[0.7rem] leading-relaxed text-muted">
           {SITE.name} · I build browser apps you control by moving. ·{" "}
-          <a className="text-cobalt" href="/testing">
+          <Link className="text-cobalt" href="/testing">
             Testing
-          </a>
+          </Link>
           {" · "}
-          <a className="text-cobalt" href="/privacy">
+          <Link className="text-cobalt" href="/privacy">
             Privacy
-          </a>
+          </Link>
           {" · "}
           <a className="text-cobalt" href={SITE.socials[0].href}>
             X
@@ -22,12 +23,12 @@ export function SiteFooter() {
             GitHub
           </a>
         </p>
-        <a
+        <Link
           href="/#signup"
           className="font-mono text-[0.7rem] text-cobalt no-underline hover:underline"
         >
           Get an email when I ship something →
-        </a>
+        </Link>
         <a href="#top" className="font-mono text-[0.7rem] uppercase tracking-wider text-cobalt no-underline">
           ↑ Back to top
         </a>

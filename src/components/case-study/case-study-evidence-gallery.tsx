@@ -16,7 +16,7 @@ export function CaseStudyEvidenceGallery({
             Product evidence · three views
           </p>
           <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-            Here's what it looks like.
+            Here&apos;s what it looks like.
           </h2>
         </div>
 
