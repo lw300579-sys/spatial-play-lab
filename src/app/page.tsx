@@ -8,6 +8,7 @@ import { BioContact } from "@/components/bio/bio-contact";
 import { SiteFooter } from "@/components/bio/site-footer";
 import { SiteNav } from "@/components/ui/site-nav";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
+import { Reveal } from "@/components/ui/reveal";
 
 export default async function Home({
   searchParams,
@@ -30,12 +31,24 @@ export default async function Home({
       <SiteNav />
       <main className="flex-1">
         <Hero />
-        <FlagshipBands />
-        <ProductIndex />
-        <HowItWorks />
-        <Principles />
-        <SignupSection status={status} />
-        <BioContact />
+        <Reveal>
+          <FlagshipBands />
+        </Reveal>
+        <Reveal delay={60}>
+          <ProductIndex />
+        </Reveal>
+        <Reveal delay={120}>
+          <HowItWorks />
+        </Reveal>
+        <Reveal delay={60}>
+          <Principles />
+        </Reveal>
+        <Reveal>
+          <SignupSection status={status} />
+        </Reveal>
+        <Reveal delay={60}>
+          <BioContact />
+        </Reveal>
         <SiteFooter />
       </main>
     </>
