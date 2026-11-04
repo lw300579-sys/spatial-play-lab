@@ -11,6 +11,7 @@ interface DeviceFrameProps {
   clip?: string | null;
   url?: string | null;
   priority?: boolean;
+  unoptimized?: boolean;
   sizes?: string;
   className?: string;
   children?: ReactNode;
@@ -33,6 +34,7 @@ export function DeviceFrame({
   clip,
   url,
   priority = false,
+  unoptimized = false,
   sizes = "(max-width: 768px) 90vw, 420px",
   className = "",
 }: DeviceFrameProps) {
@@ -56,8 +58,7 @@ export function DeviceFrame({
       height={variant === "phone" ? 844 : 900}
       sizes={sizes}
       priority={priority}
-      placeholder="blur"
-      blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiMxMTEiLz48L3N2Zz4="
+      unoptimized={unoptimized}
       className="h-full w-full object-cover object-top transition-transform duration-150 group-hover:scale-[1.02]"
     />
   );

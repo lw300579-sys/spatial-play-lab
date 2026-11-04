@@ -1,14 +1,13 @@
+import dynamic from "next/dynamic";
 import { Hero } from "@/components/hero/hero";
-import { FlagshipBands } from "@/components/flagships/flagship-bands";
-import { HowItWorks } from "@/components/how/how-it-works";
-import { ProductIndex } from "@/components/work/product-index";
-import { Principles } from "@/components/craft/principles";
-import { SignupSection } from "@/components/signup/signup-section";
-import { BioContact } from "@/components/bio/bio-contact";
-import { SiteFooter } from "@/components/bio/site-footer";
 import { SiteNav } from "@/components/ui/site-nav";
-import { ScrollProgress } from "@/components/ui/scroll-progress";
-import { Reveal } from "@/components/ui/reveal";
+
+const ScrollProgress = dynamic(
+  () => import("@/components/ui/scroll-progress").then((mod) => mod.ScrollProgress),
+);
+const HomeBelow = dynamic(() =>
+  import("@/components/home/home-below").then((mod) => mod.HomeBelow),
+);
 
 export default async function Home({
   searchParams,
@@ -23,7 +22,7 @@ export default async function Home({
     <>
       <a
         href="#apps"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:border-2 focus:border-charcoal focus:bg-ochre focus:px-4 focus:py-2 focus:font-mono focus:text-sm"
+        className="absolute left-4 top-4 z-[70] -translate-y-[200%] rounded-full border-2 border-charcoal bg-ochre px-4 py-3 font-mono text-sm focus:translate-y-0 focus-visible:translate-y-0"
       >
         Skip to the apps
       </a>
@@ -31,25 +30,7 @@ export default async function Home({
       <SiteNav />
       <main className="flex-1">
         <Hero />
-        <Reveal>
-          <FlagshipBands />
-        </Reveal>
-        <Reveal delay={60}>
-          <ProductIndex />
-        </Reveal>
-        <Reveal delay={120}>
-          <HowItWorks />
-        </Reveal>
-        <Reveal delay={60}>
-          <Principles />
-        </Reveal>
-        <Reveal>
-          <SignupSection status={status} />
-        </Reveal>
-        <Reveal delay={60}>
-          <BioContact />
-        </Reveal>
-        <SiteFooter />
+        <HomeBelow status={status} />
       </main>
     </>
   );

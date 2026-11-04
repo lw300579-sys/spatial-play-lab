@@ -5,8 +5,8 @@ import { appClips } from "@/data/clips";
 export function Hero() {
   return (
     <section id="top" className="border-b-2 border-charcoal">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:min-h-[85svh] lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-        <div className="flex flex-col gap-6">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:gap-10 sm:px-6 sm:py-20 lg:min-h-[85svh] lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+        <div className="flex flex-col gap-5 sm:gap-6">
           <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-cobalt">
             Ari Swerdlow · product engineer
           </p>
@@ -22,9 +22,9 @@ export function Hero() {
           <div className="flex flex-wrap gap-3">
             <a
               href="#apps"
-              className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-coral px-5 py-2.5 text-sm font-semibold text-white no-underline"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-coral px-5 py-2.5 text-sm font-semibold no-underline"
             >
-              Try the apps ↓
+              Try the apps <span className="btn-arrow">↓</span>
             </a>
             <Link
               href="/resume"
@@ -38,7 +38,8 @@ export function Hero() {
           </p>
         </div>
 
-        <div className="relative">
+        {/* Hidden below sm so the 390px viewport keeps CTAs above the fold and skips the shot. */}
+        <div className="relative mx-auto hidden w-full max-w-[280px] sm:block lg:max-w-[320px]">
           <svg
             className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-[0.12]"
             viewBox="0 0 400 480"
@@ -58,7 +59,7 @@ export function Hero() {
               strokeWidth="1"
             />
           </svg>
-          <div className="hero-phone mx-auto max-w-[280px] origin-bottom rotate-[-3deg] sm:max-w-[320px]">
+          <div className="hero-phone origin-bottom">
             <DeviceFrame
               variant="phone"
               src="/shots/ar-baseball-stadium-mobile.webp"
@@ -66,8 +67,7 @@ export function Hero() {
               caption="Waiting on the pitch. The pitcher won't throw until tracking is ready."
               clip={appClips["ar-baseball"]}
               url="https://ar-baseball.vercel.app/"
-              priority
-              sizes="(max-width: 640px) 70vw, 320px"
+              sizes="(max-width: 639px) 0px, (max-width: 1024px) 280px, 320px"
             />
           </div>
         </div>

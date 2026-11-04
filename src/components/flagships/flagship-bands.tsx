@@ -1,13 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { DeviceFrame } from "@/components/ui/device-frame";
-import { QrModal } from "@/components/qr-modal/qr-modal";
 import { TrackedLink } from "@/components/ui/tracked-link";
 import { flagshipCaseStudies } from "@/data/case-studies";
 import { appClips } from "@/data/clips";
 import { useDevice } from "@/hooks/use-device";
+
+const QrModal = dynamic(
+  () => import("@/components/qr-modal/qr-modal").then((mod) => mod.QrModal),
+  { ssr: false },
+);
 
 const FLAGSHIP_COPY = {
   jiku: {

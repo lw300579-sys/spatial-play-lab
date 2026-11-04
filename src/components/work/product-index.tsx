@@ -1,12 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { DeviceFrame } from "@/components/ui/device-frame";
 import { catalog, type CatalogItem } from "@/data/catalog";
 import { appClips } from "@/data/clips";
 import { useDevice } from "@/hooks/use-device";
-import { QrModal } from "@/components/qr-modal/qr-modal";
 import { TrackedLink } from "@/components/ui/tracked-link";
+
+const QrModal = dynamic(
+  () => import("@/components/qr-modal/qr-modal").then((mod) => mod.QrModal),
+  { ssr: false },
+);
 
 const FLAGSHIP_IDS = new Set(["jiku-fitness", "ar-baseball", "bio-tactical-edge"]);
 const everythingElse = catalog.filter((item) => !FLAGSHIP_IDS.has(item.id));

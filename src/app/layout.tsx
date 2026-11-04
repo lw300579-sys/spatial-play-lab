@@ -7,20 +7,24 @@ import "./globals.css";
 const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
-  display: "swap",
-  axes: ["SOFT", "WONK"],
+  // optional: never block H1 LCP on the display face under slow networks
+  display: "optional",
+  weight: ["600"],
+  // skip SOFT/WONK axes — they inflate the preload woff2 ~3× without changing the look much
 });
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
+  weight: ["400", "600", "700"],
 });
 
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
+  weight: ["400", "500"],
 });
 
 const siteUrl = "https://ari-swerdlow.vercel.app";

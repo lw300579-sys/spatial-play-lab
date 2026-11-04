@@ -1,9 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import { SITE } from "@/data/games";
 import { useCopyToClipboard } from "@/hooks/use-copy";
-import { springSnappy } from "@/lib/motion";
 import { TrackedLink } from "@/components/ui/tracked-link";
 
 export function BioContact() {
@@ -30,17 +28,9 @@ export function BioContact() {
             type="button"
             onClick={() => copy(SITE.email)}
             aria-label={copied ? "Email copied" : `Copy ${SITE.email}`}
-            className="border-2 border-charcoal bg-paper px-4 py-2.5 text-left text-sm font-semibold"
+            className="min-h-11 border-2 border-charcoal bg-paper px-4 py-2.5 text-left text-sm font-semibold"
           >
-            <AnimatePresence mode="wait" initial={false}>
-              {copied ? (
-                <motion.span key="ok" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={springSnappy}>
-                  Email copied
-                </motion.span>
-              ) : (
-                <motion.span key="mail">{SITE.email}</motion.span>
-              )}
-            </AnimatePresence>
+            {copied ? "Email copied" : SITE.email}
           </button>
           {SITE.socials.map((social) => (
             <a
@@ -48,7 +38,7 @@ export function BioContact() {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="border-2 border-charcoal bg-surface-raised px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline"
+              className="min-h-11 border-2 border-charcoal bg-surface-raised px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline"
             >
               {social.label === "X" ? "X" : social.label}
             </a>
@@ -58,13 +48,13 @@ export function BioContact() {
             download
             eventName="resume_download"
             eventTarget="contact"
-            className="border-2 border-charcoal bg-ochre px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline"
+            className="min-h-11 border-2 border-charcoal bg-ochre px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline"
           >
             Résumé (PDF)
           </TrackedLink>
           <a
             href="/resume"
-            className="border-2 border-charcoal bg-paper px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline"
+            className="min-h-11 border-2 border-charcoal bg-paper px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline"
           >
             Résumé (web)
           </a>
@@ -72,7 +62,7 @@ export function BioContact() {
             href={`mailto:${SITE.email}?subject=${encodeURIComponent("Hello")}`}
             eventName="contact_intent"
             eventTarget="contact-email"
-            className="border-2 border-charcoal bg-coral px-4 py-2.5 text-center text-sm font-semibold text-white no-underline"
+            className="min-h-11 border-2 border-charcoal bg-coral px-4 py-2.5 text-center text-sm font-semibold no-underline"
           >
             Email me →
           </TrackedLink>

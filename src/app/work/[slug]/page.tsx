@@ -28,6 +28,8 @@ interface WorkCopy {
   description: string;
   sub: string;
   shots: { src: string; alt: string; caption: string }[];
+  /** Prefer a phone-aspect source for phone frames. */
+  heroSrc?: string;
   liveUrl: string | null;
   tryLabel: string | null;
   tryNote: string | null;
@@ -55,6 +57,7 @@ const workCopy: Record<string, WorkCopy> = {
         caption: "Boxing setup. One punch, one clear response.",
       },
     ],
+    heroSrc: "/shots/jiku-fitness-start-mobile.webp",
     liveUrl: "https://posture-app-nms-projects-e9ba3578.vercel.app/",
     tryLabel: "Try Jiku Fitness",
     tryNote: "Best on a phone. Needs your camera.",
@@ -80,6 +83,7 @@ const workCopy: Record<string, WorkCopy> = {
         caption: "The menu, with the rival ladder.",
       },
     ],
+    heroSrc: "/shots/ar-baseball-stadium-mobile.webp",
     liveUrl: "https://ar-baseball.vercel.app/",
     tryLabel: "Step up to bat",
     tryNote: "Best on a phone. Needs your camera.",
@@ -213,17 +217,26 @@ export default async function WorkPage({
       </a>
       <header className="border-b-2 border-charcoal">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          <Link href="/" className="font-display text-lg font-semibold no-underline">
+          <Link
+            href="/"
+            className="inline-flex min-h-11 items-center font-display text-lg font-semibold no-underline"
+          >
             {SITE.name}
           </Link>
           <nav
-            className="flex gap-4 font-mono text-[0.68rem] uppercase tracking-wide"
+            className="flex gap-2 font-mono text-[0.68rem] uppercase tracking-wide"
             aria-label="Case study"
           >
-            <Link href="/#apps" className="text-charcoal/70 no-underline">
+            <Link
+              href="/#apps"
+              className="inline-flex min-h-11 items-center px-2 text-charcoal/70 no-underline"
+            >
               Apps
             </Link>
-            <Link href="/testing" className="text-charcoal/70 no-underline">
+            <Link
+              href="/testing"
+              className="inline-flex min-h-11 items-center px-2 text-charcoal/70 no-underline"
+            >
               Testing
             </Link>
           </nav>
@@ -264,13 +277,17 @@ export default async function WorkPage({
           <div className="mt-8 max-w-5xl">
             <DeviceFrame
               variant={frameVariant[slug] ?? "browser"}
-              src={page.shots[0].src}
+              src={page.heroSrc ?? page.shots[0].src}
               alt={page.shots[0].alt}
               caption={page.shots[0].caption}
               clip={appClips[page.clipId]}
               url={page.liveUrl}
               priority
-              sizes="(max-width: 768px) 92vw, 720px"
+              sizes={
+                frameVariant[slug] === "phone"
+                  ? "(max-width: 768px) 280px, 320px"
+                  : "(max-width: 768px) 92vw, 720px"
+              }
               className={
                 frameVariant[slug] === "phone"
                   ? "mx-auto max-w-[280px] sm:max-w-[320px]"
@@ -329,16 +346,16 @@ export default async function WorkPage({
           </section>
 
           {page.shots.length > 1 ? (
-            <div className="mt-10 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0">
+            <div className="mt-10 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:max-w-3xl sm:grid-cols-2 sm:overflow-visible sm:px-0">
               {page.shots.slice(1).map((shot) => (
-                <div key={shot.src} className="w-[85%] shrink-0 snap-center sm:w-auto">
+                <div key={shot.src} className="w-[85%] max-w-md shrink-0 snap-center sm:w-auto">
                   <DeviceFrame
                     variant="browser"
                     src={shot.src}
                     alt={shot.alt}
                     caption={shot.caption}
                     url={page.liveUrl}
-                    sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 360px"
+                    sizes="(max-width: 640px) 340px, 360px"
                   />
                 </div>
               ))}
