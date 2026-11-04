@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AppMedia } from "@/components/ui/app-media";
+import { DeviceFrame } from "@/components/ui/device-frame";
 import { catalog, type CatalogItem } from "@/data/catalog";
 import { appClips } from "@/data/clips";
 import { useDevice } from "@/hooks/use-device";
@@ -10,19 +10,6 @@ import { TrackedLink } from "@/components/ui/tracked-link";
 
 const FLAGSHIP_IDS = new Set(["jiku-fitness", "ar-baseball", "bio-tactical-edge"]);
 const everythingElse = catalog.filter((item) => !FLAGSHIP_IDS.has(item.id));
-
-function Shot({ item }: { item: CatalogItem }) {
-  return (
-    <div className="overflow-hidden rounded-lg border-2 border-charcoal bg-charcoal">
-      <AppMedia
-        clip={appClips[item.id]}
-        desktop={item.desktop}
-        mobile={item.mobile}
-        alt={item.alt}
-      />
-    </div>
-  );
-}
 
 export function ProductIndex() {
   const { isMobile, ready } = useDevice();
@@ -42,9 +29,16 @@ export function ProductIndex() {
 
         <div className="mt-8 grid gap-5 md:grid-cols-2">
           {everythingElse.map((item) => (
-            <article key={item.id} className="flex flex-col border-2 border-charcoal bg-surface-raised">
-              <Shot item={item} />
-              <div className="flex flex-1 flex-col gap-3 p-5">
+            <article key={item.id} className="flex flex-col">
+              <DeviceFrame
+                variant="browser"
+                src={item.desktop}
+                alt={item.alt}
+                clip={appClips[item.id]}
+                url={item.liveUrl}
+                sizes="(max-width: 768px) 92vw, 45vw"
+              />
+              <div className="mt-4 flex flex-1 flex-col gap-3">
                 <div>
                   <h3 className="font-display text-2xl font-semibold tracking-tight">{item.title}</h3>
                   <p className="mt-2 text-base leading-relaxed text-charcoal/80">{item.sentence}</p>
@@ -58,7 +52,7 @@ export function ProductIndex() {
                       rel="noopener noreferrer"
                       eventName="live_product_open"
                       eventTarget={item.id}
-                      className="inline-flex min-h-11 items-center border-2 border-charcoal bg-coral px-4 py-2 text-sm font-semibold text-white no-underline"
+                      className="inline-flex min-h-11 items-center rounded-full border-2 border-charcoal bg-coral px-4 py-2 text-sm font-semibold text-white no-underline"
                     >
                       {item.tryLabel} ↗
                     </TrackedLink>
@@ -67,7 +61,7 @@ export function ProductIndex() {
                     <button
                       type="button"
                       onClick={() => setQr(item)}
-                      className="hidden min-h-11 border-2 border-charcoal bg-paper px-4 py-2 text-sm font-semibold md:inline-flex md:items-center"
+                      className="hidden min-h-11 rounded-full border-2 border-charcoal bg-paper px-4 py-2 text-sm font-semibold md:inline-flex md:items-center"
                     >
                       Phone QR
                     </button>

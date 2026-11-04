@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { AppMedia } from "@/components/ui/app-media";
+import { DeviceFrame } from "@/components/ui/device-frame";
 import { QrModal } from "@/components/qr-modal/qr-modal";
 import { TrackedLink } from "@/components/ui/tracked-link";
 import { flagshipCaseStudies } from "@/data/case-studies";
@@ -75,19 +75,20 @@ export function FlagshipBands() {
                   imageLeft ? "" : "lg:[&>*:first-child]:order-2"
                 }`}
               >
-                <figure>
-                  <div className="overflow-hidden rounded-2xl border-2 border-charcoal bg-charcoal">
-                    <AppMedia
-                      clip={appClips[copy.clipId]}
-                      desktop={copy.shot}
-                      mobile={copy.mobile}
-                      alt={copy.alt}
-                    />
-                  </div>
-                  <figcaption className="mt-2 text-sm leading-relaxed text-muted">
-                    {copy.caption}
-                  </figcaption>
-                </figure>
+                <DeviceFrame
+                  variant={copy.frame}
+                  src={copy.mobile ?? copy.shot}
+                  alt={copy.alt}
+                  caption={copy.caption}
+                  clip={appClips[copy.clipId]}
+                  url={study.liveUrl}
+                  sizes={
+                    copy.frame === "phone"
+                      ? "(max-width: 1024px) 70vw, 360px"
+                      : "(max-width: 1024px) 92vw, 560px"
+                  }
+                  className={copy.frame === "phone" ? "mx-auto max-w-[280px] lg:max-w-[320px]" : ""}
+                />
 
                 <div>
                   <h3 className="font-display text-[1.375rem] font-semibold tracking-tight sm:text-3xl">

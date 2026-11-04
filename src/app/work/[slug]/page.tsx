@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/seo/json-ld";
-import { AppMedia } from "@/components/ui/app-media";
+import { DeviceFrame } from "@/components/ui/device-frame";
 import { TrackedLink } from "@/components/ui/tracked-link";
 import { appClips } from "@/data/clips";
 import { SITE } from "@/data/games";
@@ -13,6 +13,12 @@ import {
   getFlagshipCaseStudy,
   type FlagshipSlug,
 } from "@/data/case-studies";
+
+const frameVariant: Record<string, "phone" | "browser"> = {
+  jiku: "phone",
+  "ar-baseball": "phone",
+  "bio-tactical-edge": "browser",
+};
 
 const siteUrl = "https://ari-swerdlow.vercel.app";
 
@@ -255,19 +261,23 @@ export default async function WorkPage({
             Last updated {caseStudy.updatedAt}
           </p>
 
-          <figure className="mt-8 max-w-5xl">
-            <div className="overflow-hidden rounded-lg border-2 border-charcoal bg-charcoal">
-              <AppMedia
-                clip={appClips[page.clipId]}
-                desktop={page.shots[0].src}
-                alt={page.shots[0].alt}
-                priority
-              />
-            </div>
-            <figcaption className="mt-2 font-mono text-[0.7rem] leading-relaxed text-muted">
-              {page.shots[0].caption}
-            </figcaption>
-          </figure>
+          <div className="mt-8 max-w-5xl">
+            <DeviceFrame
+              variant={frameVariant[slug] ?? "browser"}
+              src={page.shots[0].src}
+              alt={page.shots[0].alt}
+              caption={page.shots[0].caption}
+              clip={appClips[page.clipId]}
+              url={page.liveUrl}
+              priority
+              sizes="(max-width: 768px) 92vw, 720px"
+              className={
+                frameVariant[slug] === "phone"
+                  ? "mx-auto max-w-[280px] sm:max-w-[320px]"
+                  : ""
+              }
+            />
+          </div>
 
           <dl className="mt-10 grid gap-4 border-y border-charcoal/15 py-5 font-mono text-[0.72rem] uppercase tracking-wide text-muted sm:grid-cols-2">
             <div>
@@ -321,24 +331,16 @@ export default async function WorkPage({
           {page.shots.length > 1 ? (
             <div className="mt-10 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0">
               {page.shots.slice(1).map((shot) => (
-                <figure
-                  key={shot.src}
-                  className="w-[85%] shrink-0 snap-center sm:w-auto"
-                >
-                  <div className="overflow-hidden rounded-lg border-2 border-charcoal bg-charcoal">
-                    <Image
-                      src={shot.src}
-                      alt={shot.alt}
-                      width={1280}
-                      height={800}
-                      sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 360px"
-                      className="aspect-[16/10] w-full object-cover object-top"
-                    />
-                  </div>
-                  <figcaption className="mt-2 font-mono text-[0.7rem] leading-relaxed text-muted">
-                    {shot.caption}
-                  </figcaption>
-                </figure>
+                <div key={shot.src} className="w-[85%] shrink-0 snap-center sm:w-auto">
+                  <DeviceFrame
+                    variant="browser"
+                    src={shot.src}
+                    alt={shot.alt}
+                    caption={shot.caption}
+                    url={page.liveUrl}
+                    sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 360px"
+                  />
+                </div>
               ))}
             </div>
           ) : null}

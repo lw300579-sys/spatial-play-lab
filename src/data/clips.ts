@@ -1,7 +1,7 @@
 /**
- * Short muted gameplay loops.
+ * Short muted gameplay loops keyed by app slug / product id.
  *
- * When a clip exists, drop the mp4 in public/clips/ and set the path here.
+ * When a clip exists, drop the file in public/clips/ and set the path here.
  * Leave the value null and the screenshot stays up.
  *
  *   "ar-baseball": "/clips/ar-baseball.mp4",

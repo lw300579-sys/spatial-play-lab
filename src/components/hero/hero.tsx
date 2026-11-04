@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AppMedia } from "@/components/ui/app-media";
+import { DeviceFrame } from "@/components/ui/device-frame";
 import { appClips } from "@/data/clips";
 
 export function Hero() {
@@ -50,6 +50,7 @@ export function Hero() {
               stroke="currentColor"
               strokeWidth="1.5"
               className="hero-field-line"
+              pathLength={1}
             />
             <path
               d="M80 400 H320 M120 360 H280 M160 320 H240"
@@ -57,19 +58,18 @@ export function Hero() {
               strokeWidth="1"
             />
           </svg>
-          <figure className="mx-auto max-w-sm origin-bottom rotate-[-3deg] overflow-hidden rounded-[2.25rem] border-[10px] border-charcoal bg-charcoal shadow-[0_24px_60px_rgba(0,0,0,0.18)]">
-            <AppMedia
-              clip={appClips["ar-baseball"]}
-              desktop="/shots/ar-baseball-stadium-desktop.webp"
-              mobile="/shots/ar-baseball-stadium-mobile.webp"
+          <div className="hero-phone mx-auto max-w-[280px] origin-bottom rotate-[-3deg] sm:max-w-[320px]">
+            <DeviceFrame
+              variant="phone"
+              src="/shots/ar-baseball-stadium-mobile.webp"
               alt="AR Baseball running in a browser: a 3D stadium waiting for your swing."
+              caption="Waiting on the pitch. The pitcher won't throw until tracking is ready."
+              clip={appClips["ar-baseball"]}
+              url="https://ar-baseball.vercel.app/"
               priority
-              frame="hero"
+              sizes="(max-width: 640px) 70vw, 320px"
             />
-            <figcaption className="border-t border-white/10 bg-charcoal px-3 py-2 font-mono text-[0.65rem] text-white/70">
-              Waiting on the pitch. The pitcher won&apos;t throw until tracking is ready.
-            </figcaption>
-          </figure>
+          </div>
         </div>
       </div>
     </section>
