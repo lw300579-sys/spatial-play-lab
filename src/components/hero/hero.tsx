@@ -1,19 +1,20 @@
 import Link from "next/link";
 import { DeviceFrame } from "@/components/ui/device-frame";
 import { appClips } from "@/data/clips";
+import { shotBlur } from "@/data/shot-blur";
 
 export function Hero() {
   return (
     <section id="top" className="border-b-2 border-charcoal">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:gap-10 sm:px-6 sm:py-20 lg:min-h-[85svh] lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-        <div className="flex flex-col gap-5 sm:gap-6">
+      <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-10 sm:gap-10 sm:px-6 sm:py-14 lg:grid-cols-[1.05fr_0.95fr] lg:py-16 xl:py-20">
+        <div className="flex flex-col gap-4 sm:gap-5">
           <p className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-cobalt">
             Ari Swerdlow · product engineer
           </p>
-          <h1 className="font-display text-[clamp(2.75rem,6vw,5rem)] font-semibold leading-[1.02] tracking-[-0.02em] text-balance">
+          <h1 className="font-display text-[clamp(2.5rem,5.6vw,4.5rem)] font-semibold leading-[1.02] tracking-[-0.02em] text-balance">
             I build software you move.
           </h1>
-          <p className="max-w-xl text-lg leading-relaxed text-charcoal/85 sm:text-xl">
+          <p className="max-w-xl text-[1.05rem] leading-relaxed text-charcoal/85 sm:text-xl">
             Swing at a pitch. Box in your living room. Learn a sign. It all runs in the browser off your phone camera.
           </p>
           <p className="max-w-lg text-base leading-relaxed text-charcoal/75">
@@ -38,8 +39,8 @@ export function Hero() {
           </p>
         </div>
 
-        {/* Hidden below sm so the 390px viewport keeps CTAs above the fold and skips the shot. */}
-        <div className="relative mx-auto hidden w-full max-w-[280px] sm:block lg:max-w-[320px]">
+        {/* Hidden below sm so the 390px viewport keeps H1 + CTAs above the fold. */}
+        <div className="relative mx-auto hidden w-full max-w-[240px] sm:block lg:max-w-[280px] xl:max-w-[300px]">
           <svg
             className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-[0.12]"
             viewBox="0 0 400 480"
@@ -67,7 +68,9 @@ export function Hero() {
               caption="Waiting on the pitch. The pitcher won't throw until tracking is ready."
               clip={appClips["ar-baseball"]}
               url="https://ar-baseball.vercel.app/"
-              sizes="(max-width: 639px) 0px, (max-width: 1024px) 280px, 320px"
+              priority
+              blurDataURL={shotBlur["ar-baseball-stadium-mobile.webp"]}
+              sizes="(max-width: 639px) 0px, (max-width: 1024px) 240px, 300px"
             />
           </div>
         </div>

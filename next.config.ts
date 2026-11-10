@@ -4,6 +4,10 @@ const nextConfig: NextConfig = {
   images: {
     // PNGs only in portfolio previews — avoid SVG attachment disposition issues
     formats: ["image/avif", "image/webp"],
+    // Next 16 defaults qualities to [75] only; allow the sharper LCP/hero values we pass.
+    qualities: [60, 75, 78, 80, 85],
+    deviceSizes: [390, 640, 750, 828, 1080, 1200, 1440, 1920],
+    imageSizes: [96, 128, 256, 320, 384, 480, 560, 640],
   },
   async redirects() {
     return [

@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export const metadata: Metadata = {
   title: "Résumé",
-  description: "Product engineer. Computer vision, browser games, things that have to work on a normal phone.",
+  description:
+    "Product engineer. Computer vision, browser games, things that have to work on a normal phone.",
   alternates: { canonical: "/resume" },
 };
 
@@ -25,12 +27,27 @@ const offers = [
 
 export default function ResumePage() {
   return (
-    <main className="min-h-screen px-4 py-12 sm:px-6 sm:py-16">
-      <article className="mx-auto max-w-3xl">
-        <Link href="/" className="font-mono text-xs uppercase tracking-wider text-cobalt">
-          ← Back
-        </Link>
-        <p className="mt-8 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-cobalt">Ari Swerdlow</p>
+    <main className="min-h-screen">
+      <a
+        href="#resume"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:border-2 focus:border-charcoal focus:bg-ochre focus:px-4 focus:py-2 focus:font-mono focus:text-sm"
+      >
+        Skip to résumé
+      </a>
+      <header className="border-b-2 border-charcoal px-4 py-3 sm:px-6">
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-4">
+          <Link
+            href="/"
+            className="inline-flex min-h-11 items-center font-mono text-xs uppercase tracking-wider text-cobalt no-underline"
+          >
+            ← Back
+          </Link>
+          <ThemeToggle />
+        </div>
+      </header>
+
+      <article id="resume" className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+        <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-cobalt">Ari Swerdlow</p>
         <h1 className="mt-2 font-display text-4xl font-semibold tracking-tight sm:text-5xl">
           Product engineer · computer vision and browser games
         </h1>
@@ -51,7 +68,7 @@ export default function ResumePage() {
         <h2 className="mt-10 font-display text-2xl font-semibold">Selected work</h2>
         <div className="mt-4 space-y-5 text-base leading-relaxed text-charcoal/85">
           <p>
-            <strong className="font-semibold text-charcoal">Jiku Fitness.</strong> Built a browser workout for boxing, push-ups and pull-ups that handles lost tracking and rest without freezing. 20 boxing tests; real-phone testing pending.
+            <strong className="font-semibold text-charcoal">Jiku Fitness.</strong> Built a browser workout for boxing, push-ups and pull-ups that handles lost tracking and rest without freezing. 8 boxing tests; real-phone testing pending.
           </p>
           <p>
             <strong className="font-semibold text-charcoal">AR Baseball.</strong> Built a three-inning baseball game controlled by your swing, with fielding, runners and a rival team. 250,000 simulated games; 21 tests.
@@ -82,11 +99,17 @@ export default function ResumePage() {
           .
         </p>
         <p className="mt-6 text-sm text-charcoal/75">
-          <a className="text-cobalt underline" href="mailto:aswerd2@gmail.com">aswerd2@gmail.com</a>
+          <a className="text-cobalt underline" href="mailto:aswerd2@gmail.com">
+            aswerd2@gmail.com
+          </a>
           {" · "}
-          <a className="text-cobalt underline" href="https://x.com/2Swerdy">X</a>
+          <a className="text-cobalt underline" href="https://x.com/2Swerdy">
+            X
+          </a>
           {" · "}
-          <a className="text-cobalt underline" href="https://github.com/lw300579-sys">GitHub</a>
+          <a className="text-cobalt underline" href="https://github.com/lw300579-sys">
+            GitHub
+          </a>
         </p>
       </article>
     </main>

@@ -1,13 +1,6 @@
-import dynamic from "next/dynamic";
 import { Hero } from "@/components/hero/hero";
+import { HomeBelow } from "@/components/home/home-below";
 import { SiteNav } from "@/components/ui/site-nav";
-
-const ScrollProgress = dynamic(
-  () => import("@/components/ui/scroll-progress").then((mod) => mod.ScrollProgress),
-);
-const HomeBelow = dynamic(() =>
-  import("@/components/home/home-below").then((mod) => mod.HomeBelow),
-);
 
 export default async function Home({
   searchParams,
@@ -26,7 +19,6 @@ export default async function Home({
       >
         Skip to the apps
       </a>
-      <ScrollProgress />
       <SiteNav />
       <main className="flex-1">
         <Hero />

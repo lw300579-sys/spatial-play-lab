@@ -1,22 +1,14 @@
-"use client";
-
-import { useState } from "react";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { DeviceFrame } from "@/components/ui/device-frame";
 import { TrackedLink } from "@/components/ui/tracked-link";
+import { FlagshipQrButton } from "@/components/flagships/flagship-qr-button";
 import { flagshipCaseStudies } from "@/data/case-studies";
 import { appClips } from "@/data/clips";
-import { useDevice } from "@/hooks/use-device";
-
-const QrModal = dynamic(
-  () => import("@/components/qr-modal/qr-modal").then((mod) => mod.QrModal),
-  { ssr: false },
-);
 
 const FLAGSHIP_COPY = {
   jiku: {
-    what: "A gym in your browser. Box, do push-ups and pull-ups, and your phone camera keeps count.",
+    // Distinct from the one-line pitch / study.summary above.
+    what: "Rounds that pause when tracking drops, and reps that only count when you finish the full range.",
     why: "Camera workout apps tend to treat a dropped arm or a quick breather like you failed. I wanted one that knows the difference.",
     how: "Open the link, prop your phone up, step back so it can see you, and go.",
     caption: "The round screen. It waits until it can actually see you.",
@@ -28,19 +20,22 @@ const FLAGSHIP_COPY = {
     frame: "phone" as const,
   },
   "ar-baseball": {
-    what: "A baseball game you play by swinging at your phone. Three innings, a rival team, no bat.",
+    // Distinct from the one-line pitch / study.summary above.
+    what: "You calibrate once, take a practice swing, then play three innings against a rival ladder.",
     why: "I wanted a Wii-style baseball game you start from a link. A real two-handed swing, no controller.",
     how: "Hold a quick pose so it learns your size, take a practice swing, then wait for the pitch.",
-    caption: "Waiting on the pitch. The pitcher won't throw until tracking is ready.",
+    // Menu shot — hero already uses the stadium / waiting-on-the-pitch frame.
+    caption: "The menu, with the rival ladder.",
     tryLabel: "Try it ↗",
-    shot: "/shots/ar-baseball-stadium-desktop.webp",
-    mobile: "/shots/ar-baseball-stadium-mobile.webp",
-    alt: "AR Baseball calibration. A 3D stadium waits until it can see you.",
+    shot: "/shots/ar-baseball-menu-desktop.webp",
+    mobile: "/shots/ar-baseball-menu-mobile.webp",
+    alt: "AR Baseball menu, with the rival ladder.",
     clipId: "ar-baseball",
     frame: "phone" as const,
   },
   "bio-tactical-edge": {
-    what: "Takes ordinary match video and works out where everyone actually was.",
+    // Distinct from the one-line pitch / study.summary above.
+    what: "Court lines mapped to a regulation court, then players and the ball projected onto it for a scrubbable 3D replay.",
     why: "Match video is easy to watch and hard to measure. I wanted real court positions out of the footage teams already have.",
     how: "There's no public demo yet. The case study shows what it does and what still needs proving.",
     caption: "Broadcast frame on one side, the rebuilt court on the other.",
@@ -54,11 +49,8 @@ const FLAGSHIP_COPY = {
 } as const;
 
 export function FlagshipBands() {
-  const { isMobile, ready } = useDevice();
-  const [qr, setQr] = useState<{ url: string; title: string } | null>(null);
-
   return (
-    <section id="apps" className="border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-20">
+    <section id="apps" className="border-b-2 border-charcoal px-4 py-14 sm:px-6 sm:py-20">
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
           <h2 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -130,7 +122,7 @@ export function FlagshipBands() {
 
                   <details className="group mt-5 border-t border-charcoal/15 pt-4">
                     <summary className="cursor-pointer list-none font-medium text-charcoal [&::-webkit-details-marker]:hidden">
-                      <span className="inline-flex items-center gap-2">
+                      <span className="inline-flex min-h-11 items-center gap-2">
                         How it works under the hood
                         <span
                           className="inline-block transition-transform group-open:rotate-90"
@@ -155,25 +147,17 @@ export function FlagshipBands() {
                         rel="noopener noreferrer"
                         eventName="live_product_open"
                         eventTarget={study.productId}
-                        className="inline-flex border-2 border-charcoal bg-coral px-4 py-2 text-sm font-semibold text-white no-underline"
+                        className="inline-flex min-h-11 items-center rounded-full border-2 border-charcoal bg-coral px-4 py-2 text-sm font-semibold text-white no-underline"
                       >
                         {copy.tryLabel}
                       </TrackedLink>
                     ) : null}
-                    {study.liveUrl && ready && !isMobile ? (
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setQr({ url: study.liveUrl!, title: study.title })
-                        }
-                        className="hidden border-2 border-charcoal bg-paper px-4 py-2 text-sm font-semibold md:inline-flex"
-                      >
-                        Phone QR
-                      </button>
+                    {study.liveUrl ? (
+                      <FlagshipQrButton url={study.liveUrl} title={study.title} />
                     ) : null}
                     <Link
                       href={`/work/${study.slug}`}
-                      className="inline-flex border-2 border-charcoal bg-paper px-4 py-2 text-sm font-semibold text-charcoal no-underline"
+                      className="inline-flex min-h-11 items-center rounded-full border-2 border-charcoal bg-paper px-4 py-2 text-sm font-semibold text-charcoal no-underline"
                     >
                       Read the whole thing →
                     </Link>
@@ -188,10 +172,6 @@ export function FlagshipBands() {
           })}
         </div>
       </div>
-
-      {qr ? (
-        <QrModal open onClose={() => setQr(null)} url={qr.url} title={qr.title} />
-      ) : null}
     </section>
   );
 }

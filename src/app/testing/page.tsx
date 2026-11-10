@@ -6,6 +6,7 @@ import {
   humanOutcomeGaps,
   publishedBenchmarks,
 } from "@/data/evidence";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export const metadata: Metadata = {
   title: "What's tested and what isn't",
@@ -25,12 +26,18 @@ export default function TestingPage() {
       </a>
       <header className="border-b-2 border-charcoal px-4 py-4 sm:px-6">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4">
-          <Link href="/" className="font-display text-xl font-semibold no-underline">
+          <Link href="/" className="inline-flex min-h-11 items-center font-display text-xl font-semibold no-underline">
             Ari Swerdlow
           </Link>
-          <Link href="/#contact" className="font-mono text-xs uppercase tracking-wider">
-            Contact →
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/#contact"
+              className="inline-flex min-h-11 items-center font-mono text-xs uppercase tracking-wider no-underline"
+            >
+              Contact →
+            </Link>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { flagshipCaseStudies } from "@/data/case-studies";
 
-const HOME_UPDATED_AT = new Date("2026-09-26T00:00:00.000Z");
+const HOME_UPDATED_AT = new Date("2026-11-10T00:00:00.000Z");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const root = "https://ari-swerdlow.vercel.app";

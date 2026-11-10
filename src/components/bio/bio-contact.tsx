@@ -1,12 +1,8 @@
-"use client";
-
 import { SITE } from "@/data/games";
-import { useCopyToClipboard } from "@/hooks/use-copy";
 import { TrackedLink } from "@/components/ui/tracked-link";
+import { CopyEmailButton } from "@/components/bio/copy-email-button";
 
 export function BioContact() {
-  const { copied, copy } = useCopyToClipboard();
-
   return (
     <section id="contact" className="scroll-mt-28 border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-20">
       <div className="mx-auto grid max-w-6xl gap-8 border-2 border-charcoal bg-surface-raised p-6 sm:grid-cols-[1.25fr_0.75fr] sm:p-10">
@@ -24,14 +20,7 @@ export function BioContact() {
         </div>
 
         <div className="flex flex-col justify-center gap-3">
-          <button
-            type="button"
-            onClick={() => copy(SITE.email)}
-            aria-label={copied ? "Email copied" : `Copy ${SITE.email}`}
-            className="min-h-11 border-2 border-charcoal bg-paper px-4 py-2.5 text-left text-sm font-semibold"
-          >
-            {copied ? "Email copied" : SITE.email}
-          </button>
+          <CopyEmailButton />
           {SITE.socials.map((social) => (
             <a
               key={social.label}

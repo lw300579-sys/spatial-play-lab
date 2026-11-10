@@ -1,20 +1,38 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export const metadata: Metadata = {
   title: "Privacy",
-  description: "What this site stores, what the apps do with the camera, and what happens if you sign up for notes.",
+  description:
+    "What this site stores, what the apps do with the camera, and what happens if you sign up for notes.",
   robots: { index: true, follow: true },
+  alternates: { canonical: "/privacy" },
 };
 
 export default function PrivacyPage() {
   return (
-    <main className="min-h-screen px-4 py-12 sm:px-6 sm:py-20">
-      <article className="mx-auto max-w-3xl">
-        <Link href="/" className="font-mono text-xs uppercase tracking-wider text-cobalt">
-          ← Back to portfolio
-        </Link>
-        <h1 className="mt-8 font-display text-5xl font-semibold tracking-tight sm:text-6xl">
+    <main className="min-h-screen">
+      <a
+        href="#privacy"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:border-2 focus:border-charcoal focus:bg-ochre focus:px-4 focus:py-2 focus:font-mono focus:text-sm"
+      >
+        Skip to privacy
+      </a>
+      <header className="border-b-2 border-charcoal px-4 py-3 sm:px-6">
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-4">
+          <Link
+            href="/"
+            className="inline-flex min-h-11 items-center font-mono text-xs uppercase tracking-wider text-cobalt no-underline"
+          >
+            ← Back to portfolio
+          </Link>
+          <ThemeToggle />
+        </div>
+      </header>
+
+      <article id="privacy" className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-20">
+        <h1 className="font-display text-5xl font-semibold tracking-tight sm:text-6xl">
           Privacy, in plain language.
         </h1>
         <div className="mt-8 space-y-8 text-base leading-relaxed text-charcoal/80">
