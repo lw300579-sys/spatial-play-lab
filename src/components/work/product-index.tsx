@@ -1,25 +1,13 @@
-"use client";
-
-import { useState } from "react";
-import dynamic from "next/dynamic";
 import { DeviceFrame } from "@/components/ui/device-frame";
-import { catalog, type CatalogItem } from "@/data/catalog";
+import { catalog } from "@/data/catalog";
 import { appClips } from "@/data/clips";
-import { useDevice } from "@/hooks/use-device";
 import { TrackedLink } from "@/components/ui/tracked-link";
-
-const QrModal = dynamic(
-  () => import("@/components/qr-modal/qr-modal").then((mod) => mod.QrModal),
-  { ssr: false },
-);
+import { ProductQrButton } from "@/components/work/product-qr-button";
 
 const FLAGSHIP_IDS = new Set(["jiku-fitness", "ar-baseball", "bio-tactical-edge"]);
 const everythingElse = catalog.filter((item) => !FLAGSHIP_IDS.has(item.id));
 
 export function ProductIndex() {
-  const { isMobile, ready } = useDevice();
-  const [qr, setQr] = useState<CatalogItem | null>(null);
-
   return (
     <section id="everything-else" className="border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-20">
       <div className="mx-auto max-w-6xl">
@@ -57,19 +45,17 @@ export function ProductIndex() {
                       rel="noopener noreferrer"
                       eventName="live_product_open"
                       eventTarget={item.id}
-                      className="inline-flex min-h-11 items-center rounded-full border-2 border-charcoal bg-coral px-4 py-2 text-sm font-semibold text-white no-underline"
+                      className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-coral px-4 py-2 text-sm font-semibold text-white no-underline"
                     >
                       {item.tryLabel} ↗
                     </TrackedLink>
                   ) : null}
-                  {item.liveUrl && item.camera && ready && !isMobile ? (
-                    <button
-                      type="button"
-                      onClick={() => setQr(item)}
-                      className="hidden min-h-11 rounded-full border-2 border-charcoal bg-paper px-4 py-2 text-sm font-semibold md:inline-flex md:items-center"
-                    >
-                      Phone QR
-                    </button>
+                  {item.liveUrl ? (
+                    <ProductQrButton
+                      url={item.liveUrl}
+                      title={item.title}
+                      camera={item.camera}
+                    />
                   ) : null}
                 </div>
               </div>
@@ -77,10 +63,6 @@ export function ProductIndex() {
           ))}
         </div>
       </div>
-
-      {qr?.liveUrl ? (
-        <QrModal open onClose={() => setQr(null)} url={qr.liveUrl} title={qr.title} />
-      ) : null}
     </section>
   );
 }

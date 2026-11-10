@@ -1,11 +1,15 @@
+import dynamic from "next/dynamic";
 import { FlagshipBands } from "@/components/flagships/flagship-bands";
 import { HowItWorks } from "@/components/how/how-it-works";
 import { ProductIndex } from "@/components/work/product-index";
 import { Principles } from "@/components/craft/principles";
-import { SignupSection } from "@/components/signup/signup-section";
 import { BioContact } from "@/components/bio/bio-contact";
 import { SiteFooter } from "@/components/bio/site-footer";
-import { Reveal } from "@/components/ui/reveal";
+import { RevealBoot } from "@/components/ui/reveal-boot";
+
+const SignupSection = dynamic(() =>
+  import("@/components/signup/signup-section").then((mod) => mod.SignupSection),
+);
 
 export function HomeBelow({
   status,
@@ -14,24 +18,24 @@ export function HomeBelow({
 }) {
   return (
     <>
-      <Reveal>
-        <FlagshipBands />
-      </Reveal>
-      <Reveal delay={60}>
+      <RevealBoot />
+      {/* First real content stays visible without scroll / without waiting on reveal JS. */}
+      <FlagshipBands />
+      <div className="reveal" data-reveal>
         <ProductIndex />
-      </Reveal>
-      <Reveal delay={120}>
+      </div>
+      <div className="reveal" data-reveal style={{ transitionDelay: "60ms" }}>
         <HowItWorks />
-      </Reveal>
-      <Reveal delay={60}>
+      </div>
+      <div className="reveal" data-reveal style={{ transitionDelay: "60ms" }}>
         <Principles />
-      </Reveal>
-      <Reveal>
+      </div>
+      <div className="reveal" data-reveal>
         <SignupSection status={status} />
-      </Reveal>
-      <Reveal delay={60}>
+      </div>
+      <div className="reveal" data-reveal style={{ transitionDelay: "60ms" }}>
         <BioContact />
-      </Reveal>
+      </div>
       <SiteFooter />
     </>
   );

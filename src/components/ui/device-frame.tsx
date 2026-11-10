@@ -14,6 +14,10 @@ interface DeviceFrameProps {
   unoptimized?: boolean;
   sizes?: string;
   className?: string;
+  quality?: number;
+  blurDataURL?: string;
+  width?: number;
+  height?: number;
   children?: ReactNode;
 }
 
@@ -37,7 +41,14 @@ export function DeviceFrame({
   unoptimized = false,
   sizes = "(max-width: 768px) 90vw, 420px",
   className = "",
+  quality = 80,
+  blurDataURL,
+  width,
+  height,
 }: DeviceFrameProps) {
+  const resolvedWidth = width ?? (variant === "phone" ? 390 : 1440);
+  const resolvedHeight = height ?? (variant === "phone" ? 844 : 900);
+
   const media = clip ? (
     <video
       src={clip}
@@ -54,11 +65,18 @@ export function DeviceFrame({
     <Image
       src={src}
       alt={alt}
-      width={variant === "phone" ? 390 : 1440}
-      height={variant === "phone" ? 844 : 900}
+      width={resolvedWidth}
+      height={resolvedHeight}
       sizes={sizes}
-      priority={priority}
+      // Next 16: `preload` inserts a head link for true LCP images.
+      // Avoid combining it with fetchPriority (docs warn against both).
+      {...(priority
+        ? { preload: true as const, loading: "eager" as const }
+        : { fetchPriority: "auto" as const })}
+      quality={quality}
       unoptimized={unoptimized}
+      placeholder={blurDataURL ? "blur" : "empty"}
+      blurDataURL={blurDataURL}
       className="h-full w-full object-cover object-top transition-transform duration-150 group-hover:scale-[1.02]"
     />
   );

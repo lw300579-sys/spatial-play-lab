@@ -157,9 +157,10 @@ a.bg-coral {
   z-index: 9999;
   opacity: var(--grain-opacity);
   mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Static tile — avoids expensive live SVG feTurbulence on every frame. */
+  background-image: url("data:image/webp;base64,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");
   background-repeat: repeat;
-  background-size: 180px 180px;
+  background-size: 128px 128px;
 }
 
 html.dark .grain-overlay {
@@ -243,12 +244,18 @@ html.dark .grain-overlay {
    Motion
    ───────────────────────────────────────────── */
 
+/* Visible by default (SSR / no-JS). Only hide after RevealBoot marks a below-fold section ready. */
 .reveal {
-  opacity: 0;
-  transform: translateY(12px);
+  opacity: 1;
+  transform: none;
   transition:
     opacity 400ms var(--ease-reveal),
     transform 400ms var(--ease-reveal);
+}
+
+.reveal[data-reveal-ready="true"]:not([data-revealed="true"]) {
+  opacity: 0;
+  transform: translateY(12px);
 }
 
 .reveal[data-revealed="true"] {
@@ -321,7 +328,8 @@ details[open] > *:not(summary) {
     transition: none;
   }
 
-  .reveal {
+  .reveal,
+  .reveal[data-reveal-ready="true"]:not([data-revealed="true"]) {
     opacity: 1;
     transform: none;
   }
@@ -382,6 +390,16 @@ summary:focus-visible {
   overflow: visible;
   clip: auto;
   white-space: normal;
+}
+
+/* Cheap below-fold rendering for long home page sections */
+#everything-else,
+#how,
+#craft,
+#signup,
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
 }
 
 .section-tape {

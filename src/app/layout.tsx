@@ -15,13 +15,18 @@ const fraunces = Fraunces({
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
+  // optional: short block, then fallback forever if late — avoids a late
+  // font-swap paint that re-stamps LCP under Slow 4G throttling.
   display: "optional",
+  preload: true,
 });
 
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
   display: "optional",
+  // Mono is decorative kickers/meta — don't compete with LCP.
+  preload: false,
 });
 
 const siteUrl = "https://ari-swerdlow.vercel.app";
