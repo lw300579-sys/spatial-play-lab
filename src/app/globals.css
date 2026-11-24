@@ -14,7 +14,7 @@
   --ink: #1d1c1a;
   --charcoal: #1d1c1a;
   --muted: #5b5853;
-  --muted-soft: #7a766f;
+  --muted-soft: #635f59;
   --line: #e3ddd2;
   --border: #1d1c1a;
   --accent: #c2412d;
@@ -22,8 +22,10 @@
   --coral-ink: #ffffff;
   --link: #2747c8;
   --cobalt: #2747c8;
+  --cobalt-ink: #ffffff;
   --lawn: #22c55e;
   --ochre: #eab308;
+  --ochre-ink: #1d1c1a;
   --frame: #111111;
   --background: var(--bg);
   --foreground: var(--ink);
@@ -52,7 +54,7 @@ html.dark {
   --ink: #edeae4;
   --charcoal: #edeae4;
   --muted: #a8a49c;
-  --muted-soft: #8a8680;
+  --muted-soft: #9c9890;
   --line: #2c2b28;
   --border: #2c2b28;
   --accent: #e2624c;
@@ -60,8 +62,10 @@ html.dark {
   --coral-ink: #121211;
   --link: #8ea2ff;
   --cobalt: #8ea2ff;
+  --cobalt-ink: #121211;
   --lawn: #4ade80;
   --ochre: #f0c43a;
+  --ochre-ink: #121211;
   --frame: #2a2a28;
   --background: var(--bg);
   --foreground: var(--ink);
@@ -76,9 +80,12 @@ html.dark {
   --color-paper-deep: var(--paper-deep);
   --color-paper-ink: var(--paper-ink);
   --color-cobalt: var(--cobalt);
+  --color-cobalt-ink: var(--cobalt-ink);
   --color-coral: var(--coral);
+  --color-coral-ink: var(--coral-ink);
   --color-lawn: var(--lawn);
   --color-ochre: var(--ochre);
+  --color-ochre-ink: var(--ochre-ink);
   --color-charcoal: var(--charcoal);
   --color-surface: var(--surface);
   --color-surface-raised: var(--surface-raised);
@@ -106,15 +113,22 @@ html {
   scroll-padding-top: 6.5rem;
 }
 
+#top,
 #apps,
 #everything-else,
 #how,
 #craft,
 #signup,
 #contact,
-#games,
-#flagships,
-#citadel {
+#hard-part,
+#how-it-works,
+#calls,
+#checked,
+#limits,
+#next,
+#testing-content,
+#resume-content,
+#privacy-content {
   scroll-margin-top: 6.5rem;
 }
 
@@ -136,14 +150,41 @@ body {
 
 ::selection {
   background: var(--ochre);
-  color: var(--ink);
+  color: var(--ochre-ink);
 }
 
-/* Coral buttons: white text in light, dark ink in dark */
+/* High-contrast ink safeguards across light & dark themes */
 .bg-coral.text-white,
 button.bg-coral,
 a.bg-coral {
   color: var(--coral-ink) !important;
+}
+
+.bg-ochre,
+a.bg-ochre,
+button.bg-ochre {
+  color: var(--ochre-ink) !important;
+}
+
+.bg-cobalt.text-white,
+a.bg-cobalt,
+button.bg-cobalt {
+  color: var(--cobalt-ink) !important;
+}
+
+/* ─────────────────────────────────────────────
+   Native <dialog> top-layer & scroll containment
+   ───────────────────────────────────────────── */
+
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: color-mix(in srgb, #121211 65%, transparent);
+  backdrop-filter: blur(3px);
 }
 
 /* ─────────────────────────────────────────────
@@ -240,20 +281,81 @@ html.dark .grain-overlay {
 }
 
 /* ─────────────────────────────────────────────
-   Motion
+   Motion & Progressive Scroll Reveal
    ───────────────────────────────────────────── */
 
+/* Visible by default in SSR, no-JS, short viewports, and print. */
 .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal[data-reveal-state="pending"] {
   opacity: 0;
   transform: translateY(12px);
   transition:
-    opacity 400ms var(--ease-reveal),
-    transform 400ms var(--ease-reveal);
+    opacity 360ms var(--ease-reveal),
+    transform 360ms var(--ease-reveal);
 }
 
-.reveal[data-revealed="true"] {
+.reveal[data-reveal-state="revealed"] {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+  transition:
+    opacity 360ms var(--ease-reveal),
+    transform 360ms var(--ease-reveal);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    @keyframes reveal-enter {
+      from {
+        opacity: 0.01;
+        translate: 0 14px;
+      }
+      to {
+        opacity: 1;
+        translate: 0 0;
+      }
+    }
+
+    .reveal-card {
+      animation: reveal-enter auto linear both;
+      animation-timeline: view(block);
+      animation-range: entry 0% entry 22%;
+    }
+  }
+}
+
+/* Compositor-thread scroll progress indicator */
+.scroll-progress-bar {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: 60;
+  height: 4px;
+  background: var(--coral);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    @keyframes grow-scroll-progress {
+      from {
+        transform: scaleX(0);
+      }
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    .scroll-progress-bar {
+      animation: grow-scroll-progress auto linear;
+      animation-timeline: scroll(root block);
+    }
+  }
 }
 
 .hero-phone {
@@ -317,13 +419,21 @@ details[open] > *:not(summary) {
   .tactile-press,
   .tactile-lift,
   .reveal,
+  .reveal-card,
   .btn-arrow {
     transition: none;
+    animation: none;
   }
 
-  .reveal {
+  .reveal,
+  .reveal[data-reveal-state="pending"],
+  .reveal[data-reveal-state="revealed"] {
     opacity: 1;
     transform: none;
+  }
+
+  .scroll-progress-bar {
+    display: none;
   }
 
   .hero-phone,
@@ -340,6 +450,79 @@ details[open] > *:not(summary) {
 
   .group:hover img {
     transform: none !important;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Responsive accessible data table (/testing)
+   ───────────────────────────────────────────── */
+
+.testing-table-wrap {
+  overflow: auto;
+  max-inline-size: 100%;
+  container-type: inline-size;
+}
+
+.testing-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.testing-table thead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+}
+
+@container (width < 640px) {
+  .testing-table,
+  .testing-table thead,
+  .testing-table tbody,
+  .testing-table tr,
+  .testing-table th,
+  .testing-table td {
+    display: block;
+    width: 100%;
+    max-width: none;
+  }
+
+  .testing-table thead {
+    display: none;
+  }
+
+  .testing-table tr {
+    padding: 0.85rem 1rem;
+    border-top: 1px solid color-mix(in srgb, var(--charcoal) 22%, transparent);
+  }
+
+  .testing-table tr:first-child {
+    border-top: 0;
+  }
+
+  .testing-table tbody th {
+    padding: 0 0 0.45rem;
+    font-size: 1rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--charcoal) 12%, transparent);
+    margin-bottom: 0.45rem;
+  }
+
+  .testing-table tbody td {
+    padding: 0.25rem 0;
+    display: grid;
+    grid-template-columns: 5.25rem 1fr;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+
+  .testing-table tbody td[data-label]::before {
+    content: attr(data-label);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    padding-top: 0.15rem;
   }
 }
 
@@ -400,4 +583,43 @@ summary:focus-visible {
   transform: rotate(-2deg);
   opacity: 0.85;
   pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────
+   Print styles
+   ───────────────────────────────────────────── */
+
+@media print {
+  @page {
+    margin: 0.55in;
+  }
+
+  html,
+  body,
+  .paper-canvas {
+    background: #ffffff !important;
+    color: #111111 !important;
+    min-height: auto !important;
+    font-size: 11pt;
+  }
+
+  .grain-overlay,
+  .scroll-progress-bar,
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  .reveal,
+  .reveal-card,
+  .reveal[data-reveal-state="pending"] {
+    opacity: 1 !important;
+    transform: none !important;
+    translate: none !important;
+    animation: none !important;
+  }
+
+  a {
+    color: #111111 !important;
+    text-decoration: underline;
+  }
 }

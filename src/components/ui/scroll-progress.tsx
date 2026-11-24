@@ -1,35 +1,45 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
-
-function subscribe(onStoreChange: () => void) {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    return () => {};
-  }
-  window.addEventListener("scroll", onStoreChange, { passive: true });
-  window.addEventListener("resize", onStoreChange);
-  return () => {
-    window.removeEventListener("scroll", onStoreChange);
-    window.removeEventListener("resize", onStoreChange);
-  };
-}
-
-function getProgress() {
-  if (typeof window === "undefined") return 0;
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return -1;
-  const max = document.documentElement.scrollHeight - window.innerHeight;
-  return max > 0 ? window.scrollY / max : 0;
-}
+import { useEffect, useRef } from "react";
 
 export function ScrollProgress() {
-  const progress = useSyncExternalStore(subscribe, getProgress, () => -1);
-  if (progress < 0) return null;
+  const barRef = useRef<HTMLDivElement>(null);
 
-  return (
-    <div
-      className="fixed left-0 right-0 top-0 z-[60] h-1 origin-left bg-coral"
-      style={{ transform: `scaleX(${progress})` }}
-      aria-hidden
-    />
-  );
+  useEffect(() => {
+    const bar = barRef.current;
+    if (!bar) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    if (typeof CSS !== "undefined" && CSS.supports("animation-timeline", "scroll()")) {
+      return;
+    }
+
+    let rafId = 0;
+    const update = () => {
+      rafId = 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      bar.style.transform = `scaleX(${ratio})`;
+    };
+
+    const onScrollOrResize = () => {
+      if (!rafId) {
+        rafId = window.requestAnimationFrame(update);
+      }
+    };
+
+    update();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize, { passive: true });
+    return () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
+    };
+  }, []);
+
+  return <div ref={barRef} className="scroll-progress-bar" aria-hidden="true" />;
 }

@@ -2,17 +2,22 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SiteFooter } from "@/components/bio/site-footer";
+import { BioTacticalInspector } from "@/components/case-study/bio-tactical-inspector";
+import { CaseStudyToc } from "@/components/case-study/case-study-toc";
+import { PhoneQrButton } from "@/components/qr-modal/phone-qr-button";
 import { JsonLd } from "@/components/seo/json-ld";
 import { DeviceFrame } from "@/components/ui/device-frame";
+import { SiteNav } from "@/components/ui/site-nav";
 import { TrackedLink } from "@/components/ui/tracked-link";
-import { appClips } from "@/data/clips";
-import { SITE } from "@/data/games";
 import {
   flagshipCaseStudies,
   flagshipSlugs,
   getFlagshipCaseStudy,
   type FlagshipSlug,
 } from "@/data/case-studies";
+import { appClips } from "@/data/clips";
+import { SITE } from "@/data/games";
 
 const frameVariant: Record<string, "phone" | "browser"> = {
   jiku: "phone",
@@ -28,7 +33,6 @@ interface WorkCopy {
   description: string;
   sub: string;
   shots: { src: string; alt: string; caption: string }[];
-  /** Prefer a phone-aspect source for phone frames. */
   heroSrc?: string;
   liveUrl: string | null;
   tryLabel: string | null;
@@ -211,58 +215,16 @@ export default async function WorkPage({
       <JsonLd data={structuredData} />
       <a
         href="#case-study"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:border-2 focus:border-charcoal focus:bg-ochre focus:px-4 focus:py-2 focus:font-mono focus:text-sm"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:border-2 focus:border-charcoal focus:bg-ochre focus:px-4 focus:py-2 focus:font-mono focus:text-sm focus:font-semibold focus:text-[var(--ochre-ink)]"
       >
         Skip to case study
       </a>
-      <header className="border-b-2 border-charcoal">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          <Link
-            href="/"
-            className="inline-flex min-h-11 items-center font-display text-lg font-semibold no-underline"
-          >
-            {SITE.name}
-          </Link>
-          <nav
-            className="flex gap-2 font-mono text-[0.68rem] uppercase tracking-wide"
-            aria-label="Case study"
-          >
-            <Link
-              href="/#apps"
-              className="inline-flex min-h-11 items-center px-2 text-charcoal/70 no-underline"
-            >
-              Apps
-            </Link>
-            <Link
-              href="/testing"
-              className="inline-flex min-h-11 items-center px-2 text-charcoal/70 no-underline"
-            >
-              Testing
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <SiteNav currentPath="/work" />
 
-      <div className="relative mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
-        <nav
-          className="pointer-events-none absolute top-16 -left-2 hidden w-40 xl:block"
-          aria-label="On this page"
-        >
-          <ul className="pointer-events-auto sticky top-28 space-y-2 border-l border-charcoal/15 pl-3">
-            {toc.map((item) => (
-              <li key={item.id}>
-                <a
-                  href={`#${item.id}`}
-                  className="font-mono text-[0.65rem] uppercase tracking-wide text-muted no-underline hover:text-charcoal"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 xl:grid xl:grid-cols-[190px_minmax(0,48rem)] xl:justify-center xl:gap-12">
+        <CaseStudyToc items={toc} />
 
-        <main id="case-study" className="mx-auto max-w-3xl">
+        <main id="case-study" className="mx-auto w-full max-w-3xl">
           <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-cobalt">
             {page.kicker}
           </p>
@@ -282,52 +244,55 @@ export default async function WorkPage({
               caption={page.shots[0].caption}
               clip={appClips[page.clipId]}
               url={page.liveUrl}
-              priority
+              displayHost={
+                slug === "bio-tactical-edge" ? "local workspace · demo in progress" : undefined
+              }
+              lcp
               sizes={
                 frameVariant[slug] === "phone"
                   ? "(max-width: 768px) 280px, 320px"
                   : "(max-width: 768px) 92vw, 720px"
               }
               className={
-                frameVariant[slug] === "phone"
-                  ? "mx-auto max-w-[280px] sm:max-w-[320px]"
-                  : ""
+                frameVariant[slug] === "phone" ? "mx-auto max-w-[280px] sm:max-w-[320px]" : ""
               }
             />
           </div>
 
           <dl className="mt-10 grid gap-4 border-y border-charcoal/15 py-5 font-mono text-[0.72rem] uppercase tracking-wide text-muted sm:grid-cols-2">
             <div>
-              <dt className="text-charcoal/45">My role</dt>
-              <dd className="mt-1 normal-case tracking-normal text-charcoal/85">
+              <dt className="text-muted">My role</dt>
+              <dd className="mt-1 normal-case tracking-normal text-charcoal/90">
                 {caseStudy.strip.role}
               </dd>
             </div>
             <div>
-              <dt className="text-charcoal/45">Built with</dt>
-              <dd className="mt-1 normal-case tracking-normal text-charcoal/85">
+              <dt className="text-muted">Built with</dt>
+              <dd className="mt-1 normal-case tracking-normal text-charcoal/90">
                 {caseStudy.strip.builtWith}
               </dd>
             </div>
             <div>
-              <dt className="text-charcoal/45">When</dt>
-              <dd className="mt-1 normal-case tracking-normal text-charcoal/85">
+              <dt className="text-muted">When</dt>
+              <dd className="mt-1 normal-case tracking-normal text-charcoal/90">
                 {caseStudy.strip.when}
               </dd>
             </div>
             <div>
-              <dt className="text-charcoal/45">Status</dt>
-              <dd className="mt-1 normal-case tracking-normal text-charcoal/85">
+              <dt className="text-muted">Status</dt>
+              <dd className="mt-1 normal-case tracking-normal text-charcoal/90">
                 {caseStudy.strip.status}
               </dd>
             </div>
             <div className="sm:col-span-2">
-              <dt className="text-charcoal/45">{caseStudy.strip.privacyLabel}</dt>
-              <dd className="mt-1 normal-case tracking-normal text-charcoal/85">
+              <dt className="text-muted">{caseStudy.strip.privacyLabel}</dt>
+              <dd className="mt-1 normal-case tracking-normal text-charcoal/90">
                 {caseStudy.strip.privacy}
               </dd>
             </div>
           </dl>
+
+          {slug === "bio-tactical-edge" ? <BioTacticalInspector /> : null}
 
           <section id="hard-part" className="mt-14 scroll-mt-28">
             <h2 className="font-display text-2xl font-semibold sm:text-3xl">The hard part</h2>
@@ -345,24 +310,24 @@ export default async function WorkPage({
             </ol>
           </section>
 
-          {page.shots.length > 1 ? (
+          {slug !== "bio-tactical-edge" && page.shots.length > 1 ? (
             <div className="mt-10 max-w-[100vw] sm:max-w-none">
               <div className="-mx-4 flex max-w-[100vw] snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-4 pb-2 sm:mx-0 sm:max-w-3xl sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0">
-              {page.shots.slice(1).map((shot) => (
-                <div
-                  key={shot.src}
-                  className="w-[min(85%,20rem)] max-w-md shrink-0 snap-center sm:w-auto"
-                >
-                  <DeviceFrame
-                    variant="browser"
-                    src={shot.src}
-                    alt={shot.alt}
-                    caption={shot.caption}
-                    url={page.liveUrl}
-                    sizes="(max-width: 640px) 340px, 360px"
-                  />
-                </div>
-              ))}
+                {page.shots.slice(1).map((shot) => (
+                  <div
+                    key={shot.src}
+                    className="w-[min(85%,20rem)] max-w-md shrink-0 snap-center sm:w-auto"
+                  >
+                    <DeviceFrame
+                      variant="browser"
+                      src={shot.src}
+                      alt={shot.alt}
+                      caption={shot.caption}
+                      url={page.liveUrl}
+                      sizes="(max-width: 640px) 340px, 360px"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           ) : null}
@@ -395,7 +360,7 @@ export default async function WorkPage({
                     {item.value}
                   </p>
                   <p className="mt-2 text-sm font-medium text-charcoal/85">{item.label}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-charcoal/70">{item.detail}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-charcoal/75">{item.detail}</p>
                   <p className="mt-3 font-mono text-[0.65rem] uppercase tracking-wide text-muted">
                     {item.measuredAt}
                   </p>
@@ -403,10 +368,7 @@ export default async function WorkPage({
               ))}
             </div>
             <p className="mt-5">
-              <Link
-                href="/testing"
-                className="text-cobalt underline underline-offset-2"
-              >
+              <Link href="/testing" className="text-cobalt underline underline-offset-2">
                 All of it, with dates, on the testing page →
               </Link>
             </p>
@@ -414,20 +376,25 @@ export default async function WorkPage({
 
           <section id="limits" className="mt-14 scroll-mt-28">
             <details className="group" open>
-              <summary className="cursor-pointer list-none font-display text-2xl font-semibold sm:text-3xl [&::-webkit-details-marker]:hidden">
-                <span className="inline-flex items-center gap-3">
-                  What it doesn&apos;t do yet
+              <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                <span className="inline-flex min-h-11 items-center gap-3">
+                  <h2 className="inline font-display text-2xl font-semibold sm:text-3xl">
+                    What it doesn&apos;t do yet
+                  </h2>
                   <span
                     className="inline-block font-mono text-base transition-transform group-open:rotate-90"
-                    aria-hidden
+                    aria-hidden="true"
                   >
                     ›
                   </span>
                 </span>
               </summary>
-              <ul className="mt-4 max-w-[68ch] space-y-2 text-base leading-relaxed text-charcoal/70">
+              <ul className="mt-4 max-w-[68ch] space-y-2 text-base leading-relaxed text-charcoal/75">
                 {caseStudy.limitations.map((item) => (
-                  <li key={item} className="pl-4 relative before:absolute before:left-0 before:content-['–']">
+                  <li
+                    key={item}
+                    className="relative pl-4 before:absolute before:left-0 before:content-['–']"
+                  >
                     {item}
                   </li>
                 ))}
@@ -445,16 +412,19 @@ export default async function WorkPage({
           <div className="mt-10 flex flex-col items-start gap-2">
             {page.liveUrl && page.tryLabel ? (
               <>
-                <TrackedLink
-                  href={page.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  eventName="live_product_open"
-                  eventTarget={caseStudy.productId}
-                  className="inline-flex border-2 border-charcoal bg-coral px-5 py-2.5 text-sm font-semibold text-white no-underline"
-                >
-                  {page.tryLabel} ↗
-                </TrackedLink>
+                <div className="flex flex-wrap gap-2">
+                  <TrackedLink
+                    href={page.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    eventName="live_product_open"
+                    eventTarget={caseStudy.productId}
+                    className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-coral px-5 py-2.5 text-sm font-semibold text-[var(--coral-ink)] no-underline transition-transform hover:-translate-y-0.5"
+                  >
+                    {page.tryLabel} ↗
+                  </TrackedLink>
+                  <PhoneQrButton url={page.liveUrl} title={page.title} />
+                </div>
                 {page.tryNote ? (
                   <p className="font-mono text-[0.7rem] text-muted">{page.tryNote}</p>
                 ) : null}
@@ -465,7 +435,7 @@ export default async function WorkPage({
                 href={`mailto:${SITE.email}?subject=${encodeURIComponent(page.title)}`}
                 eventName="contact_intent"
                 eventTarget={slug}
-                className="inline-flex border-2 border-charcoal bg-cobalt px-5 py-2.5 text-sm font-semibold text-white no-underline"
+                className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-cobalt px-5 py-2.5 text-sm font-semibold text-[var(--cobalt-ink)] no-underline transition-transform hover:-translate-y-0.5"
               >
                 {page.mailLabel} →
               </TrackedLink>
@@ -496,9 +466,7 @@ export default async function WorkPage({
                       <p className="font-display text-xl font-semibold text-charcoal">
                         {item.title}
                       </p>
-                      <p className="mt-1 text-sm leading-relaxed text-charcoal/70">
-                        {item.sub}
-                      </p>
+                      <p className="mt-1 text-sm leading-relaxed text-charcoal/75">{item.sub}</p>
                     </div>
                   </Link>
                 ) : null,
@@ -507,6 +475,7 @@ export default async function WorkPage({
           </section>
         </main>
       </div>
+      <SiteFooter />
     </>
   );
 }

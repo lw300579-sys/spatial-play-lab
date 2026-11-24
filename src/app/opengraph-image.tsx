@@ -15,29 +15,85 @@ export default async function OpenGraphImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          background: "#102027",
-          color: "#fffdf7",
+          background: "#121211",
+          color: "#EDEAE4",
+          borderTop: "10px solid #E2624C",
         }}
       >
         <div
           style={{
-            width: 500,
+            width: 510,
             height: "100%",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            padding: "56px 48px",
+            padding: "52px 48px",
           }}
         >
-          <div style={{ display: "flex", fontSize: 22, letterSpacing: 3, fontWeight: 700 }}>
-            ARI SWERDLOW
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <div
+              style={{
+                width: 34,
+                height: 34,
+                borderRadius: 6,
+                background: "#E2624C",
+                color: "#121211",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 16,
+                fontWeight: 700,
+              }}
+            >
+              AS
+            </div>
+            <div style={{ display: "flex", fontSize: 18, letterSpacing: 2.5, fontWeight: 700 }}>
+              ARI SWERDLOW
+            </div>
           </div>
-          <div style={{ display: "flex", fontSize: 52, fontWeight: 700, lineHeight: 1.05, letterSpacing: -1 }}>
+          <div
+            style={{
+              display: "flex",
+              fontSize: 52,
+              fontWeight: 700,
+              lineHeight: 1.04,
+              letterSpacing: -1.5,
+            }}
+          >
             Browser apps you control by moving.
           </div>
-          <div style={{ display: "flex", fontSize: 18, color: "#d6d3d1" }}>ari-swerdlow.vercel.app</div>
+          <div style={{ display: "flex", fontSize: 18, color: "#A8A49C" }}>
+            ari-swerdlow.vercel.app
+          </div>
         </div>
-        <img src={shot} alt="" width={700} height={630} style={{ objectFit: "cover" }} />
+        <div
+          style={{
+            width: 690,
+            height: "100%",
+            display: "flex",
+            padding: "28px 28px 28px 0",
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              overflow: "hidden",
+              borderRadius: 14,
+              border: "2px solid #2C2B28",
+              background: "#000000",
+            }}
+          >
+            <img
+              src={shot}
+              alt=""
+              width={662}
+              height={574}
+              style={{ objectFit: "cover", objectPosition: "center 68%" }}
+            />
+          </div>
+        </div>
       </div>
     ),
     { ...size },

@@ -6,12 +6,32 @@ type Theme = "light" | "dark";
 
 function subscribe(onStoreChange: () => void) {
   const media = window.matchMedia("(prefers-color-scheme: dark)");
-  media.addEventListener("change", onStoreChange);
-  window.addEventListener("storage", onStoreChange);
+
+  const onMediaChange = () => {
+    try {
+      if (!localStorage.getItem("theme")) {
+        document.documentElement.classList.toggle("dark", media.matches);
+      }
+    } catch {
+      document.documentElement.classList.toggle("dark", media.matches);
+    }
+    onStoreChange();
+  };
+
+  const onStorage = (event: StorageEvent) => {
+    if (event.key !== null && event.key !== "theme") return;
+    const nextDark =
+      event.newValue === "dark" || (event.newValue !== "light" && media.matches);
+    document.documentElement.classList.toggle("dark", nextDark);
+    onStoreChange();
+  };
+
+  media.addEventListener("change", onMediaChange);
+  window.addEventListener("storage", onStorage);
   window.addEventListener("theme-change", onStoreChange);
   return () => {
-    media.removeEventListener("change", onStoreChange);
-    window.removeEventListener("storage", onStoreChange);
+    media.removeEventListener("change", onMediaChange);
+    window.removeEventListener("storage", onStorage);
     window.removeEventListener("theme-change", onStoreChange);
   };
 }
@@ -46,9 +66,9 @@ export function ThemeToggle() {
       onClick={toggle}
       aria-label={label}
       aria-pressed={pressed}
-      className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border-2 border-charcoal bg-paper text-charcoal focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cobalt"
+      className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border-2 border-charcoal bg-paper px-3 text-charcoal transition-colors hover:bg-paper-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cobalt"
     >
-      <span aria-hidden className="font-mono text-[0.7rem] uppercase tracking-wide">
+      <span aria-hidden="true" className="font-mono text-[0.7rem] uppercase tracking-wide">
         {pressed ? "Light" : "Dark"}
       </span>
     </button>

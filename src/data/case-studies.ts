@@ -65,6 +65,8 @@ export interface FlagshipCaseStudy {
   /** Short how-it-works list for the home flagship band. */
   homeHow: string[];
   statusRow: string;
+  /** Concise single-line proof summary shared with /resume. */
+  resumeProof: string;
 }
 
 export const flagshipCaseStudies: FlagshipCaseStudy[] = [
@@ -169,6 +171,7 @@ export const flagshipCaseStudies: FlagshipCaseStudy[] = [
       "A push-up or pull-up counts when your whole body goes through the full range for long enough.",
     ],
     statusRow: "Live prototype · 8 tests",
+    resumeProof: "8 boxing tests; real-phone testing pending.",
   },
   {
     slug: "ar-baseball",
@@ -269,6 +272,7 @@ export const flagshipCaseStudies: FlagshipCaseStudy[] = [
       "Contact turns into baseball: fielders, runners, runs and a final score.",
     ],
     statusRow: "Live prototype · 21 tests",
+    resumeProof: "250k seeded games; 21 source tests.",
   },
   {
     slug: "bio-tactical-edge",
@@ -386,6 +390,7 @@ export const flagshipCaseStudies: FlagshipCaseStudy[] = [
       "Video, court positions, stats and a 3D replay share one timeline.",
     ],
     statusRow: "Research prototype · 77 tests",
+    resumeProof: "77 automated tests.",
   },
 ];
 

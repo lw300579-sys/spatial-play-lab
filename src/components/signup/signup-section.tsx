@@ -1,9 +1,12 @@
 import { NewsletterForm } from "@/components/newsletter-form";
 import { newsletterActionReady } from "@/lib/newsletter";
 
-export function SignupSection({ status }: { status?: "in" | "error" | null }) {
+export function SignupSection() {
   return (
-    <section id="signup" className="scroll-mt-28 border-b-2 border-charcoal px-4 py-14 sm:px-6 sm:py-20">
+    <section
+      id="signup"
+      className="scroll-mt-28 border-b-2 border-charcoal px-4 py-14 sm:px-6 sm:py-20"
+    >
       <div className="mx-auto max-w-6xl">
         <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
           Get an email when I ship something
@@ -12,7 +15,7 @@ export function SignupSection({ status }: { status?: "in" | "error" | null }) {
           New app or a big update, that&apos;s it. Maybe once a month. No spam, I don&apos;t have time either.
         </p>
         <div className="mt-6">
-          <NewsletterForm id="newsletter-home" status={status} ready={newsletterActionReady()} />
+          <NewsletterForm id="newsletter-home" ready={newsletterActionReady()} />
         </div>
       </div>
     </section>

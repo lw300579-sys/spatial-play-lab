@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { DeviceFrame } from "@/components/ui/device-frame";
-import { appClips } from "@/data/clips";
+import { HeroShowcase } from "@/components/hero/hero-showcase";
 
 export function Hero() {
   return (
@@ -22,13 +21,13 @@ export function Hero() {
           <div className="flex flex-wrap gap-3">
             <a
               href="#apps"
-              className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-coral px-5 py-2.5 text-sm font-semibold no-underline"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-coral px-5 py-2.5 text-sm font-semibold text-[var(--coral-ink)] no-underline transition-transform hover:-translate-y-0.5"
             >
               Try the apps <span className="btn-arrow">↓</span>
             </a>
             <Link
               href="/resume"
-              className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-paper px-5 py-2.5 text-sm font-semibold text-charcoal no-underline"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-paper px-5 py-2.5 text-sm font-semibold text-charcoal no-underline transition-colors hover:bg-paper-ink"
             >
               Résumé
             </Link>
@@ -39,38 +38,7 @@ export function Hero() {
         </div>
 
         {/* Hidden below sm so the 390px viewport keeps CTAs above the fold and skips the shot. */}
-        <div className="relative mx-auto hidden w-full max-w-[280px] sm:block lg:max-w-[320px]">
-          <svg
-            className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-[0.12]"
-            viewBox="0 0 400 480"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M40 420 C120 280, 160 200, 200 40 C240 200, 280 280, 360 420"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              className="hero-field-line"
-              pathLength={1}
-            />
-            <path
-              d="M80 400 H320 M120 360 H280 M160 320 H240"
-              stroke="currentColor"
-              strokeWidth="1"
-            />
-          </svg>
-          <div className="hero-phone origin-bottom">
-            <DeviceFrame
-              variant="phone"
-              src="/shots/ar-baseball-stadium-mobile.webp"
-              alt="AR Baseball running in a browser: a 3D stadium waiting for your swing."
-              caption="Waiting on the pitch. The pitcher won't throw until tracking is ready."
-              clip={appClips["ar-baseball"]}
-              url="https://ar-baseball.vercel.app/"
-              sizes="(max-width: 639px) 0px, (max-width: 1024px) 280px, 320px"
-            />
-          </div>
-        </div>
+        <HeroShowcase />
       </div>
     </section>
   );

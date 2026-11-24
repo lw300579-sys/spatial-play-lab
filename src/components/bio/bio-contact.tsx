@@ -1,14 +1,14 @@
-"use client";
-
-import { SITE } from "@/data/games";
-import { useCopyToClipboard } from "@/hooks/use-copy";
+import Link from "next/link";
+import { CopyEmailButton } from "@/components/bio/copy-email-button";
 import { TrackedLink } from "@/components/ui/tracked-link";
+import { SITE } from "@/data/games";
 
 export function BioContact() {
-  const { copied, copy } = useCopyToClipboard();
-
   return (
-    <section id="contact" className="scroll-mt-28 border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-20">
+    <section
+      id="contact"
+      className="scroll-mt-28 border-b-2 border-charcoal px-4 py-16 sm:px-6 sm:py-20"
+    >
       <div className="mx-auto grid max-w-6xl gap-8 border-2 border-charcoal bg-surface-raised p-6 sm:grid-cols-[1.25fr_0.75fr] sm:p-10">
         <div>
           <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">About</h2>
@@ -24,23 +24,19 @@ export function BioContact() {
         </div>
 
         <div className="flex flex-col justify-center gap-3">
-          <button
-            type="button"
-            onClick={() => copy(SITE.email)}
-            aria-label={copied ? "Email copied" : `Copy ${SITE.email}`}
-            className="min-h-11 border-2 border-charcoal bg-paper px-4 py-2.5 text-left text-sm font-semibold"
-          >
-            {copied ? "Email copied" : SITE.email}
-          </button>
+          <CopyEmailButton
+            email={SITE.email}
+            className="inline-flex min-h-11 w-full items-center justify-center rounded-full border-2 border-charcoal bg-paper px-4 py-2.5 text-sm font-semibold text-charcoal transition-colors hover:bg-paper-ink"
+          />
           {SITE.socials.map((social) => (
             <a
               key={social.label}
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="min-h-11 border-2 border-charcoal bg-surface-raised px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-surface-raised px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline transition-colors hover:bg-paper-ink"
             >
-              {social.label === "X" ? "X" : social.label}
+              {social.label} ↗
             </a>
           ))}
           <TrackedLink
@@ -48,21 +44,21 @@ export function BioContact() {
             download
             eventName="resume_download"
             eventTarget="contact"
-            className="min-h-11 border-2 border-charcoal bg-ochre px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline"
+            className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-ochre px-4 py-2.5 text-center text-sm font-semibold text-[var(--ochre-ink)] no-underline transition-transform hover:-translate-y-0.5"
           >
             Résumé (PDF)
           </TrackedLink>
-          <a
+          <Link
             href="/resume"
-            className="min-h-11 border-2 border-charcoal bg-paper px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline"
+            className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-paper px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline transition-colors hover:bg-paper-ink"
           >
             Résumé (web)
-          </a>
+          </Link>
           <TrackedLink
             href={`mailto:${SITE.email}?subject=${encodeURIComponent("Hello")}`}
             eventName="contact_intent"
             eventTarget="contact-email"
-            className="min-h-11 border-2 border-charcoal bg-coral px-4 py-2.5 text-center text-sm font-semibold no-underline"
+            className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-coral px-4 py-2.5 text-center text-sm font-semibold text-[var(--coral-ink)] no-underline transition-transform hover:-translate-y-0.5"
           >
             Email me →
           </TrackedLink>

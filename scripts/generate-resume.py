@@ -235,7 +235,7 @@ def build():
         "Jiku Fitness",
         "Product + engineering",
         "Built a browser workout for boxing, push-ups and pull-ups that handles lost tracking and rest without freezing.",
-        "20 boxing tests  /  real-phone testing pending",
+        "8 boxing tests  /  real-phone testing pending",
         right_x,
         y,
         right_w,
@@ -296,7 +296,7 @@ def build():
     metric_w = (right_w - 12) / 3
     metric(pdf, "250k", "baseball simulations", right_x, y, metric_w)
     metric(pdf, "695", "coach tests", right_x + metric_w + 6, y, metric_w)
-    metric(pdf, "5", "camera products", right_x + (metric_w + 6) * 2, y, metric_w)
+    metric(pdf, "6", "camera products", right_x + (metric_w + 6) * 2, y, metric_w)
 
     team_y = y - 58
     label(pdf, "What I can do for your team", right_x, team_y, color=COBALT)
@@ -344,7 +344,7 @@ def build():
     rule(pdf, 36, footer_y + 15, PAGE_W - 36, color=INK, width=1)
     pdf.setFillColor(MUTED)
     pdf.setFont("Helvetica", 6.5)
-    pdf.drawString(36, footer_y, "These are engineering numbers, not user results. More at ari-swerdlow.vercel.app/evidence")
+    pdf.drawString(36, footer_y, "These are engineering numbers, not user results. More at ari-swerdlow.vercel.app/testing")
     pdf.setFillColor(CORAL)
     pdf.setFont("Helvetica-Bold", 7)
     pdf.drawRightString(PAGE_W - 36, footer_y, "AVAILABLE FOR PRODUCT ENGINEERING + APPLIED CV")

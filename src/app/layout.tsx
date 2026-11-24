@@ -46,7 +46,6 @@ export const metadata: Metadata = {
     title: "Ari Swerdlow",
     description: "Browser apps you control by moving.",
     type: "website",
-    url: siteUrl,
     siteName: "Ari Swerdlow",
     locale: "en_US",
   },
@@ -56,8 +55,6 @@ export const metadata: Metadata = {
     description: "Browser apps you control by moving.",
     creator: "@2Swerdy",
   },
-  robots: { index: true, follow: true },
-  alternates: { canonical: siteUrl },
 };
 
 export const viewport: Viewport = {

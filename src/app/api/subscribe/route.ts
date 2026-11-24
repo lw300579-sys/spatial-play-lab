@@ -3,6 +3,37 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const RATE_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX = 10;
+const rateBuckets = new Map<string, { count: number; resetAt: number }>();
+
+function clientKey(request: Request) {
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0]?.trim() || "unknown";
+  return request.headers.get("x-real-ip") ?? "local";
+}
+
+function isRateLimited(key: string) {
+  const now = Date.now();
+  const current = rateBuckets.get(key);
+  if (!current || now >= current.resetAt) {
+    if (rateBuckets.size > 500) rateBuckets.clear();
+    rateBuckets.set(key, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return false;
+  }
+  current.count += 1;
+  return current.count > RATE_LIMIT_MAX;
+}
+
+function sameOriginAllowed(request: Request) {
+  const origin = request.headers.get("origin");
+  if (!origin) return true;
+  try {
+    return new URL(origin).origin === new URL(request.url).origin;
+  } catch {
+    return false;
+  }
+}
 
 function backTo(request: Request, subscribed: "0" | "1") {
   const fallback = new URL("/", request.url);
@@ -19,7 +50,9 @@ function backTo(request: Request, subscribed: "0" | "1") {
   }
   target.searchParams.set("subscribed", subscribed);
   target.hash = "signup";
-  return NextResponse.redirect(target, 303);
+  const response = NextResponse.redirect(target, 303);
+  response.headers.set("Cache-Control", "no-store");
+  return response;
 }
 
 function providerUrl() {
@@ -35,6 +68,13 @@ function providerUrl() {
 }
 
 export async function POST(request: Request) {
+  if (!sameOriginAllowed(request)) {
+    return NextResponse.json({ error: "Forbidden origin" }, { status: 403 });
+  }
+  if (isRateLimited(clientKey(request))) {
+    return backTo(request, "0");
+  }
+
   const provider = providerUrl();
   if (!provider) return backTo(request, "0");
 

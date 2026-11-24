@@ -139,3 +139,5 @@ export const catalog: CatalogItem[] = [
     camera: false,
   },
 ];
+
+export const cameraProductCount = catalog.filter((item) => item.camera).length;

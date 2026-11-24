@@ -1,46 +1,71 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { Suspense, useState, type FormEvent } from "react";
+import { useSearchParams } from "next/navigation";
+import { CopyEmailButton } from "@/components/bio/copy-email-button";
 import { SITE } from "@/data/games";
 
 function looksLikeEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }
 
+function SubscriptionStatusBanner({ mailto }: { mailto: string }) {
+  const searchParams = useSearchParams();
+  const flag = searchParams.get("subscribed");
+
+  if (flag === "1") {
+    return (
+      <p className="mb-3 text-sm text-charcoal" role="status">
+        You&apos;re in. I&apos;ll email you when there&apos;s something worth opening.
+      </p>
+    );
+  }
+  if (flag === "0") {
+    return (
+      <p className="mb-3 text-sm text-charcoal" role="alert">
+        That didn&apos;t go through. Try again, or just{" "}
+        <a className="text-cobalt underline underline-offset-2" href={mailto}>
+          email me
+        </a>
+        .
+      </p>
+    );
+  }
+  return null;
+}
+
 /**
  * Posts to /api/subscribe, which forwards to NEWSLETTER_ACTION.
- * When ready is false, show the mailto fallback instead of a form.
+ * When ready is false, shows a direct email/copy action instead of a dead form.
  */
 export function NewsletterForm({
   id,
   compact = false,
-  status,
   ready,
 }: {
   id: string;
   compact?: boolean;
-  status?: "in" | "error" | null;
   ready: boolean;
 }) {
-  const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent("A note, when there is one")}`;
+  const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent("Put me on the release list")}`;
   const [email, setEmail] = useState("");
   const [invalid, setInvalid] = useState(false);
 
   if (!ready) {
     return (
-      <p
-        className={
-          compact
-            ? "font-mono text-[0.65rem] leading-relaxed text-muted"
-            : "max-w-md text-sm leading-relaxed text-charcoal/75"
-        }
-      >
-        Want a heads up when I ship something?{" "}
-        <a className="text-cobalt underline underline-offset-2" href={mailto}>
-          Email me
-        </a>{" "}
-        and I&apos;ll put you on the list.
-      </p>
+      <div className={compact ? "flex flex-wrap items-center gap-3" : "flex flex-wrap items-center gap-3"}>
+        <a
+          href={mailto}
+          className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-coral px-5 py-2.5 text-sm font-semibold text-[var(--coral-ink)] no-underline transition-transform hover:-translate-y-0.5"
+        >
+          Email me to join →
+        </a>
+        <CopyEmailButton
+          email={SITE.email}
+          label={`Copy ${SITE.email}`}
+          className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-paper px-5 py-2.5 text-sm font-semibold text-charcoal transition-colors hover:bg-paper-ink"
+        />
+      </div>
     );
   }
 
@@ -55,20 +80,9 @@ export function NewsletterForm({
 
   return (
     <div>
-      {status === "in" ? (
-        <p className="mb-3 text-sm text-charcoal" role="status">
-          You&apos;re in. I&apos;ll email you when there&apos;s something worth opening.
-        </p>
-      ) : null}
-      {status === "error" ? (
-        <p className="mb-3 text-sm text-charcoal" role="alert">
-          That didn&apos;t go through. Try again, or just{" "}
-          <a className="text-cobalt underline underline-offset-2" href={mailto}>
-            email me
-          </a>
-          .
-        </p>
-      ) : null}
+      <Suspense fallback={null}>
+        <SubscriptionStatusBanner mailto={mailto} />
+      </Suspense>
       <form
         action="/api/subscribe"
         method="post"

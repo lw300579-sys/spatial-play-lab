@@ -16,8 +16,8 @@ export function Reveal({
   return (
     <div
       ref={ref}
-      className={`reveal ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      className={`reveal reveal-card ${className}`}
+      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}
     </div>

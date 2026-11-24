@@ -6,14 +6,10 @@ export type DeviceKind = "mobile" | "desktop";
 
 function detectDevice(): DeviceKind {
   const ua = navigator.userAgent;
-  const coarse =
-    typeof window.matchMedia === "function" &&
-    window.matchMedia("(pointer: coarse)").matches;
   const narrow = window.innerWidth < 768;
-  const mobileUa =
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+  const mobilePhoneUa = /Android.*Mobile|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
 
-  if (mobileUa || narrow || coarse) return "mobile";
+  if (mobilePhoneUa || narrow) return "mobile";
   return "desktop";
 }
 
@@ -31,7 +27,6 @@ export function useDevice(): {
   device: DeviceKind;
   isMobile: boolean;
   isDesktop: boolean;
-  ready: boolean;
 } {
   const device = useSyncExternalStore(subscribe, detectDevice, getServerSnapshot);
 
@@ -39,6 +34,5 @@ export function useDevice(): {
     device,
     isMobile: device === "mobile",
     isDesktop: device === "desktop",
-    ready: true,
   };
 }

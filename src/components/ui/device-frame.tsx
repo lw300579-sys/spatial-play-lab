@@ -10,15 +10,18 @@ interface DeviceFrameProps {
   caption?: string;
   clip?: string | null;
   url?: string | null;
+  displayHost?: string;
+  lcp?: boolean;
   priority?: boolean;
+  fetchPriority?: "high" | "low";
   unoptimized?: boolean;
   sizes?: string;
   className?: string;
   children?: ReactNode;
 }
 
-function hostLabel(url?: string | null) {
-  if (!url) return "ari-swerdlow.vercel.app";
+function hostLabel(url?: string | null, fallback?: string) {
+  if (!url) return fallback ?? "local workspace · no public demo yet";
   try {
     return new URL(url).host;
   } catch {
@@ -33,11 +36,17 @@ export function DeviceFrame({
   caption,
   clip,
   url,
+  displayHost,
+  lcp = false,
   priority = false,
+  fetchPriority,
   unoptimized = false,
   sizes = "(max-width: 768px) 90vw, 420px",
   className = "",
 }: DeviceFrameProps) {
+  const isLcp = lcp || priority;
+  const resolvedFetchPriority = fetchPriority ?? (isLcp ? "high" : undefined);
+
   const media = clip ? (
     <video
       src={clip}
@@ -57,7 +66,8 @@ export function DeviceFrame({
       width={variant === "phone" ? 390 : 1440}
       height={variant === "phone" ? 844 : 900}
       sizes={sizes}
-      priority={priority}
+      loading={isLcp ? "eager" : "lazy"}
+      fetchPriority={resolvedFetchPriority}
       unoptimized={unoptimized}
       className="h-full w-full object-cover object-top transition-transform duration-150 group-hover:scale-[1.02]"
     />
@@ -68,13 +78,13 @@ export function DeviceFrame({
       <figure className={`group ${className}`}>
         <div className="overflow-hidden rounded-xl border border-[color:var(--frame,#111)] bg-[color:var(--frame,#111)] shadow-[0_18px_40px_rgba(0,0,0,0.14)] transition-transform duration-150 hover:-translate-y-0.5">
           <div className="flex items-center gap-2 border-b border-white/10 px-3 py-2">
-            <span className="flex gap-1.5" aria-hidden>
+            <span className="flex gap-1.5" aria-hidden="true">
               <span className="h-2.5 w-2.5 rounded-full bg-white/25" />
               <span className="h-2.5 w-2.5 rounded-full bg-white/25" />
               <span className="h-2.5 w-2.5 rounded-full bg-white/25" />
             </span>
-            <span className="min-w-0 flex-1 truncate rounded bg-white/10 px-2 py-1 font-mono text-[0.65rem] text-white/70">
-              {hostLabel(url)}
+            <span className="min-w-0 flex-1 truncate rounded bg-white/10 px-2 py-1 font-mono text-[0.65rem] text-white/75">
+              {hostLabel(url, displayHost)}
             </span>
           </div>
           <div className="aspect-[16/10] overflow-hidden bg-black">{media}</div>

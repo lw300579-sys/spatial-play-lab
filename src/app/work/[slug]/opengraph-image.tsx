@@ -7,7 +7,7 @@ export const alt = "Ari Swerdlow case study";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const cards: Record<string, { title: string; line: string; shot: string }> = {
+const cards: Record<string, { title: string; line: string; shot: string; pos?: string }> = {
   jiku: {
     title: "Jiku Fitness",
     line: "A browser gym. Your phone camera keeps count.",
@@ -17,6 +17,7 @@ const cards: Record<string, { title: string; line: string; shot: string }> = {
     title: "AR Baseball",
     line: "Three innings. You swing at your phone.",
     shot: "ar-baseball-stadium-desktop.webp",
+    pos: "center 68%",
   },
   "bio-tactical-edge": {
     title: "Bio-Tactical Edge",
@@ -46,27 +47,71 @@ export default async function OpenGraphImage({
           width: "100%",
           height: "100%",
           display: "flex",
-          background: "#102027",
-          color: "#fffdf7",
+          background: "#121211",
+          color: "#EDEAE4",
+          borderTop: "10px solid #E2624C",
         }}
       >
         <div
           style={{
-            width: 480,
+            width: 490,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
-            padding: "48px 44px",
-            gap: 18,
+            justifyContent: "space-between",
+            padding: "52px 44px",
           }}
         >
-          <div style={{ display: "flex", fontSize: 18, letterSpacing: 2 }}>ARI SWERDLOW</div>
-          <div style={{ display: "flex", fontSize: 56, fontWeight: 700, lineHeight: 1, letterSpacing: -1 }}>
-            {card.title}
+          <div style={{ display: "flex", fontSize: 18, letterSpacing: 2.5, color: "#8EA2FF" }}>
+            ARI SWERDLOW · CASE STUDY
           </div>
-          <div style={{ display: "flex", fontSize: 26, lineHeight: 1.25, color: "#e7e5e4" }}>{card.line}</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 54,
+                fontWeight: 700,
+                lineHeight: 1.02,
+                letterSpacing: -1.5,
+              }}
+            >
+              {card.title}
+            </div>
+            <div style={{ display: "flex", fontSize: 25, lineHeight: 1.3, color: "#D6D3CD" }}>
+              {card.line}
+            </div>
+          </div>
+          <div style={{ display: "flex", fontSize: 17, color: "#A8A49C" }}>
+            ari-swerdlow.vercel.app
+          </div>
         </div>
-        <img src={shot} alt="" width={720} height={630} style={{ objectFit: "cover" }} />
+        <div
+          style={{
+            width: 710,
+            height: "100%",
+            display: "flex",
+            padding: "28px 28px 28px 0",
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              overflow: "hidden",
+              borderRadius: 14,
+              border: "2px solid #2C2B28",
+              background: "#000000",
+            }}
+          >
+            <img
+              src={shot}
+              alt=""
+              width={682}
+              height={574}
+              style={{ objectFit: "cover", objectPosition: card.pos ?? "center top" }}
+            />
+          </div>
+        </div>
       </div>
     ),
     { ...size },
