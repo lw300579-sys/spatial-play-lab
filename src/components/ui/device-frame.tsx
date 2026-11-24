@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
+import { versionedShot } from "@/lib/shots";
 
 type FrameVariant = "phone" | "browser";
 
@@ -17,6 +18,7 @@ interface DeviceFrameProps {
   unoptimized?: boolean;
   sizes?: string;
   className?: string;
+  frameClassName?: string;
   children?: ReactNode;
 }
 
@@ -43,14 +45,16 @@ export function DeviceFrame({
   unoptimized = false,
   sizes = "(max-width: 768px) 90vw, 420px",
   className = "",
+  frameClassName = "",
 }: DeviceFrameProps) {
   const isLcp = lcp || priority;
   const resolvedFetchPriority = fetchPriority ?? (isLcp ? "high" : undefined);
+  const resolvedSrc = versionedShot(src);
 
   const media = clip ? (
     <video
       src={clip}
-      poster={src}
+      poster={resolvedSrc}
       autoPlay
       muted
       loop
@@ -61,7 +65,7 @@ export function DeviceFrame({
     />
   ) : (
     <Image
-      src={src}
+      src={resolvedSrc}
       alt={alt}
       width={variant === "phone" ? 390 : 1440}
       height={variant === "phone" ? 844 : 900}
@@ -76,7 +80,9 @@ export function DeviceFrame({
   if (variant === "browser") {
     return (
       <figure className={`group ${className}`}>
-        <div className="overflow-hidden rounded-xl border border-[color:var(--frame,#111)] bg-[color:var(--frame,#111)] shadow-[0_18px_40px_rgba(0,0,0,0.14)] transition-transform duration-150 hover:-translate-y-0.5">
+        <div
+          className={`overflow-hidden rounded-xl border border-[color:var(--frame,#111)] bg-[color:var(--frame,#111)] shadow-[0_18px_40px_rgba(0,0,0,0.14)] transition-transform duration-150 hover:-translate-y-0.5 ${frameClassName}`}
+        >
           <div className="flex items-center gap-2 border-b border-white/10 px-3 py-2">
             <span className="flex gap-1.5" aria-hidden="true">
               <span className="h-2.5 w-2.5 rounded-full bg-white/25" />
@@ -98,11 +104,15 @@ export function DeviceFrame({
 
   return (
     <figure className={`group ${className}`}>
-      <div className="overflow-hidden rounded-[2.25rem] border-[10px] border-[color:var(--frame,#111)] bg-[color:var(--frame,#111)] shadow-[0_24px_60px_rgba(0,0,0,0.18)] transition-transform duration-150 hover:-translate-y-0.5">
+      <div
+        className={`overflow-hidden rounded-[2.25rem] border-[10px] border-[color:var(--frame,#111)] bg-[color:var(--frame,#111)] shadow-[0_24px_60px_rgba(0,0,0,0.18)] transition-transform duration-150 hover:-translate-y-0.5 ${frameClassName}`}
+      >
         <div className="aspect-[9/19.5] overflow-hidden bg-black">{media}</div>
       </div>
       {caption ? (
-        <figcaption className="mt-2 text-sm leading-relaxed text-muted">{caption}</figcaption>
+        <figcaption className="mt-3 text-center text-sm leading-relaxed text-muted">
+          {caption}
+        </figcaption>
       ) : null}
     </figure>
   );

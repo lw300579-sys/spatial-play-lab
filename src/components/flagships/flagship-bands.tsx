@@ -45,17 +45,17 @@ const FLAGSHIP_COPY: Record<FlagshipSlug, FlagshipView> = {
     shots: [
       {
         id: "menu",
-        label: "Rival ladder",
+        label: "Matchup & Modes",
         src: "/shots/ar-baseball-menu-mobile.webp",
-        alt: "AR Baseball menu, showing the five-rival ladder and game modes.",
-        caption: "Five-rival ladder and daily challenges before you step up to bat.",
+        alt: "AR Baseball menu showing four rivals (Sunny, Kenji, Elena, Matt), HR Derby, and Practice cage.",
+        caption: "Four-rival ladder, HR Derby, and batting cage before you step into the box.",
       },
       {
         id: "stadium",
-        label: "Calibration",
+        label: "3D Stadium",
         src: "/shots/ar-baseball-stadium-mobile.webp",
-        alt: "AR Baseball calibration. A 3D stadium waits until it can see you.",
-        caption: "Waiting on the pitch. The pitcher won't throw until tracking is ready.",
+        alt: "AR Baseball 3D stadium with pitcher, fielders, crowd, and bat.",
+        caption: "The 3D stadium and rival pitcher waiting for you to step into view.",
       },
     ],
   },

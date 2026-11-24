@@ -48,7 +48,13 @@ export function ProductIndex() {
                         : "(max-width: 768px) 92vw, (max-width: 1200px) 46vw, 564px"
                     }
                   />
-                  <div className="mt-4 flex flex-1 flex-col gap-3 md:mt-0">
+                  <div
+                    className={
+                      isSoloFeatured
+                        ? "mt-4 flex flex-1 flex-col gap-3 md:mt-0"
+                        : "mt-4 flex flex-1 flex-col gap-3"
+                    }
+                  >
                     <div>
                       <h3 className="font-display text-2xl font-semibold tracking-tight">
                         {item.title}

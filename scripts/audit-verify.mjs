@@ -83,6 +83,14 @@ try {
     const manifestRes = await reqCtx.get(`${BASE}/manifest.webmanifest`);
     assert.equal(manifestRes.status(), 200, "manifest.webmanifest should return 200");
 
+    const ogHome = await reqCtx.get(`${BASE}/opengraph-image`);
+    assert.equal(ogHome.status(), 200);
+    await (await import("node:fs/promises")).writeFile(path.join(SHOTS_DIR, "06_og_home.png"), await ogHome.body());
+
+    const ogBaseball = await reqCtx.get(`${BASE}/work/ar-baseball/opengraph-image`);
+    assert.equal(ogBaseball.status(), 200);
+    await (await import("node:fs/promises")).writeFile(path.join(SHOTS_DIR, "07_og_baseball.png"), await ogBaseball.body());
+
     const shotRes = await reqCtx.get(`${BASE}/shots/ar-baseball-stadium-mobile.webp`);
     assert.ok(
       (shotRes.headers()["cache-control"] ?? "").includes("max-age=86400"),
@@ -155,6 +163,21 @@ try {
 
     await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
 
+    // Assert Hero switcher pills + phone sit cleanly above the fold at 1440x900
+    const heroBox = await page.evaluate(() => {
+      const btn = [...document.querySelectorAll("#top button")].find((b) =>
+        b.textContent?.includes("Baseball"),
+      );
+      const fig = document.querySelector("#top figure");
+      return {
+        btn: btn ? btn.getBoundingClientRect().toJSON() : null,
+        fig: fig ? fig.getBoundingClientRect().toJSON() : null,
+      };
+    });
+    assert.ok(heroBox.btn && heroBox.btn.bottom <= 900, "Hero switcher pills must be above fold");
+    assert.ok(heroBox.fig && heroBox.fig.bottom <= 900, `Hero figure clipped below fold: ${JSON.stringify(heroBox.fig)}`);
+    await page.screenshot({ path: path.join(SHOTS_DIR, "00_hero_1440x900_dark.png") });
+
     // Hero LCP attribute check
     const lcpImg = await page.evaluate(() => {
       const img = document.querySelector("#top img");
@@ -171,7 +194,10 @@ try {
     assert.ok(heroCap?.includes("boxing"), `Hero switcher failed: ${heroCap}`);
 
     // Interactive Flagship ShotSwitcher
-    await page.getByRole("button", { name: "Calibration", exact: true }).click();
+    await page.locator("#apps").scrollIntoViewIfNeeded();
+    await page.waitForTimeout(200);
+    await page.screenshot({ path: path.join(SHOTS_DIR, "01_flagships_1440x900_dark.png") });
+    await page.getByRole("button", { name: "3D Stadium", exact: true }).click();
     const flagCap = await page.locator("#apps article").nth(1).locator("figcaption").textContent();
     assert.ok(flagCap?.includes("pitcher"), `Flagship switcher failed: ${flagCap}`);
 

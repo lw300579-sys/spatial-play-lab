@@ -9,8 +9,8 @@ const HERO_VIEWS = [
     id: "ar-baseball",
     label: "Baseball",
     src: "/shots/ar-baseball-stadium-mobile.webp",
-    alt: "AR Baseball running in a browser: a 3D stadium waiting for your swing.",
-    caption: "Waiting on the pitch. The pitcher won't throw until tracking is ready.",
+    alt: "AR Baseball running in a browser: a 3D stadium with pitcher, fielders, and bat.",
+    caption: "The 3D stadium and rival pitcher waiting for you to step into view.",
     url: "https://ar-baseball.vercel.app/",
   },
   {
@@ -36,7 +36,7 @@ export function HeroShowcase() {
   const current = HERO_VIEWS[activeIndex];
 
   return (
-    <div className="relative mx-auto hidden w-full max-w-[280px] sm:block lg:max-w-[320px]">
+    <div className="relative mx-auto hidden w-full max-w-[250px] sm:block lg:max-w-[275px]">
       <svg
         className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-[0.12]"
         viewBox="0 0 400 480"
@@ -57,21 +57,8 @@ export function HeroShowcase() {
         />
       </svg>
 
-      <div className="hero-phone origin-bottom">
-        <DeviceFrame
-          variant="phone"
-          src={current.src}
-          alt={current.alt}
-          caption={current.caption}
-          clip={appClips[current.id]}
-          url={current.url}
-          lcp={activeIndex === 0}
-          sizes="(max-width: 639px) 0px, (max-width: 1024px) 280px, 320px"
-        />
-      </div>
-
       <div
-        className="mt-4 flex justify-center gap-1.5"
+        className="mb-4 flex justify-center gap-1.5"
         role="group"
         aria-label="Preview different camera apps"
       >
@@ -94,6 +81,18 @@ export function HeroShowcase() {
           );
         })}
       </div>
+
+      <DeviceFrame
+        variant="phone"
+        src={current.src}
+        alt={current.alt}
+        caption={current.caption}
+        clip={appClips[current.id]}
+        url={current.url}
+        lcp={activeIndex === 0}
+        frameClassName="hero-phone origin-bottom"
+        sizes="(max-width: 639px) 0px, (max-width: 1024px) 250px, 275px"
+      />
     </div>
   );
 }

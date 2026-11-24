@@ -18,6 +18,7 @@ import {
 } from "@/data/case-studies";
 import { appClips } from "@/data/clips";
 import { SITE } from "@/data/games";
+import { versionedShot } from "@/lib/shots";
 
 const frameVariant: Record<string, "phone" | "browser"> = {
   jiku: "phone",
@@ -78,13 +79,13 @@ const workCopy: Record<string, WorkCopy> = {
     shots: [
       {
         src: "/shots/ar-baseball-stadium-desktop.webp",
-        alt: "AR Baseball calibration. A 3D stadium waits until it can see you.",
-        caption: "Calibration. It waits until it can see you before it pitches.",
+        alt: "AR Baseball 3D stadium with pitcher, fielders, crowd, and bat.",
+        caption: "The 3D stadium and rival pitcher waiting for you to step into view.",
       },
       {
         src: "/shots/ar-baseball-menu-desktop.webp",
-        alt: "AR Baseball menu, with the rival ladder.",
-        caption: "The menu, with the rival ladder.",
+        alt: "AR Baseball menu showing rivals Sunny, Kenji, Elena, and Matt, HR Derby, and Practice cage.",
+        caption: "Matchup & mode select: 3-inning rivals, HR Derby, and batting cage.",
       },
     ],
     heroSrc: "/shots/ar-baseball-stadium-mobile.webp",
@@ -454,7 +455,7 @@ export default async function WorkPage({
                   >
                     <div className="overflow-hidden bg-charcoal">
                       <Image
-                        src={item.shot.src}
+                        src={versionedShot(item.shot.src)}
                         alt={item.shot.alt}
                         width={640}
                         height={400}

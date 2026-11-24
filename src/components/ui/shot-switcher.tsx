@@ -43,7 +43,9 @@ export function ShotSwitcher({
       />
       {shots.length > 1 ? (
         <div
-          className="mt-3 flex flex-wrap justify-center gap-1.5 lg:justify-start"
+          className={`mt-3 flex flex-wrap gap-1.5 ${
+            defaultVariant === "phone" ? "justify-center" : "justify-center lg:justify-start"
+          }`}
           role="group"
           aria-label="Preview screens"
         >

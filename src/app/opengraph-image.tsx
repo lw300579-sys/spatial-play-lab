@@ -71,13 +71,14 @@ export default async function OpenGraphImage() {
             width: 690,
             height: "100%",
             display: "flex",
+            alignItems: "center",
             padding: "28px 28px 28px 0",
           }}
         >
           <div
             style={{
-              width: "100%",
-              height: "100%",
+              width: 662,
+              height: 414,
               display: "flex",
               overflow: "hidden",
               borderRadius: 14,
@@ -89,8 +90,8 @@ export default async function OpenGraphImage() {
               src={shot}
               alt=""
               width={662}
-              height={574}
-              style={{ objectFit: "cover", objectPosition: "center 68%" }}
+              height={414}
+              style={{ objectFit: "cover", objectPosition: "center center" }}
             />
           </div>
         </div>

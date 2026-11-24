@@ -8,13 +8,14 @@
     "start": "next start",
     "lint": "eslint",
     "test:release": "node scripts/release-gate.mjs",
+    "test:audit": "node scripts/audit-verify.mjs",
+    "resume:pdf": "node scripts/generate-resume-pdf.mjs",
     "previews": "node scripts/compose-previews.mjs",
     "previews:capture": "node scripts/capture-live.mjs",
     "previews:all": "node scripts/capture-live.mjs && node scripts/compose-previews.mjs",
     "previews:diagrams": "node scripts/generate-previews.mjs"
   },
   "dependencies": {
-    "framer-motion": "^13.0.0",
     "next": "16.3.6",
     "qrcode.react": "^4.2.0",
     "react": "19.2.8",

@@ -17,7 +17,7 @@ fs.mkdirSync(shots, { recursive: true });
 
 const targets = [
   { id: "ar-baseball-menu", url: "https://ar-baseball.vercel.app/", steps: [] },
-  { id: "ar-baseball-stadium", url: "https://ar-baseball.vercel.app/", steps: ["Step up to bat", "I.m ready"] },
+  { id: "ar-baseball-stadium", url: "https://ar-baseball.vercel.app/", steps: ["PLAY BALL", "USE QUICK SETUP"] },
   { id: "jiku-tennis-menu", url: "https://artennisgame.vercel.app/", steps: [] },
   { id: "jiku-fitness-start", url: "https://posture-app-nms-projects-e9ba3578.vercel.app/#dojo", steps: [] },
   {
@@ -52,6 +52,9 @@ const browser = await chromium.launch({
     "--use-fake-ui-for-media-stream",
     "--use-fake-device-for-media-stream",
     "--autoplay-policy=no-user-gesture-required",
+    "--enable-webgl",
+    "--use-gl=angle",
+    "--use-angle=swiftshader",
   ],
 });
 

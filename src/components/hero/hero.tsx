@@ -20,7 +20,7 @@ export function Hero() {
           <div className="flex flex-wrap gap-3">
             <a
               href="#apps"
-              className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-coral px-5 py-2.5 text-sm font-semibold text-[var(--coral-ink)] no-underline transition-transform hover:-translate-y-0.5"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border-2 border-charcoal bg-coral px-5 py-2.5 text-sm font-semibold text-[var(--coral-ink)] no-underline transition-transform hover:-translate-y-0.5"
             >
               Try the apps <span className="btn-arrow">↓</span>
             </a>
