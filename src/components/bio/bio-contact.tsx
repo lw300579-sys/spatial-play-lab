@@ -46,13 +46,13 @@ export function BioContact() {
             eventTarget="contact"
             className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-ochre px-4 py-2.5 text-center text-sm font-semibold text-[var(--ochre-ink)] no-underline transition-transform hover:-translate-y-0.5"
           >
-            Résumé (PDF)
+            Resume (PDF)
           </TrackedLink>
           <Link
             href="/resume"
             className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-paper px-4 py-2.5 text-center text-sm font-semibold text-charcoal no-underline transition-colors hover:bg-paper-ink"
           >
-            Résumé (web)
+            Resume (web)
           </Link>
           <TrackedLink
             href={`mailto:${SITE.email}?subject=${encodeURIComponent("Hello")}`}

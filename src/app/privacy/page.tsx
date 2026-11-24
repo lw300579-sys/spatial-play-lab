@@ -44,7 +44,7 @@ export default function PrivacyPage() {
               <h2 className="font-display text-2xl font-semibold text-charcoal">This portfolio</h2>
               <p className="mt-2">
                 This site does not use the camera. It records a few clicks, such as opening a
-                project, the résumé, or email, through its own endpoint. The record is the action
+                project, the resume, or email, through its own endpoint. The record is the action
                 name, a label, the path, and a time. No cookies, no ad pixels, no camera frames.
               </p>
             </section>

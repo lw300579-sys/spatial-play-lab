@@ -12,7 +12,7 @@ export function SiteFooter({ isHome = false }: { isHome?: boolean }) {
           </Link>
           {" · "}
           <Link className="text-cobalt underline-offset-2 hover:underline" href="/resume">
-            Résumé
+            Resume
           </Link>
           {" · "}
           <Link className="text-cobalt underline-offset-2 hover:underline" href="/privacy">

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { HeroShowcase } from "@/components/hero/hero-showcase";
 
 export function Hero() {
@@ -13,7 +12,7 @@ export function Hero() {
             I build software you move.
           </h1>
           <p className="max-w-xl text-lg leading-relaxed text-charcoal/85 sm:text-xl">
-            Swing at a pitch. Box in your living room. Learn a sign. It all runs in the browser off your phone camera.
+            Swing at a pitch. Box in your living room. Learn Sign Language. It all runs in the browser off your phone camera.
           </p>
           <p className="max-w-lg text-base leading-relaxed text-charcoal/75">
             No app store. No sensors. Just you, waving at your phone like it owes you money.
@@ -25,12 +24,6 @@ export function Hero() {
             >
               Try the apps <span className="btn-arrow">↓</span>
             </a>
-            <Link
-              href="/resume"
-              className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-charcoal bg-paper px-5 py-2.5 text-sm font-semibold text-charcoal no-underline transition-colors hover:bg-paper-ink"
-            >
-              Résumé
-            </Link>
           </div>
           <p className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">
             Runs in the browser · camera stays on your phone · no app store

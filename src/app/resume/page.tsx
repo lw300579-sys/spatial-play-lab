@@ -6,13 +6,13 @@ import { flagshipCaseStudies } from "@/data/case-studies";
 import { SITE } from "@/data/games";
 
 export const metadata: Metadata = {
-  title: "Résumé",
+  title: "Resume",
   description:
     "Product engineer. Computer vision, browser games, things that have to work on a normal phone.",
   alternates: { canonical: "/resume" },
   openGraph: {
     url: "/resume",
-    title: "Résumé · Ari Swerdlow",
+    title: "Resume · Ari Swerdlow",
     description:
       "Product engineer. Computer vision, browser games, things that have to work on a normal phone.",
   },
@@ -41,7 +41,7 @@ export default function ResumePage() {
         href="#resume-content"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:border-2 focus:border-charcoal focus:bg-ochre focus:px-4 focus:py-2 focus:font-mono focus:text-sm focus:font-semibold focus:text-[var(--ochre-ink)]"
       >
-        Skip to résumé
+        Skip to resume
       </a>
       <SiteNav currentPath="/resume" />
 

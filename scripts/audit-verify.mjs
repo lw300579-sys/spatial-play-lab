@@ -230,7 +230,7 @@ try {
     const closedByBackdrop = await page.evaluate(() => Boolean(document.querySelector("dialog")?.open));
     assert.equal(closedByBackdrop, false, "QrModal must close on backdrop click");
 
-    // Dark-mode Contrast check on Skip link & Contact Résumé (PDF)
+    // Dark-mode Contrast check on Skip link & Contact Resume (PDF)
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.keyboard.press("Tab");
     const skipColors = await page.evaluate(() => {
@@ -246,12 +246,12 @@ try {
 
     const pdfColors = await page.evaluate(() => {
       const el = [...document.querySelectorAll("#contact a")].find((a) =>
-        a.textContent?.includes("Résumé (PDF)"),
+        a.textContent?.includes("Resume (PDF)"),
       );
       return el ? { fg: getComputedStyle(el).color, bg: getComputedStyle(el).backgroundColor } : null;
     });
     const pdfContrast = contrastRatio(pdfColors.fg, pdfColors.bg);
-    assert.ok(pdfContrast >= 4.5, `Dark Résumé (PDF) contrast ${pdfContrast} < 4.5`);
+    assert.ok(pdfContrast >= 4.5, `Dark Resume (PDF) contrast ${pdfContrast} < 4.5`);
 
     await page.locator("#contact").scrollIntoViewIfNeeded();
     await page.waitForTimeout(200);
@@ -269,13 +269,13 @@ try {
     await page.getByRole("button", { name: "Switch to light mode" }).click();
     const lightPdfColors = await page.evaluate(() => {
       const el = [...document.querySelectorAll("#contact a")].find((a) =>
-        a.textContent?.includes("Résumé (PDF)"),
+        a.textContent?.includes("Resume (PDF)"),
       );
       return el ? { fg: getComputedStyle(el).color, bg: getComputedStyle(el).backgroundColor } : null;
     });
     assert.ok(
       contrastRatio(lightPdfColors.fg, lightPdfColors.bg) >= 4.5,
-      "Light Résumé (PDF) contrast < 4.5",
+      "Light Resume (PDF) contrast < 4.5",
     );
 
     await ctx.close();

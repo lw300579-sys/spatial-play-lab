@@ -35,7 +35,7 @@ export default function NotFound() {
               href="/resume"
               className="inline-flex min-h-11 items-center rounded-full border-2 border-charcoal bg-paper px-5 py-3 text-sm font-semibold text-charcoal no-underline transition-colors hover:bg-paper-ink"
             >
-              Résumé
+              Resume
             </Link>
           </div>
         </div>

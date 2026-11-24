@@ -9,7 +9,6 @@ export function SiteNav({ currentPath = "/" }: { currentPath?: ActiveRoute }) {
   const links = [
     { href: isHome ? "#apps" : "/#apps", label: "Apps", active: currentPath === "/work" },
     { href: "/testing", label: "Testing", active: currentPath === "/testing" },
-    { href: "/resume", label: "Résumé", active: currentPath === "/resume" },
     { href: isHome ? "#contact" : "/#contact", label: "Contact", active: false },
   ] as const;
 
