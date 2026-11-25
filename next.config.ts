@@ -5,9 +5,13 @@ const nextConfig: NextConfig = {
   images: {
     // PNGs/WebPs/AVIFs only — avoid SVG attachment disposition issues
     formats: ["image/avif", "image/webp"],
+    contentDispositionType: "inline",
     minimumCacheTTL: 2678400,
     localPatterns: [
+      { pathname: "/shots/**", search: "?v=4" },
       { pathname: "/shots/**", search: "?v=3" },
+      { pathname: "/shots/**", search: "?v=2" },
+      { pathname: "/shots/**", search: "?v=1" },
       { pathname: "/shots/**", search: "" },
     ],
   },
