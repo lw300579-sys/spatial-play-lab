@@ -17,13 +17,13 @@ fs.mkdirSync(shots, { recursive: true });
 
 const targets = [
   { id: "ar-baseball-menu", url: "https://ar-baseball.vercel.app/", steps: [] },
-  { id: "ar-baseball-stadium", url: "https://ar-baseball.vercel.app/", steps: ["PLAY BALL", "USE QUICK SETUP"] },
+  { id: "ar-baseball-stadium", url: "https://ar-baseball.vercel.app/", steps: ["#btn-control-tap", "#btn-play-arcade"] },
   { id: "jiku-tennis-menu", url: "https://artennisgame.vercel.app/", steps: [] },
   { id: "jiku-fitness-start", url: "https://posture-app-nms-projects-e9ba3578.vercel.app/#dojo", steps: [] },
   {
     id: "jiku-fitness-boxing-setup",
-    url: "https://posture-app-nms-projects-e9ba3578.vercel.app/",
-    steps: ["Set up my camera", "START BOXING"],
+    url: "https://posture-app-nms-projects-e9ba3578.vercel.app/#dojo",
+    steps: ["Fight Setup · 3D Ring", "Enter Ring"],
   },
   { id: "pickleball-coach-intro", url: "https://pickleball-coach-three.vercel.app/", steps: [] },
   { id: "ar-slicer-menu", url: "https://ar-fruit-slicer-orpin.vercel.app/", steps: [] },
@@ -37,11 +37,12 @@ const viewports = [
 ];
 
 async function clickLabel(page, label) {
-  const pattern = new RegExp(label, "i");
-  const target = page.getByRole("button", { name: pattern }).or(page.getByText(pattern)).first();
+  const target = label.startsWith("#")
+    ? page.locator(label).first()
+    : page.getByRole("button", { name: new RegExp(label, "i") }).or(page.getByText(new RegExp(label, "i"))).first();
   if (!(await target.isVisible().catch(() => false))) return false;
   await target.click({ timeout: 2500 }).catch(() => {});
-  await page.waitForTimeout(1600);
+  await page.waitForTimeout(1800);
   return true;
 }
 
@@ -58,7 +59,9 @@ const browser = await chromium.launch({
   ],
 });
 
+const onlyFilter = process.argv[2];
 for (const target of targets) {
+  if (onlyFilter && target.id !== onlyFilter) continue;
   for (const viewport of viewports) {
     const context = await browser.newContext({
       viewport: { width: viewport.width, height: viewport.height },
@@ -78,7 +81,7 @@ for (const target of targets) {
       }
       if (target.steps.length) await page.waitForTimeout(1200);
       const png = path.join(shots, `${name}.png`);
-      await page.screenshot({ path: png, type: "png" });
+      await page.screenshot({ path: png, type: "png", animations: "disabled", timeout: 45000 });
       const webp = path.join(shots, `${name}.webp`);
       await sharp(png).webp({ quality: 72, effort: 5 }).toFile(webp);
       fs.rmSync(png, { force: true });

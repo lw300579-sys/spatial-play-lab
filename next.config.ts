@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 2678400,
     localPatterns: [
-      { pathname: "/shots/**", search: "?v=2" },
+      { pathname: "/shots/**", search: "?v=3" },
       { pathname: "/shots/**", search: "" },
     ],
   },

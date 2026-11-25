@@ -17,8 +17,8 @@ const HERO_VIEWS = [
     id: "jiku-fitness",
     label: "Boxing",
     src: "/shots/jiku-fitness-boxing-setup-mobile.webp",
-    alt: "Jiku Fitness boxing setup. One punch, one clear response.",
-    caption: "Jiku Fitness boxing setup. Targets wait for confident pose tracking.",
+    alt: "Jiku Fitness 3D boxing ring with opponent, crowd, and counter controls.",
+    caption: "Jiku Fitness 3D boxing ring. Slip, counter, and chain combos via webcam or desk controls.",
     url: "https://posture-app-nms-projects-e9ba3578.vercel.app/",
   },
   {
